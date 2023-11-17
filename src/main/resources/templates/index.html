@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="fragments/default_layout" lang="en">
+<th:block layout:fragment="content" th:with="title='홈페이지'">
+  <!--  <div class="bgimage"></div>-->
+  <section class="bg-[url('images/background/index/dangin_dnf.jpg')]">
+    <div
+        class="mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:h-screen lg:items-center backdrop-blur-sm"
+    >
+      <div class="mx-auto max-w-xl text-center">
+        <h1 class="text-3xl font-extrabold sm:text-5xl">
+          Understand User Flow.
+          <strong class="font-extrabold text-red-700 sm:block">
+            Increase Conversion.
+          </strong>
+        </h1>
+
+        <p class="mt-4 sm:text-xl/relaxed">
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt illo
+          tenetur fuga ducimus numquam ea!
+        </p>
+        <form action="/search/character" method="get">
+          <div class="mx-auto max-w-xl text-center grid lg:grid-cols-10 lg:gap-8">
+            <div class="lg:col-span-3">
+              <label for="serverName"></label>
+              <select
+                  name="serverName"
+                  id="serverName"
+                  class="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
+              >
+                <option value="all">전체</option>
+                <option value="cain">카인</option>
+                <option value="diregie">디레지에</option>
+                <option value="siroco">시로코</option>
+                <option value="prey">프레이</option>
+                <option value="casillas">카시야스</option>
+                <option value="hilder">힐더</option>
+                <option value="anton">안톤</option>
+                <option value="bakal">바칼</option>
+              </select>
+            </div>
+            <div class="lg:col-span-7 mt-4 lg:mt-0">
+              <div class="relative">
+                <label for="characterName" class="sr-only"> Search </label>
+
+                <input
+                    type="text"
+                    id="characterName"
+                    name="characterName"
+                    placeholder="Search for..."
+                    class="w-full rounded-md border-gray-200 py-2.5 pe-10 shadow-sm sm:text-sm"
+                />
+
+                <span class="absolute inset-y-0 end-0 grid w-10 place-content-center">
+          <button type="button" class="text-gray-600 hover:text-gray-700">
+          <span class="sr-only">Search</span>
+
+          <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="h-4 w-4"
+          >
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+        />
+      </svg>
+    </button>
+  </span>
+              </div>
+              <div class="mt-8 flex flex-wrap justify-center">
+                <a
+                    class="block w-full rounded bg-red-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-red-700 focus:outline-none focus:ring active:bg-red-500 sm:w-auto"
+                    href="/get-started"
+                >검색하기
+                </a>
+              </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</th:block>
+</html>
+
