@@ -1,12 +1,11 @@
-package com.dfo.dunsee.common;
+package com.dfo.dunsee.common.url;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum ApiUri {
-
-  SERVERS("servers"),
-  CHARACTERS("characters");
+public enum WordType {
+  FULL("full"),
+  MATCH("match");
 
   private final String value;
 

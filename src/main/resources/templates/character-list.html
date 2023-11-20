@@ -7,7 +7,8 @@
 
       <ul class="grid gap-4 mt-8 sm:grid-cols-2 lg:grid-cols-4">
         <li th:each="character: ${characterList}">
-          <a href="#" class="block overflow-hidden group">
+          <a th:href="@{/search/character(imgUrl=${character.imgUrl},serverId=${character.serverId.getEngName()})}"
+             class="block overflow-hidden group">
             <img
                 th:src="${character.imgUrl}"
                 alt="캐릭터이미지"

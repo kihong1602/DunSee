@@ -10,6 +10,7 @@ import lombok.Data;
 public class DefaultCharacterInfo implements Comparable<DefaultCharacterInfo> {
 
   private Server serverId;
+  private String characterId;
   private String characterName;
   private int level;
   private String jobGrowName;

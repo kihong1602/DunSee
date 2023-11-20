@@ -1,4 +1,4 @@
-package com.dfo.dunsee.common;
+package com.dfo.dunsee.common.url;
 
 import lombok.AllArgsConstructor;
 

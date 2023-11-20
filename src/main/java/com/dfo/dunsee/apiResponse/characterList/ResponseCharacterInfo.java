@@ -1,9 +1,10 @@
-package com.dfo.dunsee.search.dto;
+package com.dfo.dunsee.apiResponse.characterList;
 
+import com.dfo.dunsee.apiResponse.ApiResponse;
 import lombok.Data;
 
 @Data
-public class ResponseCharacterInfo {
+public class ResponseCharacterInfo implements ApiResponse {
 
   private String serverId;
   private String characterId;

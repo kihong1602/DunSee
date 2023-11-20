@@ -1,14 +1,15 @@
-package com.dfo.dunsee.common;
+package com.dfo.dunsee.common.url;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum ApiParam {
+public enum ApiUri {
+  SERVERS("servers"),
+  CHARACTERS("characters"),
   CHARACTER_NAME("characterName"),
-  LIMIT("limit"),
-  WORD_TYPE("wordType"),
-  API_KEY("apikey"),
-  ZOOM("zoom");
+  STATUS("status"),
+  EQUIP("equip"),
+  EQUIPMENT("equipment");
 
   private final String value;
 

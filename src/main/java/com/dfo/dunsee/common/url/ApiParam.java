@@ -1,11 +1,13 @@
-package com.dfo.dunsee.common;
+package com.dfo.dunsee.common.url;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum WordType {
-  FULL("full"),
-  MATCH("match");
+public enum ApiParam {
+  LIMIT("limit"),
+  WORD_TYPE("wordType"),
+  API_KEY("apikey"),
+  ZOOM("zoom");
 
   private final String value;
 
