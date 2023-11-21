@@ -1,4 +1,4 @@
-package com.dfo.dunsee.security.oAuth.provider;
+package com.dfo.dunsee.security.auth.oauth.provider;
 
 import static com.dfo.dunsee.common.ProviderType.GOOGLE;
 
@@ -19,7 +19,7 @@ public class GoogleMemberInfo implements Oauth2UserInfo {
 
   @Override
   public String getProvider() {
-    return GOOGLE.getProverName();
+    return GOOGLE.getProvider();
   }
 
   @Override

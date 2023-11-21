@@ -1,7 +1,8 @@
-package com.dfo.dunsee.config;
+package com.dfo.dunsee.security.config;
 
-import com.dfo.dunsee.security.exception.SecurityAccessDeniedHandler;
-import com.dfo.dunsee.security.oAuth.Oauth2UserService;
+import com.dfo.dunsee.security.auth.oauth.Oauth2UserService;
+import com.dfo.dunsee.security.handler.exception.SecurityAccessDeniedHandler;
+import com.dfo.dunsee.security.handler.success.LoginSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -17,10 +19,13 @@ public class SecurityConfig {
 
   private final Oauth2UserService oauth2UserService;
   private final SecurityAccessDeniedHandler accessDeniedHandler;
+  private final LoginSuccessHandler loginSuccessHandler;
 
-  public SecurityConfig(Oauth2UserService oauth2UserService, SecurityAccessDeniedHandler accessDeniedHandler) {
+  public SecurityConfig(Oauth2UserService oauth2UserService, SecurityAccessDeniedHandler accessDeniedHandler,
+      LoginSuccessHandler loginSuccessHandler) {
     this.oauth2UserService = oauth2UserService;
     this.accessDeniedHandler = accessDeniedHandler;
+    this.loginSuccessHandler = loginSuccessHandler;
   }
 
   @Bean
@@ -38,10 +43,18 @@ public class SecurityConfig {
                        )
                        .oauth2Login(oauth2Login -> oauth2Login
                            .loginPage("/login")
+                           .successHandler(loginSuccessHandler.successHandler())
+                           .failureUrl("/")
                            .userInfoEndpoint(userInfo -> userInfo.userService(oauth2UserService))
                        )
+                       .logout(logout -> logout
+                           .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                           .logoutSuccessUrl("/")
+                           .invalidateHttpSession(true)
+                       )
                        .build();
-    
+
   }
+
 
 }

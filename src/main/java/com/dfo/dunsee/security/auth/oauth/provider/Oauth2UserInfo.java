@@ -1,4 +1,4 @@
-package com.dfo.dunsee.security.oAuth.provider;
+package com.dfo.dunsee.security.auth.oauth.provider;
 
 public interface Oauth2UserInfo {
 

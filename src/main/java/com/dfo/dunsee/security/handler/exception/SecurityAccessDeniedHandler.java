@@ -1,4 +1,4 @@
-package com.dfo.dunsee.security.exception;
+package com.dfo.dunsee.security.handler.exception;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

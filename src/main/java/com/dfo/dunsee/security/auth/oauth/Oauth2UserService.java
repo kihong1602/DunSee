@@ -1,10 +1,12 @@
-package com.dfo.dunsee.security.oAuth;
+package com.dfo.dunsee.security.auth.oauth;
 
 import com.dfo.dunsee.common.RoleType;
 import com.dfo.dunsee.member.entity.Member;
 import com.dfo.dunsee.member.repository.MemberRepository;
-import com.dfo.dunsee.security.oAuth.provider.GoogleMemberInfo;
-import com.dfo.dunsee.security.oAuth.provider.Oauth2UserInfo;
+import com.dfo.dunsee.security.auth.oauth.provider.GoogleMemberInfo;
+import com.dfo.dunsee.security.auth.oauth.provider.KakaoMemberInfo;
+import com.dfo.dunsee.security.auth.oauth.provider.Oauth2UserInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -13,6 +15,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class Oauth2UserService extends DefaultOAuth2UserService {
 
   private final MemberRepository memberRepository;
@@ -27,13 +30,13 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
   public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 
     OAuth2User oAuth2User = super.loadUser(userRequest);
-
     String registrationId = userRequest.getClientRegistration()
                                        .getRegistrationId();
 
     Oauth2UserInfo oauth2UserInfo = null;
     switch (registrationId) {
       case "google" -> oauth2UserInfo = new GoogleMemberInfo(oAuth2User.getAttributes());
+      case "kakao" -> oauth2UserInfo = new KakaoMemberInfo(oAuth2User.getAttributes());
     }
 
     String provider = oauth2UserInfo.getProvider();
@@ -56,7 +59,7 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
       memberRepository.save(memberEntity);
     }
 
-    return new Oauth2UserDetails(memberEntity, oAuth2User.getAttributes());
+    return new PrincipalDetails(memberEntity, oAuth2User.getAttributes());
   }
 
   private String createUserName(String provider, String providerId) {

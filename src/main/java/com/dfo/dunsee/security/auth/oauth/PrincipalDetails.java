@@ -1,4 +1,4 @@
-package com.dfo.dunsee.security.oAuth;
+package com.dfo.dunsee.security.auth.oauth;
 
 import com.dfo.dunsee.member.entity.Member;
 import java.util.ArrayList;
@@ -10,12 +10,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 @Data
-public class Oauth2UserDetails implements UserDetails, OAuth2User {
+public class PrincipalDetails implements UserDetails, OAuth2User {
 
   private final Member member;
-  private final Map<String, Object> attributes;
+  private Map<String, Object> attributes;
 
-  public Oauth2UserDetails(Member member, Map<String, Object> attributes) {
+  public PrincipalDetails(Member member) {
+    this.member = member;
+  }
+
+  public PrincipalDetails(Member member, Map<String, Object> attributes) {
     this.member = member;
     this.attributes = attributes;
   }

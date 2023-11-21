@@ -8,9 +8,9 @@ public enum ProviderType {
   GOOGLE("google"),
   KAKAO("kakao");
 
-  private final String proverName;
+  private final String provider;
 
-  ProviderType(String proverName) {
-    this.proverName = proverName;
+  ProviderType(String provider) {
+    this.provider = provider;
   }
 }
