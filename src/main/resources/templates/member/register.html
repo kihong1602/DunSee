@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="fragments/default_layout" lang="en">
+<th:block layout:fragment="content" th:with="title='회원가입'">
+  <div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-lg text-center">
+      <h1 class="text-2xl font-bold sm:text-3xl">Get started DunSee!</h1>
+
+      <p class="mt-4 text-gray-500">
+        아래 버튼을 눌러 회원가입을 완료하세요!
+      </p>
+    </div>
+
+    <div class="flex justify-center items-center mt-8">
+      <div class="mr-4">
+        <a class="group inline-block rounded-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-[2px] hover:text-white focus:outline-none focus:ring active:text-opacity-75"
+           href="/oauth2/authorization/google">
+          <span class="block rounded-full bg-white px-8 py-3 text-sm font-medium group-hover:bg-transparent">
+            Google Login
+          </span>
+        </a>
+      </div>
+
+      <div>
+        <a class="group inline-block rounded-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-[2px] hover:text-white focus:outline-none focus:ring active:text-opacity-75"
+           href="/oauth2/authorization/kakao">
+          <span class="block rounded-full bg-white px-8 py-3 text-sm font-medium group-hover:bg-transparent">
+            Kakao Login
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</th:block>
+</html>

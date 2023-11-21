@@ -10,7 +10,7 @@ public class SignInController {
 
   @GetMapping("/register")
   public String register() {
-    return "register";
+    return "member/register";
   }
 
   @GetMapping("/user")
