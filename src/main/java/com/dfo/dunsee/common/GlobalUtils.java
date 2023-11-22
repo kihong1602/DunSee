@@ -17,4 +17,9 @@ public class GlobalUtils {
   public ObjectMapper objectMapper() {
     return new ObjectMapper();
   }
+
+  @Bean
+  public JsonUtils jsonUtils(ObjectMapper objectMapper) {
+    return new JsonUtils(objectMapper);
+  }
 }

@@ -1,18 +1,19 @@
 package com.dfo.dunsee.security.config;
 
-import com.dfo.dunsee.security.auth.oauth.Oauth2UserService;
-import com.dfo.dunsee.security.handler.exception.LoginFailureHandler;
-import com.dfo.dunsee.security.handler.exception.SecurityAccessDeniedHandler;
-import com.dfo.dunsee.security.handler.exception.SecurityAuthenticationEntryPoint;
-import com.dfo.dunsee.security.handler.success.LoginSuccessHandler;
+import com.dfo.dunsee.config.CommonUtilsConfig;
+import com.dfo.dunsee.security.filter.JsonUsernamePasswordAuthenticationFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -21,15 +22,16 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @AllArgsConstructor
 public class SecurityConfig {
 
-  private final Oauth2UserService oauth2UserService;
-  private final SecurityAccessDeniedHandler accessDeniedHandler;
-  private final SecurityAuthenticationEntryPoint authenticationEntryPoint;
-  private final LoginSuccessHandler loginSuccessHandler;
-  private final LoginFailureHandler loginFailureHandler;
+  private final SecurityHandlersConfig securityHandlersConfig;
+  private final SecurityUserServiceConfig securityUserServiceConfig;
+  private final CommonUtilsConfig commonUtilsConfig;
+
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
     return httpSecurity.csrf(AbstractHttpConfigurer::disable)
+                       .addFilterBefore(jsonUsernamePasswordAuthenticationFilter(),
+                                        UsernamePasswordAuthenticationFilter.class)
                        .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                            .requestMatchers("/favorite/**")
                            .authenticated()
@@ -39,14 +41,21 @@ public class SecurityConfig {
                            .permitAll()
                        )
                        .exceptionHandling(handling -> handling
-                           .accessDeniedHandler(accessDeniedHandler)
-                           .authenticationEntryPoint(authenticationEntryPoint)
+                           .accessDeniedHandler(securityHandlersConfig.getSecurityAccessDeniedHandler())
+                           .authenticationEntryPoint(securityHandlersConfig.getSecurityAuthenticationEntryPoint())
+                       )
+                       .formLogin(formLogin -> formLogin
+                           .loginPage("/login")
+                           .loginProcessingUrl("/login-process")
+                           .successHandler(securityHandlersConfig.getLoginSuccessHandler())
+                           .failureHandler(securityHandlersConfig.getLoginFailureHandler())
                        )
                        .oauth2Login(oauth2Login -> oauth2Login
                            .loginPage("/login")
-                           .successHandler(loginSuccessHandler)
-                           .failureHandler(loginFailureHandler)
-                           .userInfoEndpoint(userInfo -> userInfo.userService(oauth2UserService))
+                           .successHandler(securityHandlersConfig.getLoginSuccessHandler())
+                           .failureHandler(securityHandlersConfig.getLoginFailureHandler())
+                           .userInfoEndpoint(
+                               userInfo -> userInfo.userService(securityUserServiceConfig.getOauth2UserService()))
                        )
                        .logout(logout -> logout
                            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
@@ -57,5 +66,22 @@ public class SecurityConfig {
 
   }
 
+  @Bean
+  public JsonUsernamePasswordAuthenticationFilter jsonUsernamePasswordAuthenticationFilter() {
+    JsonUsernamePasswordAuthenticationFilter jsonUsernamePasswordAuthenticationFilter = new JsonUsernamePasswordAuthenticationFilter(
+        commonUtilsConfig.getJsonUtils(), securityHandlersConfig.getLoginSuccessHandler(),
+        securityHandlersConfig.getLoginFailureHandler());
+    jsonUsernamePasswordAuthenticationFilter.setAuthenticationManager(authenticationManager());
 
+    return jsonUsernamePasswordAuthenticationFilter;
+  }
+
+  @Bean
+  public AuthenticationManager authenticationManager() {
+    DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+
+    provider.setPasswordEncoder(commonUtilsConfig.getBCryptPasswordEncoder());
+    provider.setUserDetailsService(securityUserServiceConfig.getPrincipalDetailsService());
+    return new ProviderManager(provider);
+  }
 }

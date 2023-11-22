@@ -19,6 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 @Entity
 @Table(name = "member")
@@ -28,6 +29,7 @@ import org.hibernate.annotations.ColumnDefault;
 @Setter
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
+@DynamicInsert
 public class Member {
 
   @JsonIgnore
@@ -35,6 +37,7 @@ public class Member {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
+  @Column(unique = true)
   private String username;
 
   private String password;

@@ -50,7 +50,7 @@ public class MemberRegisterService {
           memberRepository.save(saveMember);
           yield SUCCESS;
         } catch (DataAccessException | TransactionalException e) {
-          log.warn(serviceCode + " | Error", e);
+          log.error(serviceCode + " | Error", e);
           yield FAILURE;
         }
       }
