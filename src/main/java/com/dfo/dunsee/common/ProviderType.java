@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum ProviderType {
 
   GOOGLE("google"),
-  KAKAO("kakao");
+  KAKAO("kakao"),
+  DUNSEE("dunsee");
 
   private final String provider;
 

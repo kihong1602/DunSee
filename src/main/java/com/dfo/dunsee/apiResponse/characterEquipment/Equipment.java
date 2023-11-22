@@ -4,6 +4,7 @@ import com.dfo.dunsee.apiResponse.characterEquipment.enchant.Enchant;
 import com.dfo.dunsee.apiResponse.characterEquipment.fusionEpic.BakalInfo;
 import com.dfo.dunsee.apiResponse.characterEquipment.fusionEpic.CustomOption;
 import com.dfo.dunsee.apiResponse.characterEquipment.fusionEpic.DimensionCloisterInfo;
+import com.dfo.dunsee.apiResponse.characterEquipment.fusionEpic.DuskyIslandOption;
 import com.dfo.dunsee.apiResponse.characterEquipment.fusionEpic.IspinsInfo;
 import com.dfo.dunsee.apiResponse.characterEquipment.fusionEpic.MachineRevolutionInfo;
 import com.dfo.dunsee.apiResponse.characterEquipment.fusionEpic.UpgradeInfo;
@@ -59,6 +60,8 @@ import lombok.Data;
  * ispinsInfo: 이스핀즈 융합에픽 정보
  * <p>
  * dimensionCloisterInfo: 차원회랑 융합에픽 정보
+ * <p>
+ * duskyIslandOption: 안개섬 융합에픽 정보
  */
 @Data
 public class Equipment {
@@ -89,4 +92,5 @@ public class Equipment {
   private CustomOption customOption;
   private IspinsInfo ispinsInfo;
   private DimensionCloisterInfo dimensionCloisterInfo;
+  private DuskyIslandOption duskyIslandOption;
 }

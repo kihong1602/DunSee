@@ -1,6 +1,7 @@
 package com.dfo.dunsee.member.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,26 +17,41 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "member")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @Builder
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Member {
 
   @JsonIgnore
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
+
   private String username;
+
   private String password;
+
+  @Column(unique = true)
   private String email;
+
+  @ColumnDefault("'ROLE_USER'")
   private String role;
+
+  @ColumnDefault("'dunsee'")
   private String provider;
+
   @Column(name = "provider_id")
+  @ColumnDefault("199716020616")
   private String providerId;
+
   @Column(name = "created_date")
   private LocalDateTime createdDate;
 
