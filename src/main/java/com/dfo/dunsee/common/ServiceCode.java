@@ -34,4 +34,7 @@ public enum ServiceCode {
 
   private final String description;
 
+  public static String setServiceMsg(ServiceCode serviceCode) {
+    return serviceCode.name() + " | " + serviceCode.getDescription() + " :: ";
+  }
 }

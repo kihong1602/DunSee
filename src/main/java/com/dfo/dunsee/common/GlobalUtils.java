@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 
 @Component
 public class GlobalUtils {
@@ -21,5 +22,10 @@ public class GlobalUtils {
   @Bean
   public JsonUtils jsonUtils(ObjectMapper objectMapper) {
     return new JsonUtils(objectMapper);
+  }
+
+  @Bean
+  public AntPathMatcher antPathMatcher() {
+    return new AntPathMatcher();
   }
 }

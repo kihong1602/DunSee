@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class DefaultCharacterInfo implements Comparable<DefaultCharacterInfo> {
+public class SimpleCharacterInfo implements Comparable<SimpleCharacterInfo> {
 
   private Server serverId;
   private String characterId;
@@ -18,8 +18,8 @@ public class DefaultCharacterInfo implements Comparable<DefaultCharacterInfo> {
   private String imgUrl;
 
   @Override
-  public int compareTo(DefaultCharacterInfo other) {
-    return Comparator.comparing(DefaultCharacterInfo::getFame, Comparator.nullsLast(Comparator.reverseOrder()))
+  public int compareTo(SimpleCharacterInfo other) {
+    return Comparator.comparing(SimpleCharacterInfo::getFame, Comparator.nullsLast(Comparator.reverseOrder()))
                      .compare(this, other);
   }
 }

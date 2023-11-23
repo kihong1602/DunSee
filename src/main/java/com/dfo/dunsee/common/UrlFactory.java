@@ -10,14 +10,15 @@ import static com.dfo.dunsee.common.url.ApiUri.CHARACTERS;
 import static com.dfo.dunsee.common.url.ApiUri.CHARACTER_NAME;
 import static com.dfo.dunsee.common.url.ApiUri.EQUIP;
 import static com.dfo.dunsee.common.url.ApiUri.EQUIPMENT;
-import static com.dfo.dunsee.common.url.ApiUri.SERVERS;
 import static com.dfo.dunsee.common.url.ApiUri.STATUS;
 
 import com.dfo.dunsee.common.url.WordType;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class UrlFactory {
 
   @Value("${dnf.apiKey}")
@@ -28,12 +29,11 @@ public class UrlFactory {
    * <p>
    * https://api.neople.co.kr/df/servers/{serverId}/characters?characterName={characterName}&limit={limit}&wordType={wordType}&apikey={apikey}
    */
-  public String setSearchCharacterListUrl(String characterName, String serverId) {
+  public String setSearchCharacterListUrl(ServiceCode serviceCode, String characterName, String serverId) {
+    log.info(ServiceCode.setServiceMsg(serviceCode) + "Character List URL Create");
     StringBuilder sb = new StringBuilder();
 
     return sb.append(DEFAULT_URL.url())
-             .append(SERVERS.value())
-             .append("/")
              .append(serverId)
              .append("/")
              .append(CHARACTERS.value())
@@ -61,12 +61,11 @@ public class UrlFactory {
    * <p>
    * https://img-api.neople.co.kr/df/servers/{serverId}/characters/{characterId}?zoom={zoom}
    */
-  public String setSearchCharacterProfileImgUrl(String serverId, String characterId) {
+  public String setSearchCharacterProfileImgUrl(ServiceCode serviceCode, String serverId, String characterId) {
+    log.info(ServiceCode.setServiceMsg(serviceCode) + "Character Image URL Create");
     StringBuilder sb = new StringBuilder();
 
     return sb.append(IMAGE_URL.url())
-             .append(SERVERS.value())
-             .append("/")
              .append(serverId)
              .append("/")
              .append(CHARACTERS.value())
@@ -84,12 +83,11 @@ public class UrlFactory {
    * <p>
    * https://api.neople.co.kr/df/servers/{serverId}/characters/{characterId}?apikey={apikey}
    */
-  public String setSearchCharacterDefaultUrl(String serverId, String characterId) {
+  public String setSearchCharacterDefaultUrl(ServiceCode serviceCode, String serverId, String characterId) {
+    log.info(ServiceCode.setServiceMsg(serviceCode) + "Character Default Info URL Create");
     StringBuilder sb = new StringBuilder();
 
     return sb.append(DEFAULT_URL.url())
-             .append(SERVERS.value())
-             .append("/")
              .append(serverId)
              .append("/")
              .append(CHARACTERS.value())
@@ -107,12 +105,11 @@ public class UrlFactory {
    * <p>
    * https://api.neople.co.kr/df/servers/{serverId}/characters/{characterId}/status?apikey={apikey}
    */
-  public String setSearchCharacterStatusUrl(String serverId, String characterId) {
+  public String setSearchCharacterStatusUrl(ServiceCode serviceCode, String serverId, String characterId) {
+    log.info(ServiceCode.setServiceMsg(serviceCode) + "Character Status URL Create");
     StringBuilder sb = new StringBuilder();
 
     return sb.append(DEFAULT_URL.url())
-             .append(SERVERS.value())
-             .append("/")
              .append(serverId)
              .append("/")
              .append(CHARACTERS.value())
@@ -132,12 +129,11 @@ public class UrlFactory {
    * <p>
    * https://api.neople.co.kr/df/servers/{serverId}/characters/{characterId}/equip/equipment?apikey={apikey}
    */
-  public String setSearchCharacterEquipUrl(String serverId, String characterId) {
+  public String setSearchCharacterEquipUrl(ServiceCode serviceCode, String serverId, String characterId) {
+    log.info(ServiceCode.setServiceMsg(serviceCode) + "Character Equipment URL Create");
     StringBuilder sb = new StringBuilder();
 
     return sb.append(DEFAULT_URL.url())
-             .append(SERVERS.value())
-             .append("/")
              .append(serverId)
              .append("/")
              .append(CHARACTERS.value())
