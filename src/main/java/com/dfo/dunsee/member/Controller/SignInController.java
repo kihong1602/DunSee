@@ -1,8 +1,11 @@
 package com.dfo.dunsee.member.Controller;
 
 import static com.dfo.dunsee.common.ServiceCode.MBR101;
+import static com.dfo.dunsee.common.ServiceCode.MBR201;
+import static com.dfo.dunsee.common.ServiceCode.MBR202;
 
 import com.dfo.dunsee.common.ResultType;
+import com.dfo.dunsee.common.ServiceCode;
 import com.dfo.dunsee.common.response.ResponseJson;
 import com.dfo.dunsee.member.dto.JoinMemberInfo;
 import com.dfo.dunsee.member.service.MemberRegisterService;
@@ -25,6 +28,7 @@ public class SignInController {
 
   @GetMapping("/register")
   public String register() {
+    log.info(ServiceCode.setServiceMsg(MBR201) + ServiceCode.setServiceMsg(MBR202) + "회원가입 페이지 이동");
     return "member/register";
   }
 
@@ -32,12 +36,12 @@ public class SignInController {
   @PostMapping("/register-process")
   @ResponseBody
   public ResponseEntity<ResponseJson> registerId(@RequestBody JoinMemberInfo joinMemberInfo) {
-    String stateLog = MBR101.name() + " | " + MBR101.getDescription();
-    log.info(stateLog);
+
+    log.info(ServiceCode.setServiceMsg(MBR101) + "일반 회원가입 진행");
 
     ResultType result = memberService.memberRegister(MBR101, joinMemberInfo);
 
-    ResponseJson responseJson = ResponseJson.setResponseJson(MBR101, result);
+    ResponseJson responseJson = ResponseJson.setResponseJson(MBR101, result, "회원가입이 완료되었습니다. 로그인페이지로 이동합니다.");
 
     return switch (result) {
       case SUCCESS -> ResponseEntity.ok(responseJson);

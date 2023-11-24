@@ -10,12 +10,12 @@ import com.dfo.dunsee.member.dto.UsernameDto;
 import com.dfo.dunsee.member.entity.Member;
 import com.dfo.dunsee.member.repository.MemberRepository;
 import com.dfo.dunsee.member.utils.MemberUtils;
-import jakarta.transaction.Transactional;
 import jakarta.transaction.TransactionalException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service

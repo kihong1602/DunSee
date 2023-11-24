@@ -11,13 +11,15 @@ public class ResponseJson {
 
   private String code;
   private String description;
+  private String detail;
   private InnerData data;
 
-  public static ResponseJson setResponseJson(ServiceCode serviceCode, ResultType resultType) {
+  public static ResponseJson setResponseJson(ServiceCode serviceCode, ResultType resultType, String details) {
     return ResponseJson.builder()
-                       .code(serviceCode.name())
-                       .description(serviceCode.getDescription())
-                       .data(new InnerData(resultType.name()))
-                       .build();
+        .code(serviceCode.name())
+        .detail(details)
+        .description(serviceCode.getDescription())
+        .data(new InnerData(resultType.name()))
+        .build();
   }
 }

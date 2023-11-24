@@ -2,8 +2,8 @@ const SUCCESS = "SUCCESS"
 const FAILURE = "FAILURE"
 
 function loginProcess() {
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
+  let username = document.getElementById('username');
+  let password = document.getElementById('password');
 
   const data = setLoginUserData(username, password);
 
@@ -16,14 +16,31 @@ function loginProcess() {
   })
   .then(response => response.text())
   .then(result => {
-
+    const jsonData = JSON.parse(result);
+    console.log(jsonData.code);
+    console.log(jsonData.description);
+    console.log(jsonData.data.value);
+    const detail = jsonData.detail
+    switch (jsonData.data.value) {
+      case SUCCESS: {
+        alert("로그인에 성공하였습니다.")
+        location.href = detail
+        break
+      }
+      case FAILURE : {
+        alert(detail)
+        username.value = '';
+        password.value = '';
+        break
+      }
+    }
   })
 }
 
 function registerProcess() {
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
-  const email = document.getElementById('email').value;
+  let username = document.getElementById('username');
+  let password = document.getElementById('password');
+  let email = document.getElementById('email');
 
   const data = setJoinUserData(username, password, email);
 
@@ -40,14 +57,18 @@ function registerProcess() {
     console.log(jsonData.code);
     console.log(jsonData.description);
     console.log(jsonData.data.value);
+    const detail = jsonData.detail
     switch (jsonData.data.value) {
       case SUCCESS: {
-        alert("회원가입이 완료되었습니다. 로그인페이지로 이동합니다.")
+        alert(detail)
         location.href = "/login"
         break
       }
       case FAILURE : {
         alert("회원가입에 실패하였습니다. 다시한번 확인해주세요.")
+        username.value = '';
+        password.value = '';
+        email.value = '';
         break
       }
     }
@@ -55,9 +76,13 @@ function registerProcess() {
 }
 
 function setJoinUserData(username, password, email) {
-  return {username: username, password: password, email: email}
+  return {
+    username: username.value,
+    password: password.value,
+    email: email.value
+  }
 }
 
 function setLoginUserData(username, password) {
-  return {username: username, password: password}
+  return {username: username.value, password: password.value}
 }
