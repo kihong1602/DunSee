@@ -1,13 +1,13 @@
-package com.dfo.dunsee.apiResponse.characterEquipment;
+package com.dfo.dunsee.apiresponse.characterequipment;
 
-import com.dfo.dunsee.apiResponse.characterEquipment.enchant.Enchant;
-import com.dfo.dunsee.apiResponse.characterEquipment.fusionEpic.BakalInfo;
-import com.dfo.dunsee.apiResponse.characterEquipment.fusionEpic.CustomOption;
-import com.dfo.dunsee.apiResponse.characterEquipment.fusionEpic.DimensionCloisterInfo;
-import com.dfo.dunsee.apiResponse.characterEquipment.fusionEpic.DuskyIslandOption;
-import com.dfo.dunsee.apiResponse.characterEquipment.fusionEpic.IspinsInfo;
-import com.dfo.dunsee.apiResponse.characterEquipment.fusionEpic.MachineRevolutionInfo;
-import com.dfo.dunsee.apiResponse.characterEquipment.fusionEpic.UpgradeInfo;
+import com.dfo.dunsee.apiresponse.characterequipment.enchant.Enchant;
+import com.dfo.dunsee.apiresponse.characterequipment.fusionepic.BakalInfo;
+import com.dfo.dunsee.apiresponse.characterequipment.fusionepic.CustomOption;
+import com.dfo.dunsee.apiresponse.characterequipment.fusionepic.DimensionCloisterInfo;
+import com.dfo.dunsee.apiresponse.characterequipment.fusionepic.DuskyIslandOption;
+import com.dfo.dunsee.apiresponse.characterequipment.fusionepic.IspinsInfo;
+import com.dfo.dunsee.apiresponse.characterequipment.fusionepic.MachineRevolutionInfo;
+import com.dfo.dunsee.apiresponse.characterequipment.fusionepic.UpgradeInfo;
 import lombok.Data;
 
 /**

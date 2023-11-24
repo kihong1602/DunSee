@@ -1,4 +1,4 @@
-package com.dfo.dunsee.member.Controller;
+package com.dfo.dunsee.member.controller;
 
 import static com.dfo.dunsee.common.ServiceCode.MBR101;
 import static com.dfo.dunsee.common.ServiceCode.MBR201;

@@ -1,8 +1,8 @@
 package com.dfo.dunsee.search.service;
 
-import com.dfo.dunsee.apiResponse.characterDefault.ResponseCharacterDefaultInfo;
-import com.dfo.dunsee.apiResponse.characterEquipment.ResponseCharacterEquipInfo;
-import com.dfo.dunsee.apiResponse.characterStatus.ResponseCharacterStatusInfo;
+import com.dfo.dunsee.apiresponse.characterdefault.ResponseCharacterDefaultInfo;
+import com.dfo.dunsee.apiresponse.characterequipment.ResponseCharacterEquipInfo;
+import com.dfo.dunsee.apiresponse.characterstatus.ResponseCharacterStatusInfo;
 import com.dfo.dunsee.common.ServiceCode;
 import com.dfo.dunsee.config.ApiUtilsConfig;
 import com.dfo.dunsee.search.dto.ImgUrlParserCharacterInfo;
@@ -17,9 +17,9 @@ import org.springframework.stereotype.Service;
 public class SyncCharDetailService {
 
   private final ApiUtilsConfig apiUtilsConfig;
-  private final String DEFAULT = "default";
-  private final String STATUS = "status";
-  private final String EQUIP = "equip";
+  private static final String DEFAULT = "default";
+  private static final String STATUS = "status";
+  private static final String EQUIP = "equip";
 
   public void syncSearch(ServiceCode serviceCode, String imgUrl) {
     log.info(ServiceCode.setServiceMsg(serviceCode) + "Sync Character Detail Info Search Service Start");

@@ -1,4 +1,4 @@
-package com.dfo.dunsee.apiResponse.characterEquipment.fusionEpic;
+package com.dfo.dunsee.apiresponse.characterequipment.fusionepic;
 
 import java.util.List;
 import lombok.Data;

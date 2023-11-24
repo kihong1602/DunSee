@@ -1,6 +1,6 @@
 package com.dfo.dunsee.search.service;
 
-import com.dfo.dunsee.apiResponse.ApiResponse;
+import com.dfo.dunsee.apiresponse.ApiResponse;
 import com.dfo.dunsee.common.ApiUtils;
 import com.dfo.dunsee.common.ServiceCode;
 import java.util.concurrent.CompletableFuture;

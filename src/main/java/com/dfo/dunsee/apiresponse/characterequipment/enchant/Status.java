@@ -1,4 +1,4 @@
-package com.dfo.dunsee.apiResponse.characterEquipment.enchant;
+package com.dfo.dunsee.apiresponse.characterequipment.enchant;
 
 import lombok.Data;
 

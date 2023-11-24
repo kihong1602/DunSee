@@ -16,7 +16,7 @@ public class CharDetailSearchController {
 
   private final SyncCharDetailService syncCharDetailService;
   private final AsyncCharDetailService asyncCharDetailService;
-  private final ServiceCode SERVICE_CODE = ServiceCode.CHR201;
+  private static final ServiceCode SERVICE_CODE = ServiceCode.CHR201;
 
   @GetMapping("/search/character")
   public String searchCharacterDetailInfo(@RequestParam String imgUrl) {

@@ -1,6 +1,6 @@
-package com.dfo.dunsee.apiResponse.characterStatus;
+package com.dfo.dunsee.apiresponse.characterstatus;
 
-import com.dfo.dunsee.apiResponse.ApiResponse;
+import com.dfo.dunsee.apiresponse.ApiResponse;
 import java.util.List;
 import lombok.Data;
 

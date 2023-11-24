@@ -4,10 +4,10 @@ import static com.dfo.dunsee.common.KeyType.DEFAULT;
 import static com.dfo.dunsee.common.KeyType.EQUIP;
 import static com.dfo.dunsee.common.KeyType.STATUS;
 
-import com.dfo.dunsee.apiResponse.ApiResponse;
-import com.dfo.dunsee.apiResponse.characterDefault.ResponseCharacterDefaultInfo;
-import com.dfo.dunsee.apiResponse.characterEquipment.ResponseCharacterEquipInfo;
-import com.dfo.dunsee.apiResponse.characterStatus.ResponseCharacterStatusInfo;
+import com.dfo.dunsee.apiresponse.ApiResponse;
+import com.dfo.dunsee.apiresponse.characterdefault.ResponseCharacterDefaultInfo;
+import com.dfo.dunsee.apiresponse.characterequipment.ResponseCharacterEquipInfo;
+import com.dfo.dunsee.apiresponse.characterstatus.ResponseCharacterStatusInfo;
 import com.dfo.dunsee.common.KeyType;
 import com.dfo.dunsee.common.ServiceCode;
 import com.dfo.dunsee.config.ApiUtilsConfig;
@@ -88,6 +88,8 @@ public class AsyncCharDetailService {
       resMap.put(STATUS, statusInfo.get());
       resMap.put(EQUIP, equipInfo.get());
     } catch (InterruptedException | ExecutionException e) {
+      Thread.currentThread()
+            .interrupt();
       throw new RuntimeException(ServiceCode.setServiceMsg(serviceCode) + "\n" + e);
     }
     return resMap;

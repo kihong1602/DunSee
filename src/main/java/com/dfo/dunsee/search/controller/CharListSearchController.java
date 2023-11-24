@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 public class CharListSearchController {
 
   private final CharListService charListService;
-  private final ServiceCode SERVICE_CODE = CHR101;
+  private static final ServiceCode SERVICE_CODE = CHR101;
 
   @GetMapping("/search/list")
   public String searchCharacterDefaultInfo(@ModelAttribute CharacterSearchKeyword searchKeyword, Model model) {

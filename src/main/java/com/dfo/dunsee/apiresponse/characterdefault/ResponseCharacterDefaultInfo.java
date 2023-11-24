@@ -1,6 +1,6 @@
-package com.dfo.dunsee.apiResponse.characterDefault;
+package com.dfo.dunsee.apiresponse.characterdefault;
 
-import com.dfo.dunsee.apiResponse.ApiResponse;
+import com.dfo.dunsee.apiresponse.ApiResponse;
 import lombok.Data;
 
 @Data

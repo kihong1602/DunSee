@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 public class JsonLoginFailureHandler implements AuthenticationFailureHandler {
 
   private final JsonUtils jsonUtils;
-  private final ServiceCode SERVICE_CODE = ServiceCode.MBR201;
+  private static final ServiceCode SERVICE_CODE = ServiceCode.MBR201;
 
   @Override
   public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,

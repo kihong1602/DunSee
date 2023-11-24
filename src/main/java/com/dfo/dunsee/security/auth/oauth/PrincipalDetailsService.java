@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class PrincipalDetailsService implements UserDetailsService {
 
   private final MemberRepository memberRepository;
-  private final ServiceCode SERVICE_CODE = ServiceCode.MBR201;
+  private static final ServiceCode SERVICE_CODE = ServiceCode.MBR201;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

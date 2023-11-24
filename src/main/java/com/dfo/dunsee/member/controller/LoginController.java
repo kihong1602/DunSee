@@ -1,4 +1,4 @@
-package com.dfo.dunsee.member.Controller;
+package com.dfo.dunsee.member.controller;
 
 import com.dfo.dunsee.common.ServiceCode;
 import lombok.extern.slf4j.Slf4j;

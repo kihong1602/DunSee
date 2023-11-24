@@ -1,7 +1,7 @@
 package com.dfo.dunsee.search.service;
 
-import com.dfo.dunsee.apiResponse.characterList.ResponseCharacterInfo;
-import com.dfo.dunsee.apiResponse.characterList.ResponseCharacterList;
+import com.dfo.dunsee.apiresponse.characterlist.ResponseCharacterInfo;
+import com.dfo.dunsee.apiresponse.characterlist.ResponseCharacterList;
 import com.dfo.dunsee.common.Server;
 import com.dfo.dunsee.common.ServiceCode;
 import com.dfo.dunsee.config.ApiUtilsConfig;
@@ -41,9 +41,7 @@ public class CharListService {
     List<SimpleCharacterInfo> simpleCharacterInfoList = new ArrayList<>();
 
     for (ResponseCharacterInfo info : responseCharacterList.getRows()) {
-      if (info.getLevel() < 95) {
-        continue;
-      } else if (simpleCharacterInfoList.size() == 20) {
+      if (simpleCharacterInfoList.size() == 20) {
         break;
       }
       String imgUrl = apiUtilsConfig.getUrlFactory()

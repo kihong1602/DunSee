@@ -1,5 +1,8 @@
 package com.dfo.dunsee.security.handler.success;
 
+import static com.dfo.dunsee.common.ProviderType.DUNSEE;
+import static com.dfo.dunsee.common.ProviderType.GOOGLE;
+import static com.dfo.dunsee.common.ProviderType.KAKAO;
 import static com.dfo.dunsee.common.ResultType.SUCCESS;
 import static com.dfo.dunsee.common.RoleType.ADMIN;
 import static com.dfo.dunsee.common.RoleType.MANAGER;
@@ -41,8 +44,8 @@ import org.springframework.stereotype.Component;
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
   private final JsonUtils jsonUtils;
-  private final ServiceCode NORMAL_SERVICE_CODE = MBR201;
-  private final ServiceCode OAUTH_SERVICE_CODE = MBR202;
+  private static final ServiceCode NORMAL_SERVICE_CODE = MBR201;
+  private static final ServiceCode OAUTH_SERVICE_CODE = MBR202;
   private final RequestCache requestCache = new HttpSessionRequestCache();
   private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
@@ -52,9 +55,10 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     String provider = getProviderName(authentication);
 
-    switch (provider) {
-      case "dunsee" -> jsonLoginRedirectStrategy(request, response, authentication);
-      case "kakao", "google" -> oAuth2LoginRedirectStrategy(request, response, authentication);
+    if (provider.equals(DUNSEE.getProvider())) {
+      jsonLoginRedirectStrategy(request, response, authentication);
+    } else if (provider.equals(GOOGLE.getProvider()) || provider.equals(KAKAO.getProvider())) {
+      oAuth2LoginRedirectStrategy(request, response, authentication);
     }
 
   }

@@ -11,6 +11,7 @@ import com.dfo.dunsee.security.auth.oauth.provider.KakaoMemberInfo;
 import com.dfo.dunsee.security.auth.oauth.provider.Oauth2UserInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -26,7 +27,10 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
 
   private final MemberRepository memberRepository;
   private final BCryptPasswordEncoder bCryptPasswordEncoder;
-  private final ServiceCode SERVICE_CODE = ServiceCode.MBR202;
+  private static final ServiceCode SERVICE_CODE = ServiceCode.MBR202;
+
+  @Value("${dnf.password}")
+  private String oAuth2Password;
 
 
   @Override
@@ -41,6 +45,8 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
     switch (registrationId) {
       case "google" -> oauth2UserInfo = new GoogleMemberInfo(oAuth2User.getAttributes());
       case "kakao" -> oauth2UserInfo = new KakaoMemberInfo(oAuth2User.getAttributes());
+      default ->
+          throw new OAuth2AuthenticationException(setServiceMsg(SERVICE_CODE) + "OAuth2 Authentication Exception");
     }
 
     Member memberEntity = memberRepository.findByUsername(
@@ -66,7 +72,7 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
     String providerId = oauth2UserInfo.getProviderId();
     String email = oauth2UserInfo.getEmail();
     String username = createUserName(provider, providerId);
-    String password = bCryptPasswordEncoder.encode("OAuth2SignUp");
+    String password = bCryptPasswordEncoder.encode(oAuth2Password);
     String role = RoleType.USER.getValue();
     return Member.builder()
         .username(username)

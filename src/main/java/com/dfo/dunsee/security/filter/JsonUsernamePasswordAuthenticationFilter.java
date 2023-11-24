@@ -26,7 +26,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class JsonUsernamePasswordAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
   private final JsonUtils jsonUtils;
-  private final ServiceCode SERVICE_CODE = ServiceCode.MBR201;
+  private static final ServiceCode SERVICE_CODE = ServiceCode.MBR201;
   private static final String DEFAULT_LOGIN_REQUEST_URL = "/login-process";
   private static final AntPathRequestMatcher DEFAULT_LOGIN_PATH_REQUEST_MATCHER = new AntPathRequestMatcher(
       DEFAULT_LOGIN_REQUEST_URL, HttpMethod.POST.name());
