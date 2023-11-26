@@ -15,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -25,7 +24,6 @@ public class MemberRegisterService {
   private final MemberRepository memberRepository;
   private final MemberUtils memberUtils;
 
-  @Transactional
   public ResultType memberRegister(ServiceCode serviceCode, JoinMemberInfo joinMemberInfo) {
 
     Member saveMember = memberUtils.joinMemberInfoToMember(joinMemberInfo);

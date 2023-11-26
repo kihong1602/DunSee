@@ -12,7 +12,7 @@ import com.dfo.dunsee.common.KeyType;
 import com.dfo.dunsee.common.ServiceCode;
 import com.dfo.dunsee.config.ApiUtilsConfig;
 import com.dfo.dunsee.search.dto.ImgUrlParserCharacterInfo;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -27,6 +27,7 @@ public class AsyncCharDetailService {
 
   private final ApiUtilsConfig apiUtilsConfig;
   private final AsyncCallApiService asyncCallApiService;
+  private String serviceMsg;
 
   //받아와야하는 정보
   //캐릭터 기본정보 -> 모험단명 등등
@@ -39,27 +40,22 @@ public class AsyncCharDetailService {
   //비동기 병렬처리로 API호출하는걸로
 
   public void aSyncSearch(ServiceCode serviceCode, String imgUrl) {
-    String serviceMsg = ServiceCode.setServiceMsg(serviceCode);
+    serviceMsg = ServiceCode.setServiceMsg(serviceCode);
     log.info(serviceMsg + "Sync Character Detail Info Search Service Start");
     long startTime = System.currentTimeMillis();
+
     ImgUrlParserCharacterInfo imgUrlParserCharacterInfo = apiUtilsConfig.getUrlParser()
                                                                         .imgUrlParseCharacterInfo(serviceCode, imgUrl);
-    String serverId = imgUrlParserCharacterInfo.getServerId();
-    String characterId = imgUrlParserCharacterInfo.getCharacterId();
-    Map<KeyType, String> urlMap = setCallApiUrlMap(serviceCode, serverId, characterId);
+
+    Map<KeyType, String> urlMap = setCallApiUrlMap(serviceCode, imgUrlParserCharacterInfo.getServerId(), imgUrlParserCharacterInfo.getCharacterId());
 
     Map<KeyType, ApiResponse> resMap = getApiResponseData(serviceCode, urlMap);
 
-    ResponseCharacterDefaultInfo defaultInfo = (ResponseCharacterDefaultInfo) resMap.get(DEFAULT);
-    ResponseCharacterStatusInfo statusInfo = (ResponseCharacterStatusInfo) resMap.get(STATUS);
-    ResponseCharacterEquipInfo equipInfo = (ResponseCharacterEquipInfo) resMap.get(EQUIP);
-    log.info(serviceMsg + defaultInfo.toString());
-    log.info(serviceMsg + statusInfo);
-    log.info(serviceMsg + equipInfo);
+    buildCharacterDetails(resMap);
 
     long endTime = System.currentTimeMillis();
     long workTime = endTime - startTime;
-    log.info("동기처리 작업시간 :: {} ms", workTime);
+    log.info("비동기처리 작업시간 :: {} ms", workTime);
   }
 
   private Map<KeyType, String> setCallApiUrlMap(ServiceCode serviceCode, String serverId, String characterId) {
@@ -74,7 +70,7 @@ public class AsyncCharDetailService {
   }
 
   private Map<KeyType, ApiResponse> getApiResponseData(ServiceCode serviceCode, Map<KeyType, String> urlMap) {
-    Map<KeyType, ApiResponse> resMap = new HashMap<>();
+    Map<KeyType, ApiResponse> resMap = new EnumMap<>(KeyType.class);
     CompletableFuture<ApiResponse> defaultInfo = asyncCallApiService.callNeopleApi(serviceCode, urlMap.get(DEFAULT),
                                                                                    ResponseCharacterDefaultInfo.class);
     CompletableFuture<ApiResponse> statusInfo = asyncCallApiService.callNeopleApi(serviceCode, urlMap.get(STATUS),
@@ -95,5 +91,13 @@ public class AsyncCharDetailService {
     return resMap;
   }
 
+  private void buildCharacterDetails(Map<KeyType,ApiResponse> resMap){
+    ResponseCharacterDefaultInfo defaultInfo = (ResponseCharacterDefaultInfo) resMap.get(DEFAULT);
+    ResponseCharacterStatusInfo statusInfo = (ResponseCharacterStatusInfo) resMap.get(STATUS);
+    ResponseCharacterEquipInfo equipInfo = (ResponseCharacterEquipInfo) resMap.get(EQUIP);
+    log.info(serviceMsg + defaultInfo.toString());
+    log.info(serviceMsg + statusInfo);
+    log.info(serviceMsg + equipInfo);
+  }
 
 }
