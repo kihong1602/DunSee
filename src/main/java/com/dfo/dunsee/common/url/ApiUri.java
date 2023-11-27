@@ -9,7 +9,10 @@ public enum ApiUri {
   CHARACTER_NAME("characterName"),
   STATUS("status"),
   EQUIP("equip"),
-  EQUIPMENT("equipment");
+  EQUIPMENT("equipment"),
+  AVATAR("avatar"),
+  CREATURE("creature"),
+  TALISMAN("talisman");
 
   private final String value;
 

@@ -22,7 +22,7 @@ public class CharDetailSearchController {
   public String searchCharacterDetailInfo(@RequestParam String imgUrl) throws InterruptedException {
     log.info(ServiceCode.setServiceMsg(SERVICE_CODE) + "Character Detail Search Process Start");
 
-    charDetailSearchAdapter.searchAdapter(SERVICE_CODE,imgUrl,ASYNC);
+    charDetailSearchAdapter.searchAdapter(SERVICE_CODE, imgUrl, ASYNC);
 
     return "character-list";
   }

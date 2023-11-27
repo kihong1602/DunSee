@@ -1,10 +1,10 @@
 package com.dfo.dunsee.search.service;
 
-import com.dfo.dunsee.apiresponse.characterlist.ResponseCharacterInfo;
-import com.dfo.dunsee.apiresponse.characterlist.ResponseCharacterList;
 import com.dfo.dunsee.common.Server;
 import com.dfo.dunsee.common.ServiceCode;
 import com.dfo.dunsee.config.ApiUtilsConfig;
+import com.dfo.dunsee.response.charlist.ResponseCharacterInfo;
+import com.dfo.dunsee.response.charlist.ResponseCharacterList;
 import com.dfo.dunsee.search.dto.CharacterSearchKeyword;
 import com.dfo.dunsee.search.dto.SimpleCharacterInfo;
 import java.util.ArrayList;

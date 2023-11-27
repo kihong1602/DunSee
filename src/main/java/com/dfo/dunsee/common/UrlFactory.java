@@ -6,11 +6,14 @@ import static com.dfo.dunsee.common.url.ApiParam.WORD_TYPE;
 import static com.dfo.dunsee.common.url.ApiParam.ZOOM;
 import static com.dfo.dunsee.common.url.ApiPath.DEFAULT_URL;
 import static com.dfo.dunsee.common.url.ApiPath.IMAGE_URL;
+import static com.dfo.dunsee.common.url.ApiUri.AVATAR;
 import static com.dfo.dunsee.common.url.ApiUri.CHARACTERS;
 import static com.dfo.dunsee.common.url.ApiUri.CHARACTER_NAME;
+import static com.dfo.dunsee.common.url.ApiUri.CREATURE;
 import static com.dfo.dunsee.common.url.ApiUri.EQUIP;
 import static com.dfo.dunsee.common.url.ApiUri.EQUIPMENT;
 import static com.dfo.dunsee.common.url.ApiUri.STATUS;
+import static com.dfo.dunsee.common.url.ApiUri.TALISMAN;
 
 import com.dfo.dunsee.common.url.WordType;
 import lombok.extern.slf4j.Slf4j;
@@ -143,6 +146,69 @@ public class UrlFactory {
              .append(EQUIP.value())
              .append("/")
              .append(EQUIPMENT.value())
+             .append("?")
+             .append(API_KEY.value())
+             .append("=")
+             .append(apiKey)
+             .toString();
+  }
+
+  public String setSearchCharacterAvatarUrl(ServiceCode serviceCode, String serverId, String characterId) {
+    log.info(ServiceCode.setServiceMsg(serviceCode) + " Character Avatar URL Create");
+    StringBuilder sb = new StringBuilder();
+
+    return sb.append(DEFAULT_URL.url())
+             .append(serverId)
+             .append("/")
+             .append(CHARACTERS.value())
+             .append("/")
+             .append(characterId)
+             .append("/")
+             .append(EQUIP.value())
+             .append("/")
+             .append(AVATAR.value())
+             .append("?")
+             .append(API_KEY.value())
+             .append("=")
+             .append(apiKey)
+             .toString();
+  }
+
+  public String setSearchCreatureUrl(ServiceCode serviceCode, String serverId, String characterId) {
+    log.info(ServiceCode.setServiceMsg(serviceCode) + " Creature URL Create");
+    StringBuilder sb = new StringBuilder();
+
+    return sb.append(DEFAULT_URL.url())
+             .append(serverId)
+             .append("/")
+             .append(CHARACTERS.value())
+             .append("/")
+             .append(characterId)
+             .append("/")
+             .append(EQUIP.value())
+             .append("/")
+             .append(CREATURE.value())
+             .append("?")
+             .append(API_KEY.value())
+             .append("=")
+             .append(apiKey)
+             .toString();
+  }
+
+  public String setSearchTalismanUrl(ServiceCode serviceCode, String serverId, String characterId) {
+    log.info(ServiceCode.setServiceMsg(serviceCode) + "Talisman URL Create");
+    StringBuilder sb = new StringBuilder();
+
+    return sb.append(DEFAULT_URL.url())
+             .append(serverId)
+             .append("/")
+             .append(CHARACTERS.value())
+             .append("/")
+             .append(characterId)
+             .append("/")
+             .append(EQUIP.value())
+             .append("/")
+             .append(TALISMAN.value())
              .append("?")
              .append(API_KEY.value())
              .append("=")
