@@ -2,9 +2,11 @@ package com.dfo.dunsee.response.chartalisman;
 
 import com.dfo.dunsee.response.ApiResponse;
 import java.util.List;
-import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
-@Data
+@Getter
+@ToString
 public class ResponseCharacterTalismanInfo implements ApiResponse {
 
   private String characterId;

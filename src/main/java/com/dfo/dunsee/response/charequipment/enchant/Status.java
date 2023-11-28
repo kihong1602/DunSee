@@ -1,6 +1,7 @@
 package com.dfo.dunsee.response.charequipment.enchant;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
  * 아이템 마법부여 수치 관련 클래스
@@ -9,7 +10,8 @@ import lombok.Data;
  * <p>
  * value: 마법부여 능력치 수치
  */
-@Data
+@Getter
+@ToString
 public class Status {
 
   private String name;

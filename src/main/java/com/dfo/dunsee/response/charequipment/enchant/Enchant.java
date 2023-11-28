@@ -1,7 +1,8 @@
 package com.dfo.dunsee.response.charequipment.enchant;
 
 import java.util.List;
-import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
  * 마법부여 관련 클래스
@@ -10,7 +11,8 @@ import lombok.Data;
  * <p>
  * explain: 스킬공격력 등 %증가 마법부여 수치
  */
-@Data
+@Getter
+@ToString
 public class Enchant {
 
   private List<Status> status;

@@ -1,9 +1,11 @@
 package com.dfo.dunsee.response.charavatar;
 
 import java.util.ArrayList;
-import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
-@Data
+@Getter
+@ToString
 public class Avatar {
 
   private String slotId;

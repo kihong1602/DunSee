@@ -2,9 +2,11 @@ package com.dfo.dunsee.response.charavatar;
 
 import com.dfo.dunsee.response.ApiResponse;
 import java.util.ArrayList;
-import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
-@Data
+@Getter
+@ToString
 public class ResponseCharacterAvatarInfo implements ApiResponse {
 
   private String characterId;

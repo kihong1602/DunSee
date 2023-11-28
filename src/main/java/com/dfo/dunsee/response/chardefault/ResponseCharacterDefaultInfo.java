@@ -1,9 +1,11 @@
 package com.dfo.dunsee.response.chardefault;
 
 import com.dfo.dunsee.response.ApiResponse;
-import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
-@Data
+@Getter
+@ToString
 public class ResponseCharacterDefaultInfo implements ApiResponse {
 
   private String characterId;

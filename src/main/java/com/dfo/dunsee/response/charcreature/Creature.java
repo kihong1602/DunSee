@@ -1,9 +1,11 @@
 package com.dfo.dunsee.response.charcreature;
 
 import java.util.List;
-import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
-@Data
+@Getter
+@ToString
 public class Creature {
 
   private String itemId;

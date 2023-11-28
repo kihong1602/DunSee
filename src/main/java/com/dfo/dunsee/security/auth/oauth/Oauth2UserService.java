@@ -74,13 +74,14 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
     String username = createUserName(provider, providerId);
     String password = bCryptPasswordEncoder.encode(oAuth2Password);
     String role = RoleType.USER.getValue();
-    return Member.builder()
-        .username(username)
-        .password(password)
-        .email(email)
-        .role(role)
-        .provider(provider)
-        .providerId(providerId)
-        .build();
+    
+    return Member.oAuth2Builder()
+                 .username(username)
+                 .password(password)
+                 .email(email)
+                 .role(role)
+                 .provider(provider)
+                 .providerId(providerId)
+                 .build();
   }
 }

@@ -1,6 +1,7 @@
 package com.dfo.dunsee.response.charequipment;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
  * 융합에픽 내부에 있는 기존 아이템 옵션
@@ -17,7 +18,8 @@ import lombok.Data;
  * <p>
  * explainDetail: 아이템 상세설명
  */
-@Data
+@Getter
+@ToString
 public class FixedOption {
 
   private int damage;

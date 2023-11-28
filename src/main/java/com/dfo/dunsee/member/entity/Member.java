@@ -14,7 +14,7 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,14 +23,29 @@ import org.hibernate.annotations.DynamicInsert;
 
 @Entity
 @Table(name = "member", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
-@AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-
-@Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 @DynamicInsert
 public class Member {
+
+  @Builder(builderMethodName = "generalBuilder")
+  private Member(String username, String password, String email) {
+    this.username = username;
+    this.password = password;
+    this.email = email;
+  }
+
+  @Builder(builderMethodName = "oAuth2Builder")
+  private Member(String username, String password, String email, String role,
+      String provider, String providerId) {
+    this.username = username;
+    this.password = password;
+    this.email = email;
+    this.role = role;
+    this.provider = provider;
+    this.providerId = providerId;
+  }
 
   @JsonIgnore
   @Id
@@ -65,4 +80,5 @@ public class Member {
   public void prePersist() {
     this.createdDate = LocalDateTime.now();
   }
+
 }

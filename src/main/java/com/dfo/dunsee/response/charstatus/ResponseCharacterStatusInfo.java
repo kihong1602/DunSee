@@ -2,7 +2,8 @@ package com.dfo.dunsee.response.charstatus;
 
 import com.dfo.dunsee.response.ApiResponse;
 import java.util.List;
-import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
  * 캐릭터 스탯정보 클래스
@@ -11,7 +12,8 @@ import lombok.Data;
  * <p>
  * Status: 스탯정보 클래스
  */
-@Data
+@Getter
+@ToString
 public class ResponseCharacterStatusInfo implements ApiResponse {
 
   private String characterId;

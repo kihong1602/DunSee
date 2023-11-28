@@ -1,6 +1,7 @@
 package com.dfo.dunsee.response.charequipment.fusionepic;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
  * 융합에픽 관련 클래스
@@ -9,7 +10,8 @@ import lombok.Data;
  * <p>
  * itemName: 융합에픽 아이템이름
  */
-@Data
+@Getter
+@ToString
 public class UpgradeInfo {
 
   private String itemId;

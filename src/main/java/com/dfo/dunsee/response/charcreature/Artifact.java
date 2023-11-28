@@ -1,8 +1,10 @@
 package com.dfo.dunsee.response.charcreature;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
-@Data
+@Getter
+@ToString
 public class Artifact {
 
   private String slotColor;

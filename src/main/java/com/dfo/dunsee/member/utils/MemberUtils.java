@@ -13,12 +13,12 @@ public class MemberUtils {
   private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
   public Member joinMemberInfoToMember(JoinMemberInfo joinMemberInfo) {
+
+    String username = joinMemberInfo.getUsername();
     String encodedPassword = passwordEncoding(joinMemberInfo.getPassword());
-    return Member.builder()
-                 .username(joinMemberInfo.getUsername())
-                 .password(encodedPassword)
-                 .email(joinMemberInfo.getEmail())
-                 .build();
+    String email = joinMemberInfo.getEmail();
+
+    return Member.generalBuilder().username(username).password(encodedPassword).email(email).build();
   }
 
   private String passwordEncoding(String password) {

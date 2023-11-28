@@ -1,7 +1,8 @@
 package com.dfo.dunsee.response.charequipment.fusionepic;
 
 import java.util.List;
-import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
  * 커스텀 에픽 관련 클래스
@@ -12,7 +13,8 @@ import lombok.Data;
  * <p>
  * expRate: 아이템 경험치
  */
-@Data
+@Getter
+@ToString
 public class CustomOption {
 
   private int damage;

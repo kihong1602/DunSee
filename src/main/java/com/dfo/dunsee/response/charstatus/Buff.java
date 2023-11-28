@@ -1,7 +1,8 @@
 package com.dfo.dunsee.response.charstatus;
 
 import java.util.List;
-import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
  * 모험단 버프 및 길드 버프 클래스
@@ -12,7 +13,8 @@ import lombok.Data;
  * <p>
  * Status: 스탯 정보 클래스
  */
-@Data
+@Getter
+@ToString
 public class Buff {
 
   private String name;

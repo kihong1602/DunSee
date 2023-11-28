@@ -1,9 +1,11 @@
 package com.dfo.dunsee.response.charcreature;
 
 import com.dfo.dunsee.response.ApiResponse;
-import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
-@Data
+@Getter
+@ToString
 public class ResponseCreatureInfo implements ApiResponse {
 
   private String characterId;

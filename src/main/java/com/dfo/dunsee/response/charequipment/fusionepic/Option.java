@@ -1,6 +1,7 @@
 package com.dfo.dunsee.response.charequipment.fusionepic;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
  * 아이템 옵션 Class
@@ -15,7 +16,8 @@ import lombok.Data;
  * <p>
  * transfer: 커스텀 옵션변환 여부? 재질변환?
  */
-@Data
+@Getter
+@ToString
 public class Option {
 
   private int buff;

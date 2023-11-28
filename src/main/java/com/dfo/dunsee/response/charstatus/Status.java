@@ -1,6 +1,7 @@
 package com.dfo.dunsee.response.charstatus;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
 
 /**
@@ -10,7 +11,8 @@ import lombok.Data;
  * <p>
  * value: 스탯 수치
  */
-@Data
+@Getter
+@ToString
 public class Status {
 
   private String name;

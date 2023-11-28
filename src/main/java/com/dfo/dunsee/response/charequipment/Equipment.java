@@ -8,7 +8,8 @@ import com.dfo.dunsee.response.charequipment.fusionepic.DuskyIslandOption;
 import com.dfo.dunsee.response.charequipment.fusionepic.IspinsInfo;
 import com.dfo.dunsee.response.charequipment.fusionepic.MachineRevolutionInfo;
 import com.dfo.dunsee.response.charequipment.fusionepic.UpgradeInfo;
-import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
  * 장착장비 클래스
@@ -63,7 +64,8 @@ import lombok.Data;
  * <p>
  * duskyIslandOption: 안개섬 융합에픽 정보
  */
-@Data
+@Getter
+@ToString
 public class Equipment {
 
   private String slotId;

@@ -1,8 +1,10 @@
 package com.dfo.dunsee.response.charavatar;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
-@Data
+@Getter
+@ToString
 public class Emblem {
 
   private int slotNo;
