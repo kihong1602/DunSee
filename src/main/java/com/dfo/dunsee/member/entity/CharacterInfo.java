@@ -22,6 +22,8 @@ public class CharacterInfo {
 
   private String imgUrl;
 
+  private String adventureName;
+
   @Builder
   private CharacterInfo(String imgUrl) {
     this.imgUrl = imgUrl;

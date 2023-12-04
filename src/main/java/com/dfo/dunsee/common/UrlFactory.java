@@ -4,8 +4,9 @@ import static com.dfo.dunsee.common.url.ApiParam.API_KEY;
 import static com.dfo.dunsee.common.url.ApiParam.LIMIT;
 import static com.dfo.dunsee.common.url.ApiParam.WORD_TYPE;
 import static com.dfo.dunsee.common.url.ApiParam.ZOOM;
+import static com.dfo.dunsee.common.url.ApiPath.CHAR_IMAGE_URL;
 import static com.dfo.dunsee.common.url.ApiPath.DEFAULT_URL;
-import static com.dfo.dunsee.common.url.ApiPath.IMAGE_URL;
+import static com.dfo.dunsee.common.url.ApiPath.ITEM_IMAGE_URL;
 import static com.dfo.dunsee.common.url.ApiUri.AVATAR;
 import static com.dfo.dunsee.common.url.ApiUri.CHARACTERS;
 import static com.dfo.dunsee.common.url.ApiUri.CHARACTER_NAME;
@@ -68,7 +69,7 @@ public class UrlFactory {
     log.info(ServiceCode.setServiceMsg(serviceCode) + "Character Image URL Create");
     StringBuilder sb = new StringBuilder();
 
-    return sb.append(IMAGE_URL.url())
+    return sb.append(CHAR_IMAGE_URL.url())
              .append(serverId)
              .append("/")
              .append(CHARACTERS.value())
@@ -214,5 +215,13 @@ public class UrlFactory {
              .append("=")
              .append(apiKey)
              .toString();
+  }
+
+  public String setItemImgUrl(String itemId) {
+    log.info("Item Image URL Create");
+    StringBuilder sb = new StringBuilder();
+
+    return sb.append(ITEM_IMAGE_URL.url())
+             .append(itemId).toString();
   }
 }

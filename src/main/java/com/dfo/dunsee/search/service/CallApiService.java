@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class AsyncCallApiService {
+public class CallApiService {
 
   private final ApiUtils apiUtils;
 
