@@ -10,6 +10,7 @@ import static com.dfo.dunsee.common.KeyType.TALISMAN;
 import com.dfo.dunsee.common.KeyType;
 import com.dfo.dunsee.common.ServiceCode;
 import com.dfo.dunsee.config.ApiUtilsConfig;
+import com.dfo.dunsee.member.entity.CharacterInfo;
 import com.dfo.dunsee.response.ApiResponse;
 import com.dfo.dunsee.response.charavatar.ResponseCharacterAvatarInfo;
 import com.dfo.dunsee.response.charcreature.ResponseCreatureInfo;
@@ -35,6 +36,7 @@ public class CharDetailService {
   private final ApiUtilsConfig apiUtilsConfig;
   private final CallApiService callApiService;
   private final CharDataProcessor charDataProcessor;
+  private final CharSaveService charSaveService;
 
   private String serviceMsg;
 
@@ -54,8 +56,23 @@ public class CharDetailService {
 
     //이쯤에서 반환할예정
     //반환하기 전, 모든 데이터가 가공이 완료되었으면, CompletableFuture를 통해 모험단명과 imgUrl을 DB에 저장
-    
+    CompletableFuture.runAsync(() -> saveCharacterInfoProcess(detailCharInfoDto));
     return detailCharInfoDto;
+  }
+
+
+  private void saveCharacterInfoProcess(DetailCharInfoDto detailCharInfoDto) {
+    log.info(serviceMsg + "Async Character Info Save Process Start");
+    CharacterInfo characterInfo = CharacterInfo.builder().fame(detailCharInfoDto.getFame())
+                                                         .imgUrl(detailCharInfoDto.getImgUrl())
+                                                         .adventureName(detailCharInfoDto.getAdventureName())
+                                                         .build();
+    boolean result = charSaveService.saveCharacterInfo(characterInfo);
+    if (result) {
+      log.info(serviceMsg + "Character Info Save Success");
+    } else {
+      log.error(serviceMsg + "Character Info Save Fail");
+    }
   }
 
   private Map<KeyType, String> setCallApiUrlMap(ServiceCode serviceCode, String serverId, String characterId) {

@@ -1,5 +1,7 @@
 package com.dfo.dunsee.search.dto.detail.equip;
 
+import com.dfo.dunsee.response.charequipment.Equipment;
+import com.dfo.dunsee.response.charequipment.fusionepic.UpgradeInfo;
 import lombok.Builder;
 
 public class EquipmentDto {
@@ -22,6 +24,32 @@ public class EquipmentDto {
     this.reinforceDto = reinforceDto;
     this.enchantDto = enchantDto;
     this.upgradeInfo = upgradeInfoSubstring(upgradeInfo);
+  }
+
+  public static EquipmentDto createEquipmentDto(String imgUrl, Equipment equipment) {
+    String slotName = equipment.getSlotName();
+    String itemName = equipment.getItemName();
+    String itemRarity = equipment.getItemRarity();
+    String amplificationName = equipment.getAmplificationName();
+    int reinforce = equipment.getReinforce();
+
+    String upgradeInfo = null;
+    UpgradeInfo upgradeInfoObj = equipment.getUpgradeInfo();
+    if (upgradeInfoObj != null) {
+      upgradeInfo = upgradeInfoObj.getItemName();
+    }
+
+    EnchantDto enchantDto = EnchantDto.createEnchantDto(equipment.getEnchant());
+    ReinforceDto reinforceDto = ReinforceDto.createReinforceDto(amplificationName, reinforce);
+
+    return EquipmentDto.builder().imgUrl(imgUrl)
+                                 .slotName(slotName)
+                                 .itemName(itemName)
+                                 .itemRarity(itemRarity)
+                                 .reinforceDto(reinforceDto)
+                                 .upgradeInfo(upgradeInfo)
+                                 .enchantDto(enchantDto)
+                                 .build();
   }
 
   private String upgradeInfoSubstring(String upgradeInfo) {

@@ -12,6 +12,9 @@ public class EnchantDto {
   }
 
   public static EnchantDto createEnchantDto(Enchant enchant) {
+    if (enchant == null) {
+      return null;
+    }
     String statusValue = enchant.getStatus()
                                 .stream()
                                 .map(status -> status.getName() + " + " + status.getValue() + " ")

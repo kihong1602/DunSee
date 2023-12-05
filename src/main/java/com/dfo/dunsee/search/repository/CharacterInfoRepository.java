@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface CharacterInfoRepository extends JpaRepository<CharacterInfo, Integer> {
 
   List<CharacterInfo> findByAdventureName(String adventureName);
+
+  boolean existsByImgUrl(String imgUrl);
 }

@@ -6,6 +6,7 @@ import static com.dfo.dunsee.common.ServiceCode.setServiceMsg;
 import com.dfo.dunsee.common.ServiceCode;
 import com.dfo.dunsee.search.dto.CharacterSearchKeyword;
 import com.dfo.dunsee.search.dto.SimpleCharacterInfo;
+import com.dfo.dunsee.search.service.AdvListService;
 import com.dfo.dunsee.search.service.CharListService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -21,14 +22,21 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 public class CharListSearchController {
 
   private final CharListService charListService;
+  private final AdvListService advListService;
   private static final ServiceCode SERVICE_CODE = CHR101;
+  private static final String ADVENTURE = "adventure";
 
   @GetMapping("/search/list")
   public String searchCharacterDefaultInfo(@ModelAttribute CharacterSearchKeyword searchKeyword, Model model) {
     log.info(setServiceMsg(SERVICE_CODE) + "Character Search Process Start");
 
-    List<SimpleCharacterInfo> characterInfoList =
-        charListService.getCharacterSearchResult(SERVICE_CODE, searchKeyword);
+    List<SimpleCharacterInfo> characterInfoList;
+
+    if (searchKeyword.getServerId().equals(ADVENTURE)) {
+      characterInfoList = advListService.getAdvList(SERVICE_CODE, searchKeyword);
+    } else {
+      characterInfoList = charListService.getCharacterSearchResult(SERVICE_CODE, searchKeyword);
+    }
     model.addAttribute("characterList", characterInfoList);
     return "character-list";
   }

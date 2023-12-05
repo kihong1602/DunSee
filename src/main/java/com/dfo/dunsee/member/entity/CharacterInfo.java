@@ -22,10 +22,14 @@ public class CharacterInfo {
 
   private String imgUrl;
 
+  private String fame;
+
   private String adventureName;
 
   @Builder
-  private CharacterInfo(String imgUrl) {
+  private CharacterInfo(String imgUrl, String fame, String adventureName) {
     this.imgUrl = imgUrl;
+    this.fame = fame;
+    this.adventureName = adventureName;
   }
 }

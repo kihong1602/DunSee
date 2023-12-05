@@ -1,6 +1,5 @@
 package com.dfo.dunsee.search.service;
 
-import com.dfo.dunsee.common.Server;
 import com.dfo.dunsee.common.ServiceCode;
 import com.dfo.dunsee.config.ApiUtilsConfig;
 import com.dfo.dunsee.response.charlist.ResponseCharacterInfo;
@@ -41,29 +40,21 @@ public class CharListService {
     List<SimpleCharacterInfo> simpleCharacterInfoList = new ArrayList<>();
 
     for (ResponseCharacterInfo info : responseCharacterList.getRows()) {
-      if (simpleCharacterInfoList.size() == 20) {
-        break;
+      if (info.getFame() == null) {
+        continue;
       }
+
+      String serverId = info.getServerId();
+      String characterId = info.getCharacterId();
+
       String imgUrl = apiUtilsConfig.getUrlFactory()
-                                    .setSearchCharacterProfileImgUrl(serviceCode, info.getServerId(),
-                                                                     info.getCharacterId());
-      SimpleCharacterInfo simpleCharacterInfo =
-          SimpleCharacterInfo
-              .builder()
-              .serverId(Server.fromValue(info.getServerId()))
-              .characterId(info.getCharacterId())
-              .characterName(info.getCharacterName())
-              .level(info.getLevel())
-              .jobGrowName(info.getJobGrowName())
-              .fame(info.getFame())
-              .imgUrl(imgUrl)
-              .build();
+                                    .setSearchCharacterProfileImgUrl(serviceCode, serverId, characterId);
+      SimpleCharacterInfo simpleCharacterInfo = SimpleCharacterInfo.createSimpleCharacterInfo(imgUrl, info);
+
       simpleCharacterInfoList.add(simpleCharacterInfo);
     }
 
-    return simpleCharacterInfoList.stream()
-                                  .sorted()
-                                  .toList();
+    return simpleCharacterInfoList.stream().sorted().toList();
   }
 
 

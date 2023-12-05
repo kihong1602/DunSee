@@ -1,12 +1,12 @@
 package com.dfo.dunsee.search.dto.detail;
 
+import com.dfo.dunsee.response.chardefault.ResponseCharacterDefaultInfo;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 public class NormalCharInfoDto {
 
-  private String imgUrl;
   private String characterName;
   private int level;
   private String jobGrowName;
@@ -14,13 +14,28 @@ public class NormalCharInfoDto {
   private String adventureName;
 
   @Builder
-  public NormalCharInfoDto(String imgUrl, String characterName, int level, String jobGrowName, String guildName,
+  private NormalCharInfoDto(String characterName, int level, String jobGrowName, String guildName,
       String adventureName) {
-    this.imgUrl = imgUrl;
     this.characterName = characterName;
     this.level = level;
     this.jobGrowName = jobGrowName;
     this.guildName = guildName;
     this.adventureName = adventureName;
+  }
+
+  public static NormalCharInfoDto createNormalCharInfoDto(ResponseCharacterDefaultInfo defaultInfo) {
+    String characterName = defaultInfo.getCharacterName();
+    int level = defaultInfo.getLevel();
+    String jobGrowName = defaultInfo.getJobGrowName();
+    String guildName = defaultInfo.getGuildName();
+    String adventureName = defaultInfo.getAdventureName();
+
+    return NormalCharInfoDto.builder()
+        .characterName(characterName)
+        .level(level)
+        .jobGrowName(jobGrowName)
+        .guildName(guildName)
+        .adventureName(adventureName)
+        .build();
   }
 }

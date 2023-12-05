@@ -1,21 +1,61 @@
 package com.dfo.dunsee.search.dto;
 
 import com.dfo.dunsee.common.Server;
+import com.dfo.dunsee.member.entity.CharacterInfo;
+import com.dfo.dunsee.response.charlist.ResponseCharacterInfo;
+import com.dfo.dunsee.response.charstatus.ResponseCharacterStatusInfo;
 import java.util.Comparator;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
-@Builder
+@Getter
 public class SimpleCharacterInfo implements Comparable<SimpleCharacterInfo> {
 
-  private Server serverId;
-  private String characterId;
-  private String characterName;
-  private int level;
-  private String jobGrowName;
-  private Integer fame;
-  private String imgUrl;
+  private final Server serverId;
+  private final String characterId;
+  private final String characterName;
+  private final int level;
+  private final String jobGrowName;
+  private final Integer fame;
+  private final String imgUrl;
+
+  @Builder
+  private SimpleCharacterInfo(String serverId, String characterId, String characterName, int level, String jobGrowName,
+      Integer fame, String imgUrl) {
+    this.serverId = Server.fromValue(serverId);
+    this.characterId = characterId;
+    this.characterName = characterName;
+    this.level = level;
+    this.jobGrowName = jobGrowName;
+    this.fame = fame;
+    this.imgUrl = imgUrl;
+  }
+
+  public static SimpleCharacterInfo createSimpleCharacterInfo(ImgUrlParserCharacterInfo parseInfo,
+      ResponseCharacterStatusInfo statusInfo, CharacterInfo characterInfo) {
+    return SimpleCharacterInfo.builder()
+        .serverId(parseInfo.getServerId())
+        .characterId(parseInfo.getCharacterId())
+        .characterName(statusInfo.getCharacterName())
+        .level(statusInfo.getLevel())
+        .jobGrowName(statusInfo.getJobGrowName())
+        .fame(Integer.valueOf(characterInfo.getFame()))
+        .imgUrl(characterInfo.getImgUrl())
+        .build();
+  }
+
+  public static SimpleCharacterInfo createSimpleCharacterInfo(String imgUrl, ResponseCharacterInfo info) {
+    return SimpleCharacterInfo
+        .builder()
+        .serverId(info.getServerId())
+        .characterId(info.getCharacterId())
+        .characterName(info.getCharacterName())
+        .level(info.getLevel())
+        .jobGrowName(info.getJobGrowName())
+        .fame(info.getFame())
+        .imgUrl(imgUrl)
+        .build();
+  }
 
   @Override
   public int compareTo(SimpleCharacterInfo other) {

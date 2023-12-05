@@ -9,27 +9,6 @@ import static com.dfo.dunsee.common.KeyType.TALISMAN;
 import static com.dfo.dunsee.search.dto.detail.word.AvatarSlotType.AURORA;
 import static com.dfo.dunsee.search.dto.detail.word.AvatarSlotType.SKIN;
 import static com.dfo.dunsee.search.dto.detail.word.AvatarSlotType.values;
-import static com.dfo.dunsee.search.dto.detail.word.StatusType.ASPD;
-import static com.dfo.dunsee.search.dto.detail.word.StatusType.CAST;
-import static com.dfo.dunsee.search.dto.detail.word.StatusType.CENH;
-import static com.dfo.dunsee.search.dto.detail.word.StatusType.CRES;
-import static com.dfo.dunsee.search.dto.detail.word.StatusType.DENH;
-import static com.dfo.dunsee.search.dto.detail.word.StatusType.DRES;
-import static com.dfo.dunsee.search.dto.detail.word.StatusType.FAME;
-import static com.dfo.dunsee.search.dto.detail.word.StatusType.FENH;
-import static com.dfo.dunsee.search.dto.detail.word.StatusType.FRES;
-import static com.dfo.dunsee.search.dto.detail.word.StatusType.IATK;
-import static com.dfo.dunsee.search.dto.detail.word.StatusType.INT;
-import static com.dfo.dunsee.search.dto.detail.word.StatusType.LENH;
-import static com.dfo.dunsee.search.dto.detail.word.StatusType.LRES;
-import static com.dfo.dunsee.search.dto.detail.word.StatusType.MATK;
-import static com.dfo.dunsee.search.dto.detail.word.StatusType.MDEF;
-import static com.dfo.dunsee.search.dto.detail.word.StatusType.MSPEED;
-import static com.dfo.dunsee.search.dto.detail.word.StatusType.PATK;
-import static com.dfo.dunsee.search.dto.detail.word.StatusType.PDEF;
-import static com.dfo.dunsee.search.dto.detail.word.StatusType.SPR;
-import static com.dfo.dunsee.search.dto.detail.word.StatusType.STR;
-import static com.dfo.dunsee.search.dto.detail.word.StatusType.VIT;
 
 import com.dfo.dunsee.common.KeyType;
 import com.dfo.dunsee.common.UrlFactory;
@@ -40,7 +19,6 @@ import com.dfo.dunsee.response.charcreature.ResponseCreatureInfo;
 import com.dfo.dunsee.response.chardefault.ResponseCharacterDefaultInfo;
 import com.dfo.dunsee.response.charequipment.Equipment;
 import com.dfo.dunsee.response.charequipment.ResponseCharacterEquipInfo;
-import com.dfo.dunsee.response.charequipment.fusionepic.UpgradeInfo;
 import com.dfo.dunsee.response.charstatus.ResponseCharacterStatusInfo;
 import com.dfo.dunsee.response.charstatus.Status;
 import com.dfo.dunsee.response.chartalisman.ResponseCharacterTalismanInfo;
@@ -52,14 +30,14 @@ import com.dfo.dunsee.search.dto.detail.NormalCharInfoDto;
 import com.dfo.dunsee.search.dto.detail.StatusDto;
 import com.dfo.dunsee.search.dto.detail.avatar.AvatarDto;
 import com.dfo.dunsee.search.dto.detail.avatar.EmblemDto;
-import com.dfo.dunsee.search.dto.detail.equip.EnchantDto;
 import com.dfo.dunsee.search.dto.detail.equip.EquipmentDto;
-import com.dfo.dunsee.search.dto.detail.equip.ReinforceDto;
 import com.dfo.dunsee.search.dto.detail.talisman.RuneDto;
 import com.dfo.dunsee.search.dto.detail.talisman.TalismanDto;
 import com.dfo.dunsee.search.dto.detail.word.AvatarSlotType;
 import com.dfo.dunsee.search.dto.detail.word.EquipSlotType;
+import com.dfo.dunsee.search.dto.detail.word.StatusType;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -74,145 +52,85 @@ public class CharDataProcessor {
   private final UrlFactory urlFactory;
 
   public DetailCharInfoDto buildCharacterDetails(Map<KeyType, ApiResponse> resMap, String imgUrl) {
-    NormalCharInfoDto normalCharInfoDto = createNormalCharInfoDto(resMap.get(DEFAULT), imgUrl);
-    StatusDto statusDto = createStatusDto(resMap.get(STATUS));
-    Map<EquipSlotType, EquipmentDto> equipmentDtoMap = createEquipmentDto(resMap.get(EQUIP));
-    CreatureDto creatureDto = createCreatureDto(resMap.get(CREATURE));
-    Map<AvatarSlotType, AvatarDto> avatarDtoMap = createAvatarDto(resMap.get(AVATAR));
-    List<TalismanDto> talismanDtoList = createTalismanList(resMap.get(TALISMAN));
 
     return DetailCharInfoDto.builder()
-        .normalCharInfoDto(normalCharInfoDto)
-        .statusDto(statusDto)
-        .equipmentDtos(equipmentDtoMap)
-        .avatarDtos(avatarDtoMap)
-        .creatureDto(creatureDto)
-        .talismanDtos(talismanDtoList)
+        .imgUrl(imgUrl)
+        .normalCharInfoDto(createNormalCharInfoDto(resMap.get(DEFAULT)))
+        .statusDtos(createStatusDto(resMap.get(STATUS)))
+        .equipmentDtos(createEquipmentDto(resMap.get(EQUIP)))
+        .avatarDtos(createAvatarDto(resMap.get(AVATAR)))
+        .creatureDto(createCreatureDto(resMap.get(CREATURE)))
+        .talismanDtos(createTalismanList(resMap.get(TALISMAN)))
         .build();
   }
 
-  private NormalCharInfoDto createNormalCharInfoDto(ApiResponse apiResponse, String imgUrl) {
+  private NormalCharInfoDto createNormalCharInfoDto(ApiResponse apiResponse) {
     ResponseCharacterDefaultInfo defaultInfo = (ResponseCharacterDefaultInfo) apiResponse;
 
-    String characterName = defaultInfo.getCharacterName();
-    int level = defaultInfo.getLevel();
-    String jobGrowName = defaultInfo.getJobGrowName();
-    String guildName = defaultInfo.getGuildName();
-    String adventureName = defaultInfo.getAdventureName();
-
-    return NormalCharInfoDto.builder()
-        .imgUrl(imgUrl)
-        .characterName(characterName)
-        .level(level)
-        .jobGrowName(jobGrowName)
-        .guildName(guildName)
-        .adventureName(adventureName)
-        .build();
+    return NormalCharInfoDto.createNormalCharInfoDto(defaultInfo);
   }
 
-  private StatusDto createStatusDto(ApiResponse apiResponse) {
+  private Map<StatusType, StatusDto> createStatusDto(ApiResponse apiResponse) {
+    Map<StatusType, StatusDto> statusDtoMap = new EnumMap<>(StatusType.class);
     Map<String, Status> statusMap = convertStatusListToMap(((ResponseCharacterStatusInfo) apiResponse).getStatus());
 
-    int fame = statusMap.get(FAME.getName()).getValue();
-    int strength = statusMap.get(STR.getName()).getValue();
-    int intelligence = statusMap.get(INT.getName()).getValue();
-    int vitality = statusMap.get(VIT.getName()).getValue();
-    int spirit = statusMap.get(SPR.getName()).getValue();
-    int physicalAttack = statusMap.get(PATK.getName()).getValue();
-    int magicAttack = statusMap.get(MATK.getName()).getValue();
-    int independentAttack = statusMap.get(IATK.getName()).getValue();
-    double physicalDefense = statusMap.get(PDEF.getName()).getValue();
-    double magicDefense = statusMap.get(MDEF.getName()).getValue();
-    double attackSpeed = statusMap.get(ASPD.getName()).getValue();
-    double castingSpeed = statusMap.get(CAST.getName()).getValue();
-    double moveSpeed = statusMap.get(MSPEED.getName()).getValue();
-    int fireEnhance = statusMap.get(FENH.getName()).getValue();
-    int coldEnhance = statusMap.get(CENH.getName()).getValue();
-    int lightEnhance = statusMap.get(LENH.getName()).getValue();
-    int darkEnhance = statusMap.get(DENH.getName()).getValue();
-    int fireResist = statusMap.get(FRES.getName()).getValue();
-    int coldResist = statusMap.get(CRES.getName()).getValue();
-    int lightResist = statusMap.get(LRES.getName()).getValue();
-    int darkResist = statusMap.get(DRES.getName()).getValue();
+    for (StatusType statusType : StatusType.values()) {
+      Status status = statusMap.get(statusType.getName());
+      statusDtoMap.put(statusType, StatusDto.createStatusDto(status));
+    }
 
-    return StatusDto.builder()
-        .fame(fame)
-        .strength(strength)
-        .intelligence(intelligence)
-        .vitality(vitality)
-        .spirit(spirit)
-        .physicalAttack(physicalAttack)
-        .magicAttack(magicAttack)
-        .independentAttack(independentAttack)
-        .physicalDefense(physicalDefense)
-        .magicDefense(magicDefense)
-        .attackSpeed(attackSpeed)
-        .castingSpeed(castingSpeed)
-        .moveSpeed(moveSpeed)
-        .fireEnhance(fireEnhance)
-        .coldEnhance(coldEnhance)
-        .lightEnhance(lightEnhance)
-        .darkEnhance(darkEnhance)
-        .fireResist(fireResist)
-        .coldResist(coldResist)
-        .lightResist(lightResist)
-        .darkResist(darkResist)
-        .build();
+    return statusDtoMap;
   }
 
   private Map<EquipSlotType, EquipmentDto> createEquipmentDto(ApiResponse apiResponse) {
     Map<EquipSlotType, EquipmentDto> equipDtoMap = new EnumMap<>(EquipSlotType.class);
-    Map<String, Equipment> equipmentMap = convertEquipListToMap(
-        ((ResponseCharacterEquipInfo) apiResponse).getEquipment());
+    List<Equipment> equipmentList = ((ResponseCharacterEquipInfo) apiResponse).getEquipment();
+    if (equipmentList == null) {
+      return Collections.emptyMap();
+    }
+
+    Map<String, Equipment> equipmentMap = convertEquipListToMap(equipmentList);
 
     for (EquipSlotType equipSlotType : EquipSlotType.values()) {
-
-      String imgUrl = urlFactory.setItemImgUrl(equipmentMap.get(equipSlotType.name()).getItemId());
-      String slotName = equipmentMap.get(equipSlotType.name()).getSlotName();
-      String itemName = equipmentMap.get(equipSlotType.name()).getItemName();
-      String itemRarity = equipmentMap.get(equipSlotType.name()).getItemRarity();
-      String amplificationName = equipmentMap.get(equipSlotType.name()).getAmplificationName();
-      int reinforce = equipmentMap.get(equipSlotType.name()).getReinforce();
-
-      String upgradeInfo = null;
-      UpgradeInfo upgradeInfoObj = equipmentMap.get(equipSlotType.name()).getUpgradeInfo();
-      if (upgradeInfoObj != null) {
-        upgradeInfo = upgradeInfoObj.getItemName();
+      if (equipmentMap.get(equipSlotType.name()) == null) {
+        continue;
       }
+      Equipment equipment = equipmentMap.get(equipSlotType.name());
+      String imgUrl = urlFactory.setItemImgUrl(equipment.getItemId());
 
-      EnchantDto enchantDto = EnchantDto.createEnchantDto(equipmentMap.get(equipSlotType.name()).getEnchant());
-      ReinforceDto reinforceDto = ReinforceDto.createReinforceDto(amplificationName, reinforce);
+      EquipmentDto equipmentDto = EquipmentDto.createEquipmentDto(imgUrl, equipment);
 
-      EquipmentDto build = EquipmentDto.builder().imgUrl(imgUrl)
-                                                 .slotName(slotName)
-                                                 .itemName(itemName)
-                                                 .itemRarity(itemRarity)
-                                                 .reinforceDto(reinforceDto)
-                                                 .upgradeInfo(upgradeInfo)
-                                                 .enchantDto(enchantDto)
-                                                 .build();
-      equipDtoMap.put(equipSlotType, build);
+      equipDtoMap.put(equipSlotType, equipmentDto);
     }
 
     return equipDtoMap;
   }
 
   private Map<AvatarSlotType, AvatarDto> createAvatarDto(ApiResponse apiResponse) {
+    List<Avatar> avatarList = ((ResponseCharacterAvatarInfo) apiResponse).getAvatar();
+    if (avatarList == null) {
+      return Collections.emptyMap();
+    }
+
     Map<AvatarSlotType, AvatarDto> avatarDtoMap = new EnumMap<>(AvatarSlotType.class);
-    Map<String, Avatar> avatarMap = convertAvatarListToMap(((ResponseCharacterAvatarInfo) apiResponse).getAvatar());
+    Map<String, Avatar> avatarMap = convertAvatarListToMap(avatarList);
 
     for (AvatarSlotType avatarSlotType : values()) {
+      Avatar avatar = avatarMap.get(avatarSlotType.name());
+      if (avatar == null) {
+        continue;
+      }
       String imgUrl;
       String itemName;
       if (avatarSlotType.equals(SKIN) || avatarSlotType.equals(AURORA)) {
-        imgUrl = urlFactory.setItemImgUrl(avatarMap.get(avatarSlotType.name()).getItemId());
-        itemName = avatarMap.get(avatarSlotType.name()).getItemName();
+        imgUrl = urlFactory.setItemImgUrl(avatar.getItemId());
+        itemName = avatar.getItemName();
       } else {
-        imgUrl = urlFactory.setItemImgUrl(avatarMap.get(avatarSlotType.name()).getClone().getItemId());
-        itemName = avatarMap.get(avatarSlotType.name()).getClone().getItemName();
+        imgUrl = urlFactory.setItemImgUrl(avatar.getClone().getItemId());
+        itemName = avatar.getClone().getItemName();
       }
-      String slotName = avatarMap.get(avatarSlotType.name()).getSlotName();
-      String optionAbility = avatarMap.get(avatarSlotType.name()).getOptionAbility();
+      String slotName = avatar.getSlotName();
+      String optionAbility = avatar.getOptionAbility();
       List<EmblemDto> emblemDtos = createEblemDtoList(avatarSlotType, avatarMap);
 
       AvatarDto avatarDto = AvatarDto.builder()
@@ -238,18 +156,28 @@ public class CharDataProcessor {
 
   private CreatureDto createCreatureDto(ApiResponse apiResponse) {
     ResponseCreatureInfo creatureInfo = (ResponseCreatureInfo) apiResponse;
+    if (creatureInfo.getCreature() == null) {
+      return null;
+    }
+
     String imgUrl = urlFactory.setItemImgUrl(creatureInfo.getCreature().getItemId());
     String itemName = creatureInfo.getCreature().getItemName();
     return CreatureDto.builder().imgUrl(imgUrl).itemName(itemName).build();
   }
 
   private List<TalismanDto> createTalismanList(ApiResponse apiResponse) {
-
     ResponseCharacterTalismanInfo talismanInfo = (ResponseCharacterTalismanInfo) apiResponse;
+    if (talismanInfo.getTalismans() == null) {
+      return Collections.emptyList();
+    }
+
     List<TalismanDto> talismanDtoList = new ArrayList<>();
     List<Talisman> talismans = talismanInfo.getTalismans();
 
     for (Talisman talisman : talismans) {
+      if (talisman.getTalisman() == null) {
+        continue;
+      }
       String imgUrl = urlFactory.setItemImgUrl(talisman.getTalisman().getItemId());
       String itemName = talisman.getTalisman().getItemName();
       List<RuneDto> runeDtos = createRuneDtoList(talisman);
@@ -260,6 +188,7 @@ public class CharDataProcessor {
                                                      .build();
       talismanDtoList.add(talismanDto);
     }
+
     return talismanDtoList;
   }
 
