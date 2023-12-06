@@ -2,7 +2,9 @@ package com.dfo.dunsee.search.dto.detail.avatar;
 
 import com.dfo.dunsee.response.charavatar.Emblem;
 import lombok.Builder;
+import lombok.Getter;
 
+@Getter
 public class EmblemDto {
 
   private String itemName;

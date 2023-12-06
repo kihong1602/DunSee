@@ -30,7 +30,7 @@ public class SecurityConfig {
                        .addFilterBefore(jsonUsernamePasswordAuthenticationFilter,
                                         UsernamePasswordAuthenticationFilter.class)
                        .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                           .requestMatchers("/favorite/**")
+                           .requestMatchers("/bookmark/**")
                            .authenticated()
                            .requestMatchers("/admin/**")
                            .hasRole("ADMIN")

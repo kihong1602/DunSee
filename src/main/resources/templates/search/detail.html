@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="fragments/default_layout" lang="en">
+<th:block layout:fragment="content" th:with="title='상세조회'">
+  <!--  즐겨찾기 버튼-->
+  <a sec:authorize="isAuthenticated()"
+     class="group relative inline-block text-sm font-medium text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
+     href="javascript:bookmarkProcess();"
+  >
+  <span
+      class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-indigo-600 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"
+  ></span>
+
+    <span class="relative block border border-current bg-white px-8 py-3"> 즐겨찾기 </span>
+  </a>
+  <!--  즐겨찾기 버튼-->
+  <div class="max-w-screen-xl px-4 py-8 mx-auto sm:px-6 sm:py-12 lg:px-8">
+    <img
+        id="imgUrl"
+        th:src="${characterInfo.imgUrl}"
+        alt="캐릭터이미지"
+
+    />
+  </div>
+  <p>Character Name: <span th:text="${characterInfo.characterName}"></span></p>
+
+  <!-- level -->
+  <p>Level: <span th:text="${characterInfo.level}"></span></p>
+
+  <!-- jobGrowName -->
+  <p>Job Grow Name: <span th:text="${characterInfo.jobGrowName}"></span></p>
+
+  <!-- guildName -->
+  <p>Guild Name: <span th:text="${characterInfo.guildName}"></span></p>
+
+  <!-- adventureName -->
+  <p>Adventure Name: <span th:text="${characterInfo.adventureName}"></span></p>
+
+  <!-- fame -->
+  <p>Fame: <span th:text="${characterInfo.fame}"></span></p>
+
+  <!-- statusDto -->
+  <ul>
+    <li>능력치</li>
+    <li th:each="entry : ${characterInfo.statusDto}">
+      <span th:text="${entry.value.name}"></span>: <span th:text="${entry.value.value}"></span>
+    </li>
+  </ul>
+
+  <!-- equipmentDtos -->
+  <ul>
+    <li>장비</li>
+    <li th:each="entry : ${characterInfo.equipmentDtos}">
+      <span th:text="${entry.value.slotName}"></span>: <span th:text="${entry.value.itemName}"></span>
+    </li>
+  </ul>
+
+  <!-- avatarDtos -->
+  <ul>
+    <li>아바타</li>
+    <li th:each="entry : ${characterInfo.avatarDtos}">
+      <span th:text="${entry.value.slotName}"></span>: <span th:text="${entry.value.itemName}"></span>
+    </li>
+  </ul>
+
+  <!-- talismanDtos -->
+  <ul>
+    <li>탈리스만</li>
+    <li th:each="talisman : ${characterInfo.talismanDtos}">
+      <span th:text="${talisman.itemName}"></span>
+    </li>
+  </ul>
+
+  <!-- creatureDto -->
+  <p>크리쳐</p>
+  <p>Creature: <span th:text="${characterInfo.creatureDto.itemName}"></span></p>
+  <script src="/js/bookmark.js"></script>
+</th:block>
+</html>

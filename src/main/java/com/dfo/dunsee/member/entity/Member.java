@@ -30,22 +30,18 @@ import org.hibernate.annotations.DynamicInsert;
 @DynamicInsert
 public class Member {
 
-  @Builder(builderMethodName = "generalBuilder")
-  private Member(String username, String password, String email) {
-    this.username = username;
-    this.password = password;
-    this.email = email;
-  }
-
-  @Builder(builderMethodName = "oAuth2Builder")
-  private Member(String username, String password, String email, String role,
-      String provider, String providerId) {
+  @Builder
+  private Member(Integer id, String username, String password, String email, String role, String provider,
+      String providerId, LocalDateTime createdDate, List<Bookmark> bookmarks) {
+    this.id = id;
     this.username = username;
     this.password = password;
     this.email = email;
     this.role = role;
     this.provider = provider;
     this.providerId = providerId;
+    this.createdDate = createdDate;
+    this.bookmarks = bookmarks;
   }
 
   @JsonIgnore
@@ -74,11 +70,8 @@ public class Member {
   @Column(name = "created_date")
   private LocalDateTime createdDate;
 
- /* @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private Favorite favorite;*/
-
   @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<BookmarkCharacter> bookmarkCharacters = new ArrayList<>();
+  private List<Bookmark> bookmarks = new ArrayList<>();
 
   @PrePersist
   public void prePersist() {

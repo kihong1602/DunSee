@@ -2,14 +2,10 @@ package com.dfo.dunsee.search.dto.detail.avatar;
 
 import java.util.List;
 import lombok.Builder;
+import lombok.Getter;
 
+@Getter
 public class AvatarDto {
-
-  //itemId
-  // slotName -> 모자아바타, 목가슴 아바타 ,...
-  // itemName -> clone.getItemName()
-  // optionAbility -> 아바타 능력치
-  // emblems -> 아바타 엠블렘
 
   private String imgUrl;
   private String slotName;

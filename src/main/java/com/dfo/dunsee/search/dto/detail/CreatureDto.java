@@ -1,7 +1,9 @@
 package com.dfo.dunsee.search.dto.detail;
 
 import lombok.Builder;
+import lombok.Getter;
 
+@Getter
 public class CreatureDto {
 
   private String imgUrl;

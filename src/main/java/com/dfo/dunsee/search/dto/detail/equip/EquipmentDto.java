@@ -3,7 +3,9 @@ package com.dfo.dunsee.search.dto.detail.equip;
 import com.dfo.dunsee.response.charequipment.Equipment;
 import com.dfo.dunsee.response.charequipment.fusionepic.UpgradeInfo;
 import lombok.Builder;
+import lombok.Getter;
 
+@Getter
 public class EquipmentDto {
 
   private String imgUrl;

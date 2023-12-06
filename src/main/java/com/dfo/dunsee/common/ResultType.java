@@ -1,14 +1,15 @@
 package com.dfo.dunsee.common;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
 public enum ResultType {
 
   SUCCESS("success"),
-  FAILURE("failure");
+  FAILURE("failure"),
+  EXIST("exist");
 
   private final String description;
 

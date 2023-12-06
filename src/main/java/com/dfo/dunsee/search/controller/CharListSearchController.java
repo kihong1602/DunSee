@@ -38,7 +38,7 @@ public class CharListSearchController {
       characterInfoList = charListService.getCharacterSearchResult(SERVICE_CODE, searchKeyword);
     }
     model.addAttribute("characterList", characterInfoList);
-    return "character-list";
+    return "search/list";
   }
 
 }

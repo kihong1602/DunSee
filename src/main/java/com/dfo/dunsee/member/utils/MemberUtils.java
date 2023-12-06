@@ -18,7 +18,7 @@ public class MemberUtils {
     String encodedPassword = passwordEncoding(joinMemberInfo.getPassword());
     String email = joinMemberInfo.getEmail();
 
-    return Member.generalBuilder().username(username).password(encodedPassword).email(email).build();
+    return Member.builder().username(username).password(encodedPassword).email(email).build();
   }
 
   private String passwordEncoding(String password) {

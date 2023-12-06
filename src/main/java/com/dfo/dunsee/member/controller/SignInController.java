@@ -8,33 +8,34 @@ import com.dfo.dunsee.common.ResultType;
 import com.dfo.dunsee.common.ServiceCode;
 import com.dfo.dunsee.common.response.ResponseJson;
 import com.dfo.dunsee.member.dto.JoinMemberInfo;
-import com.dfo.dunsee.member.service.MemberRegisterService;
+import com.dfo.dunsee.member.service.RegisterService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @Slf4j
 public class SignInController {
 
-  private final MemberRegisterService memberService;
+  private final RegisterService memberService;
 
   @GetMapping("/register")
-  public String register() {
+  public ModelAndView register() {
     log.info(ServiceCode.setServiceMsg(MBR201) + ServiceCode.setServiceMsg(MBR202) + "회원가입 페이지 이동");
-    return "member/register";
+    ModelAndView modelAndView = new ModelAndView();
+    modelAndView.setViewName("member/register");
+    return modelAndView;
   }
 
 
   @PostMapping("/register-process")
-  @ResponseBody
   public ResponseEntity<ResponseJson> registerId(@RequestBody JoinMemberInfo joinMemberInfo) {
 
     log.info(ServiceCode.setServiceMsg(MBR101) + "일반 회원가입 진행");
@@ -46,27 +47,24 @@ public class SignInController {
     return switch (result) {
       case SUCCESS -> ResponseEntity.ok(responseJson);
 
-      case FAILURE -> ResponseEntity.notFound()
-                                    .build();
+      case FAILURE -> ResponseEntity.notFound().build();
+      default -> ResponseEntity.badRequest().build();
     };
 
   }
 
   @GetMapping("/user")
-  @ResponseBody
   public String user() {
     return "user";
   }
 
   @GetMapping("/favorite")
-  @ResponseBody
   public String favorite() {
     return "즐겨찾기 페이지";
   }
 
   @GetMapping("/admin")
   @PreAuthorize("hasRole('ROLE_ADMIN')")
-  @ResponseBody
   public String admin() {
     return "관리자페이지";
   }

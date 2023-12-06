@@ -11,4 +11,6 @@ public interface CharacterInfoRepository extends JpaRepository<CharacterInfo, In
   List<CharacterInfo> findByAdventureName(String adventureName);
 
   boolean existsByImgUrl(String imgUrl);
+
+  CharacterInfo findByImgUrl(String imgUrl);
 }

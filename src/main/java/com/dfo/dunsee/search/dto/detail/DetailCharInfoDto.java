@@ -14,17 +14,15 @@ import lombok.Builder;
 import lombok.Getter;
 
 
+@Getter
 public class DetailCharInfoDto {
 
-  @Getter
   private String imgUrl;
   private String characterName;
   private int level;
   private String jobGrowName;
   private String guildName;
-  @Getter
   private String adventureName;
-  @Getter
   private String fame;
   private Map<StatusType, StatusDto> statusDto;
   private Map<EquipSlotType, EquipmentDto> equipmentDtos;

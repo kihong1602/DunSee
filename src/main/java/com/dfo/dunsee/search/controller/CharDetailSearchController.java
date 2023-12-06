@@ -24,6 +24,6 @@ public class CharDetailSearchController {
 
     DetailCharInfoDto detailCharInfoDto = charDetailService.charDetailSearch(SERVICE_CODE, imgUrl);
     model.addAttribute("characterInfo", detailCharInfoDto);
-    return "character-list";
+    return "search/detail";
   }
 }

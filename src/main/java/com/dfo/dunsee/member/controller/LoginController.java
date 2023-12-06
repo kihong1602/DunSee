@@ -17,9 +17,7 @@ public class LoginController {
 
   @GetMapping("/")
   public String indexPage() {
-    log.info(ServiceCode.setServiceMsg(ServiceCode.COM100)
-                        .replace("::", "")
-                        .trim());
+    log.info(ServiceCode.setServiceMsg(ServiceCode.COM100).replace("::", "").trim());
     return "/index";
   }
 }

@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class MemberRegisterService {
+public class RegisterService {
 
   private final MemberRepository memberRepository;
   private final MemberUtils memberUtils;
@@ -54,7 +54,7 @@ public class MemberRegisterService {
       }
 
       case FAILURE -> FAILURE;
-
+      default -> throw new IllegalStateException("Unexpected value: " + resultType);
     };
   }
 

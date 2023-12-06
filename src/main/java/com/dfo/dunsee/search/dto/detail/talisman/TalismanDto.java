@@ -2,7 +2,9 @@ package com.dfo.dunsee.search.dto.detail.talisman;
 
 import java.util.List;
 import lombok.Builder;
+import lombok.Getter;
 
+@Getter
 public class TalismanDto {
 
   private String imgUrl;
