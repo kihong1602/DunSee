@@ -8,8 +8,8 @@ import lombok.ToString;
 
 @Getter
 @ToString
-public class ResponseCharacterList implements ApiResponse {
+public class ResCharList implements ApiResponse {
 
-  private List<ResponseCharacterInfo> rows;
+  private List<ResCharInfo> rows;
 
 }

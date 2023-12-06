@@ -2,8 +2,8 @@ package com.dfo.dunsee.search.service;
 
 import com.dfo.dunsee.common.ServiceCode;
 import com.dfo.dunsee.config.ApiUtilsConfig;
-import com.dfo.dunsee.response.charlist.ResponseCharacterInfo;
-import com.dfo.dunsee.response.charlist.ResponseCharacterList;
+import com.dfo.dunsee.response.charlist.ResCharInfo;
+import com.dfo.dunsee.response.charlist.ResCharList;
 import com.dfo.dunsee.search.dto.CharacterSearchKeyword;
 import com.dfo.dunsee.search.dto.SimpleCharacterInfo;
 import java.util.ArrayList;
@@ -27,19 +27,19 @@ public class CharListService {
     String searchCharacterUrl = apiUtilsConfig.getUrlFactory()
                                               .setSearchCharacterListUrl(serviceCode, characterName, serverId);
 
-    ResponseCharacterList responseCharacterList = apiUtilsConfig.getApiUtils()
-                                                                .getApiResponseJson(serviceCode, searchCharacterUrl,
-                                                                                    ResponseCharacterList.class);
+    ResCharList resCharList = apiUtilsConfig.getApiUtils()
+                                            .getApiResponseJson(serviceCode, searchCharacterUrl,
+                                                                ResCharList.class);
 
-    return getDefaultCharacterInfoList(serviceCode, responseCharacterList);
+    return getDefaultCharacterInfoList(serviceCode, resCharList);
   }
 
   private List<SimpleCharacterInfo> getDefaultCharacterInfoList(ServiceCode serviceCode,
-      ResponseCharacterList responseCharacterList) {
+      ResCharList resCharList) {
     log.info(ServiceCode.setServiceMsg(serviceCode) + "Character List DataProcessing");
     List<SimpleCharacterInfo> simpleCharacterInfoList = new ArrayList<>();
 
-    for (ResponseCharacterInfo info : responseCharacterList.getRows()) {
+    for (ResCharInfo info : resCharList.getRows()) {
       if (info.getFame() == null) {
         continue;
       }

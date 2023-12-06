@@ -1,14 +1,17 @@
 package com.dfo.dunsee.search.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
-@AllArgsConstructor
-@Builder
+@Getter
 public class CharacterSearchKeyword {
 
   private String characterName;
   private String serverId;
+
+  @Builder
+  private CharacterSearchKeyword(String characterName, String serverId) {
+    this.characterName = characterName;
+    this.serverId = serverId;
+  }
 }

@@ -3,7 +3,7 @@ package com.dfo.dunsee.search.service;
 import com.dfo.dunsee.common.ServiceCode;
 import com.dfo.dunsee.config.ApiUtilsConfig;
 import com.dfo.dunsee.member.entity.CharacterInfo;
-import com.dfo.dunsee.response.charstatus.ResponseCharacterStatusInfo;
+import com.dfo.dunsee.response.charstatus.ResCharStatusInfo;
 import com.dfo.dunsee.search.dto.CharacterSearchKeyword;
 import com.dfo.dunsee.search.dto.ImgUrlParserCharacterInfo;
 import com.dfo.dunsee.search.dto.SimpleCharacterInfo;
@@ -44,20 +44,19 @@ public class AdvListService {
       urlList.add(searchUrl);
 
     }
-    Map<String, ResponseCharacterStatusInfo> statusInfoMap = callApi(serviceCode, urlList);
+    Map<String, ResCharStatusInfo> statusInfoMap = callApi(serviceCode, urlList);
 
     return createSimpleCharInfoList(serviceCode, savedCharacterInfoList, statusInfoMap);
   }
 
 
-  private Map<String, ResponseCharacterStatusInfo> callApi(ServiceCode serviceCode, List<String> urlList) {
-    Map<String, ResponseCharacterStatusInfo> statusInfoMap = new HashMap<>();
+  private Map<String, ResCharStatusInfo> callApi(ServiceCode serviceCode, List<String> urlList) {
+    Map<String, ResCharStatusInfo> statusInfoMap = new HashMap<>();
 
-    List<CompletableFuture<ResponseCharacterStatusInfo>> futures =
+    List<CompletableFuture<ResCharStatusInfo>> futures =
         urlList.stream()
-               .map(url -> callApiService
-                   .callNeopleApi(serviceCode, url, ResponseCharacterStatusInfo.class)
-                   .thenApply(ResponseCharacterStatusInfo.class::cast)).toList();
+               .map(url -> callApiService.callNeopleApi(serviceCode, url, ResCharStatusInfo.class)
+                                         .thenApply(ResCharStatusInfo.class::cast)).toList();
 
     futures.stream()
            .map(CompletableFuture::join)
@@ -68,12 +67,12 @@ public class AdvListService {
 
   private List<SimpleCharacterInfo> createSimpleCharInfoList(ServiceCode serviceCode,
       List<CharacterInfo> savedCharacterInfoList,
-      Map<String, ResponseCharacterStatusInfo> statusInfoMap) {
+      Map<String, ResCharStatusInfo> statusInfoMap) {
     List<SimpleCharacterInfo> simpleCharInfoList = new ArrayList<>();
 
     for (CharacterInfo characterInfo : savedCharacterInfoList) {
       ImgUrlParserCharacterInfo parseInfo = getParserCharacterInfo(serviceCode, characterInfo);
-      ResponseCharacterStatusInfo statusInfo = statusInfoMap.get(parseInfo.getCharacterId());
+      ResCharStatusInfo statusInfo = statusInfoMap.get(parseInfo.getCharacterId());
 
       SimpleCharacterInfo simpleCharInfo = SimpleCharacterInfo
           .createSimpleCharacterInfo(parseInfo, statusInfo, characterInfo);

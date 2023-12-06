@@ -6,7 +6,7 @@ import lombok.ToString;
 
 @Getter
 @ToString
-public class ResponseCharacterInfo implements ApiResponse {
+public class ResCharInfo implements ApiResponse {
 
   private String serverId;
   private String characterId;

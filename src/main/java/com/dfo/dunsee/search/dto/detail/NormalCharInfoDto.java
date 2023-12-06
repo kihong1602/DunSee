@@ -1,6 +1,6 @@
 package com.dfo.dunsee.search.dto.detail;
 
-import com.dfo.dunsee.response.chardefault.ResponseCharacterDefaultInfo;
+import com.dfo.dunsee.response.chardefault.ResCharDefaultInfo;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -23,7 +23,7 @@ public class NormalCharInfoDto {
     this.adventureName = adventureName;
   }
 
-  public static NormalCharInfoDto createNormalCharInfoDto(ResponseCharacterDefaultInfo defaultInfo) {
+  public static NormalCharInfoDto createNormalCharInfoDto(ResCharDefaultInfo defaultInfo) {
     String characterName = defaultInfo.getCharacterName();
     int level = defaultInfo.getLevel();
     String jobGrowName = defaultInfo.getJobGrowName();

@@ -14,16 +14,19 @@ import com.dfo.dunsee.common.KeyType;
 import com.dfo.dunsee.common.UrlFactory;
 import com.dfo.dunsee.response.ApiResponse;
 import com.dfo.dunsee.response.charavatar.Avatar;
-import com.dfo.dunsee.response.charavatar.ResponseCharacterAvatarInfo;
-import com.dfo.dunsee.response.charcreature.ResponseCreatureInfo;
-import com.dfo.dunsee.response.chardefault.ResponseCharacterDefaultInfo;
+import com.dfo.dunsee.response.charavatar.Clone;
+import com.dfo.dunsee.response.charavatar.ResCharAvatarInfo;
+import com.dfo.dunsee.response.charcreature.Creature;
+import com.dfo.dunsee.response.charcreature.ResCreatureInfo;
+import com.dfo.dunsee.response.chardefault.ResCharDefaultInfo;
 import com.dfo.dunsee.response.charequipment.Equipment;
-import com.dfo.dunsee.response.charequipment.ResponseCharacterEquipInfo;
-import com.dfo.dunsee.response.charstatus.ResponseCharacterStatusInfo;
+import com.dfo.dunsee.response.charequipment.ResCharEquipInfo;
+import com.dfo.dunsee.response.charstatus.ResCharStatusInfo;
 import com.dfo.dunsee.response.charstatus.Status;
-import com.dfo.dunsee.response.chartalisman.ResponseCharacterTalismanInfo;
+import com.dfo.dunsee.response.chartalisman.ResCharTalismanInfo;
 import com.dfo.dunsee.response.chartalisman.Rune;
 import com.dfo.dunsee.response.chartalisman.Talisman;
+import com.dfo.dunsee.response.chartalisman.TalismanDetails;
 import com.dfo.dunsee.search.dto.detail.CreatureDto;
 import com.dfo.dunsee.search.dto.detail.DetailCharInfoDto;
 import com.dfo.dunsee.search.dto.detail.NormalCharInfoDto;
@@ -65,14 +68,14 @@ public class CharDataProcessor {
   }
 
   private NormalCharInfoDto createNormalCharInfoDto(ApiResponse apiResponse) {
-    ResponseCharacterDefaultInfo defaultInfo = (ResponseCharacterDefaultInfo) apiResponse;
+    ResCharDefaultInfo defaultInfo = (ResCharDefaultInfo) apiResponse;
 
     return NormalCharInfoDto.createNormalCharInfoDto(defaultInfo);
   }
 
   private Map<StatusType, StatusDto> createStatusDto(ApiResponse apiResponse) {
     Map<StatusType, StatusDto> statusDtoMap = new EnumMap<>(StatusType.class);
-    Map<String, Status> statusMap = convertStatusListToMap(((ResponseCharacterStatusInfo) apiResponse).getStatus());
+    Map<String, Status> statusMap = convertStatusListToMap(((ResCharStatusInfo) apiResponse).getStatus());
 
     for (StatusType statusType : StatusType.values()) {
       Status status = statusMap.get(statusType.getName());
@@ -84,7 +87,7 @@ public class CharDataProcessor {
 
   private Map<EquipSlotType, EquipmentDto> createEquipmentDto(ApiResponse apiResponse) {
     Map<EquipSlotType, EquipmentDto> equipDtoMap = new EnumMap<>(EquipSlotType.class);
-    List<Equipment> equipmentList = ((ResponseCharacterEquipInfo) apiResponse).getEquipment();
+    List<Equipment> equipmentList = ((ResCharEquipInfo) apiResponse).getEquipment();
     if (equipmentList == null) {
       return Collections.emptyMap();
     }
@@ -92,10 +95,11 @@ public class CharDataProcessor {
     Map<String, Equipment> equipmentMap = convertEquipListToMap(equipmentList);
 
     for (EquipSlotType equipSlotType : EquipSlotType.values()) {
-      if (equipmentMap.get(equipSlotType.name()) == null) {
+      Equipment equipment = equipmentMap.get(equipSlotType.name());
+      if (equipment == null) {
         continue;
       }
-      Equipment equipment = equipmentMap.get(equipSlotType.name());
+
       String imgUrl = urlFactory.setItemImgUrl(equipment.getItemId());
 
       EquipmentDto equipmentDto = EquipmentDto.createEquipmentDto(imgUrl, equipment);
@@ -107,43 +111,38 @@ public class CharDataProcessor {
   }
 
   private Map<AvatarSlotType, AvatarDto> createAvatarDto(ApiResponse apiResponse) {
-    List<Avatar> avatarList = ((ResponseCharacterAvatarInfo) apiResponse).getAvatar();
+    List<Avatar> avatarList = ((ResCharAvatarInfo) apiResponse).getAvatar();
     if (avatarList == null) {
       return Collections.emptyMap();
     }
 
-    Map<AvatarSlotType, AvatarDto> avatarDtoMap = new EnumMap<>(AvatarSlotType.class);
     Map<String, Avatar> avatarMap = convertAvatarListToMap(avatarList);
+    Map<AvatarSlotType, AvatarDto> avatarDtoMap = new EnumMap<>(AvatarSlotType.class);
 
     for (AvatarSlotType avatarSlotType : values()) {
       Avatar avatar = avatarMap.get(avatarSlotType.name());
       if (avatar == null) {
         continue;
       }
-      String imgUrl;
-      String itemName;
-      if (avatarSlotType.equals(SKIN) || avatarSlotType.equals(AURORA)) {
-        imgUrl = urlFactory.setItemImgUrl(avatar.getItemId());
-        itemName = avatar.getItemName();
-      } else {
-        imgUrl = urlFactory.setItemImgUrl(avatar.getClone().getItemId());
-        itemName = avatar.getClone().getItemName();
-      }
-      String slotName = avatar.getSlotName();
-      String optionAbility = avatar.getOptionAbility();
-      List<EmblemDto> emblemDtos = createEblemDtoList(avatarSlotType, avatarMap);
+      Clone clone = avatar.getClone();
 
       AvatarDto avatarDto = AvatarDto.builder()
-          .imgUrl(imgUrl)
-          .slotName(slotName)
-          .itemName(itemName)
-          .optionAbility(optionAbility)
-          .emblemDtos(emblemDtos)
+          .imgUrl(urlFactory.setItemImgUrl(
+              avatarSlotTypeCheck(avatarSlotType) ? avatar.getItemId() : clone.getItemId()))
+          .slotName(avatar.getSlotName())
+          .itemName(avatarSlotTypeCheck(avatarSlotType) ? avatar.getItemName() : clone.getItemName())
+          .optionAbility(avatar.getOptionAbility())
+          .emblemDtos(createEblemDtoList(avatarSlotType, avatarMap))
           .build();
+
       avatarDtoMap.put(avatarSlotType, avatarDto);
     }
 
     return avatarDtoMap;
+  }
+
+  private boolean avatarSlotTypeCheck(AvatarSlotType avatarSlotType) {
+    return avatarSlotType.equals(SKIN) || avatarSlotType.equals(AURORA);
   }
 
   private List<EmblemDto> createEblemDtoList(AvatarSlotType avatarSlotType, Map<String, Avatar> avatarMap) {
@@ -155,18 +154,19 @@ public class CharDataProcessor {
   }
 
   private CreatureDto createCreatureDto(ApiResponse apiResponse) {
-    ResponseCreatureInfo creatureInfo = (ResponseCreatureInfo) apiResponse;
-    if (creatureInfo.getCreature() == null) {
+    ResCreatureInfo creatureInfo = (ResCreatureInfo) apiResponse;
+    Creature creature = creatureInfo.getCreature();
+    if (creature == null) {
       return null;
     }
 
-    String imgUrl = urlFactory.setItemImgUrl(creatureInfo.getCreature().getItemId());
-    String itemName = creatureInfo.getCreature().getItemName();
+    String imgUrl = urlFactory.setItemImgUrl(creature.getItemId());
+    String itemName = creature.getItemName();
     return CreatureDto.builder().imgUrl(imgUrl).itemName(itemName).build();
   }
 
   private List<TalismanDto> createTalismanList(ApiResponse apiResponse) {
-    ResponseCharacterTalismanInfo talismanInfo = (ResponseCharacterTalismanInfo) apiResponse;
+    ResCharTalismanInfo talismanInfo = (ResCharTalismanInfo) apiResponse;
     if (talismanInfo.getTalismans() == null) {
       return Collections.emptyList();
     }
@@ -175,17 +175,16 @@ public class CharDataProcessor {
     List<Talisman> talismans = talismanInfo.getTalismans();
 
     for (Talisman talisman : talismans) {
-      if (talisman.getTalisman() == null) {
+      TalismanDetails talismanDetails = talisman.getTalisman();
+      if (talismanDetails == null) {
         continue;
       }
-      String imgUrl = urlFactory.setItemImgUrl(talisman.getTalisman().getItemId());
-      String itemName = talisman.getTalisman().getItemName();
-      List<RuneDto> runeDtos = createRuneDtoList(talisman);
 
-      TalismanDto talismanDto = TalismanDto.builder().imgUrl(imgUrl)
-                                                     .itemName(itemName)
-                                                     .runeDtos(runeDtos)
-                                                     .build();
+      TalismanDto talismanDto = TalismanDto.builder()
+          .imgUrl(urlFactory.setItemImgUrl(talismanDetails.getItemId()))
+          .itemName(talismanDetails.getItemName())
+          .runeDtos(createRuneDtoList(talisman))
+          .build();
       talismanDtoList.add(talismanDto);
     }
 
@@ -194,10 +193,13 @@ public class CharDataProcessor {
 
   private List<RuneDto> createRuneDtoList(Talisman talisman) {
     List<RuneDto> runeDtos = new ArrayList<>();
+
     for (Rune rune : talisman.getRunes()) {
-      String runeImgUrl = urlFactory.setItemImgUrl(rune.getItemId());
-      String runeItemName = rune.getItemName();
-      RuneDto runeDto = RuneDto.builder().imgUrl(runeImgUrl).itemName(runeItemName).build();
+
+      RuneDto runeDto = RuneDto.builder()
+          .imgUrl(urlFactory.setItemImgUrl(rune.getItemId()))
+          .itemName(rune.getItemName())
+          .build();
       runeDtos.add(runeDto);
     }
     return runeDtos;

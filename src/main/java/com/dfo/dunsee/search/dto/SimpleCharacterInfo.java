@@ -2,8 +2,8 @@ package com.dfo.dunsee.search.dto;
 
 import com.dfo.dunsee.common.Server;
 import com.dfo.dunsee.member.entity.CharacterInfo;
-import com.dfo.dunsee.response.charlist.ResponseCharacterInfo;
-import com.dfo.dunsee.response.charstatus.ResponseCharacterStatusInfo;
+import com.dfo.dunsee.response.charlist.ResCharInfo;
+import com.dfo.dunsee.response.charstatus.ResCharStatusInfo;
 import java.util.Comparator;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,7 +32,7 @@ public class SimpleCharacterInfo implements Comparable<SimpleCharacterInfo> {
   }
 
   public static SimpleCharacterInfo createSimpleCharacterInfo(ImgUrlParserCharacterInfo parseInfo,
-      ResponseCharacterStatusInfo statusInfo, CharacterInfo characterInfo) {
+      ResCharStatusInfo statusInfo, CharacterInfo characterInfo) {
     return SimpleCharacterInfo.builder()
         .serverId(parseInfo.getServerId())
         .characterId(parseInfo.getCharacterId())
@@ -44,7 +44,7 @@ public class SimpleCharacterInfo implements Comparable<SimpleCharacterInfo> {
         .build();
   }
 
-  public static SimpleCharacterInfo createSimpleCharacterInfo(String imgUrl, ResponseCharacterInfo info) {
+  public static SimpleCharacterInfo createSimpleCharacterInfo(String imgUrl, ResCharInfo info) {
     return SimpleCharacterInfo
         .builder()
         .serverId(info.getServerId())

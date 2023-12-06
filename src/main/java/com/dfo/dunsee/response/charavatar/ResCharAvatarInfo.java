@@ -1,16 +1,13 @@
-package com.dfo.dunsee.response.charequipment;
+package com.dfo.dunsee.response.charavatar;
 
 import com.dfo.dunsee.response.ApiResponse;
-import java.util.List;
+import java.util.ArrayList;
 import lombok.Getter;
 import lombok.ToString;
 
-/**
- * 캐릭터 장착 장비 총괄 클래스
- */
 @Getter
 @ToString
-public class ResponseCharacterEquipInfo implements ApiResponse {
+public class ResCharAvatarInfo implements ApiResponse {
 
   private String characterId;
   private String characterName;
@@ -22,6 +19,5 @@ public class ResponseCharacterEquipInfo implements ApiResponse {
   private String adventureName;
   private String guildId;
   private String guildName;
-  private List<Equipment> equipment;
-  private List<Object> setItemInfo;
+  private ArrayList<Avatar> avatar;
 }

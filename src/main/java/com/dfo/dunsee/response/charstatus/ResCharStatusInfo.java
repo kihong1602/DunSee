@@ -1,13 +1,20 @@
-package com.dfo.dunsee.response.charavatar;
+package com.dfo.dunsee.response.charstatus;
 
 import com.dfo.dunsee.response.ApiResponse;
-import java.util.ArrayList;
+import java.util.List;
 import lombok.Getter;
 import lombok.ToString;
 
+/**
+ * 캐릭터 스탯정보 클래스
+ * <p>
+ * Buff: 모험단버프, 길드버프
+ * <p>
+ * Status: 스탯정보 클래스
+ */
 @Getter
 @ToString
-public class ResponseCharacterAvatarInfo implements ApiResponse {
+public class ResCharStatusInfo implements ApiResponse {
 
   private String characterId;
   private String characterName;
@@ -19,5 +26,6 @@ public class ResponseCharacterAvatarInfo implements ApiResponse {
   private String adventureName;
   private String guildId;
   private String guildName;
-  private ArrayList<Avatar> avatar;
+  private List<Buff> buff;
+  private List<Status> status;
 }

@@ -12,12 +12,12 @@ import com.dfo.dunsee.common.ServiceCode;
 import com.dfo.dunsee.config.ApiUtilsConfig;
 import com.dfo.dunsee.member.entity.CharacterInfo;
 import com.dfo.dunsee.response.ApiResponse;
-import com.dfo.dunsee.response.charavatar.ResponseCharacterAvatarInfo;
-import com.dfo.dunsee.response.charcreature.ResponseCreatureInfo;
-import com.dfo.dunsee.response.chardefault.ResponseCharacterDefaultInfo;
-import com.dfo.dunsee.response.charequipment.ResponseCharacterEquipInfo;
-import com.dfo.dunsee.response.charstatus.ResponseCharacterStatusInfo;
-import com.dfo.dunsee.response.chartalisman.ResponseCharacterTalismanInfo;
+import com.dfo.dunsee.response.charavatar.ResCharAvatarInfo;
+import com.dfo.dunsee.response.charcreature.ResCreatureInfo;
+import com.dfo.dunsee.response.chardefault.ResCharDefaultInfo;
+import com.dfo.dunsee.response.charequipment.ResCharEquipInfo;
+import com.dfo.dunsee.response.charstatus.ResCharStatusInfo;
+import com.dfo.dunsee.response.chartalisman.ResCharTalismanInfo;
 import com.dfo.dunsee.search.dto.ImgUrlParserCharacterInfo;
 import com.dfo.dunsee.search.dto.detail.DetailCharInfoDto;
 import java.util.EnumMap;
@@ -95,17 +95,17 @@ public class CharDetailService {
   private Map<KeyType, ApiResponse> getApiResponseData(ServiceCode serviceCode, Map<KeyType, String> urlMap) {
     Map<KeyType, ApiResponse> resMap = new EnumMap<>(KeyType.class);
     CompletableFuture<ApiResponse> defaultInfo = callApiService.callNeopleApi(serviceCode, urlMap.get(DEFAULT),
-                                                                              ResponseCharacterDefaultInfo.class);
+                                                                              ResCharDefaultInfo.class);
     CompletableFuture<ApiResponse> statusInfo = callApiService.callNeopleApi(serviceCode, urlMap.get(STATUS),
-                                                                             ResponseCharacterStatusInfo.class);
+                                                                             ResCharStatusInfo.class);
     CompletableFuture<ApiResponse> equipInfo = callApiService.callNeopleApi(serviceCode, urlMap.get(EQUIP),
-                                                                            ResponseCharacterEquipInfo.class);
+                                                                            ResCharEquipInfo.class);
     CompletableFuture<ApiResponse> creatureInfo = callApiService.callNeopleApi(serviceCode, urlMap.get(CREATURE),
-                                                                               ResponseCreatureInfo.class);
+                                                                               ResCreatureInfo.class);
     CompletableFuture<ApiResponse> avatarInfo = callApiService.callNeopleApi(serviceCode, urlMap.get(AVATAR),
-                                                                             ResponseCharacterAvatarInfo.class);
+                                                                             ResCharAvatarInfo.class);
     CompletableFuture<ApiResponse> talismanInfo = callApiService.callNeopleApi(serviceCode, urlMap.get(TALISMAN),
-                                                                               ResponseCharacterTalismanInfo.class);
+                                                                               ResCharTalismanInfo.class);
     CompletableFuture.allOf(defaultInfo, statusInfo, equipInfo, creatureInfo, avatarInfo, talismanInfo)
                      .join();
     try {

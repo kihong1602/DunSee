@@ -1,12 +1,13 @@
-package com.dfo.dunsee.response.chardefault;
+package com.dfo.dunsee.response.chartalisman;
 
 import com.dfo.dunsee.response.ApiResponse;
+import java.util.List;
 import lombok.Getter;
 import lombok.ToString;
 
 @Getter
 @ToString
-public class ResponseCharacterDefaultInfo implements ApiResponse {
+public class ResCharTalismanInfo implements ApiResponse {
 
   private String characterId;
   private String characterName;
@@ -18,5 +19,5 @@ public class ResponseCharacterDefaultInfo implements ApiResponse {
   private String adventureName;
   private String guildId;
   private String guildName;
-
+  private List<Talisman> talismans;
 }
