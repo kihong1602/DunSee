@@ -2,6 +2,7 @@ package com.dfo.dunsee.member.controller;
 
 import static com.dfo.dunsee.common.ServiceCode.MBR401;
 import static com.dfo.dunsee.common.ServiceCode.MBR402;
+import static com.dfo.dunsee.common.ServiceCode.MBR403;
 import static com.dfo.dunsee.common.ServiceCode.setServiceMsg;
 
 import com.dfo.dunsee.common.ResultType;
@@ -55,6 +56,18 @@ public class BookmarkController {
     ResultType resultType = bookmarkService.addBookmarkCharacter(MBR401, imgUrlDto, member);
 
     ResponseJson responseJson = setResponseJson(MBR401, resultType);
+    return ResponseEntity.ok(responseJson);
+  }
+
+  @PostMapping("/remove")
+  public ResponseEntity<ResponseJson> remove(@RequestBody ImgUrlDto imgUrlDto,
+      @AuthenticationPrincipal PrincipalDetails principalDetails) {
+    Member member = getMember(principalDetails);
+    //즐겨찾기 삭제 기능 작성중
+    //html 에서 fetch를 통해 어떻게 url을 전송할지 고민해야함
+    ResultType resultType = bookmarkService.removeBookmark(MBR403, imgUrlDto, member);
+
+    ResponseJson responseJson = ResponseJson.setResponseJson(MBR403, resultType, "즐겨찾기 삭제에 성공하였습니다.");
     return ResponseEntity.ok(responseJson);
   }
 

@@ -13,4 +13,6 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Integer> {
 
   @Query("select b.characterInfo from Member m join m.bookmarks b where m = :member")
   List<CharacterInfo> findCharacterInfoByMember(Member member);
+
+  int deleteByMemberAndCharacterInfo(Member member, CharacterInfo characterInfo);
 }

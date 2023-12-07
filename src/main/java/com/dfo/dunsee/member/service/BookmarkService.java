@@ -1,5 +1,9 @@
 package com.dfo.dunsee.member.service;
 
+import static com.dfo.dunsee.common.ResultType.EXIST;
+import static com.dfo.dunsee.common.ResultType.FAILURE;
+import static com.dfo.dunsee.common.ResultType.SUCCESS;
+
 import com.dfo.dunsee.common.CharUtils;
 import com.dfo.dunsee.common.ResultType;
 import com.dfo.dunsee.common.ServiceCode;
@@ -25,6 +29,7 @@ public class BookmarkService {
   private final BookmarkRepository bookmarkRepository;
   private final CharacterInfoRepository characterInfoRepository;
   private final CharUtils charUtils;
+  private final int ZERO = 0;
 
   @Transactional
   public ResultType addBookmarkCharacter(ServiceCode serviceCode, ImgUrlDto imgUrlDto, Member member) {
@@ -32,19 +37,19 @@ public class BookmarkService {
     try {
       CharacterInfo characterInfo = characterInfoRepository.findByImgUrl(imgUrlDto.getImgUrl());
       if (isBookmarkExist(member, characterInfo)) {
-        return ResultType.EXIST;
+        return EXIST;
       }
       Bookmark bookmark = Bookmark.createBookmark(member, characterInfo);
 
       bookmarkRepository.save(bookmark);
 
-      return ResultType.SUCCESS;
+      return SUCCESS;
     } catch (NullPointerException e) {
       log.error(ServiceCode.setServiceMsg(serviceCode) + "NullPointerException 발생");
-      return ResultType.FAILURE;
+      return FAILURE;
     } catch (DataAccessException e) {
       log.error(ServiceCode.setServiceMsg(serviceCode) + "DataAccessException 발생");
-      return ResultType.FAILURE;
+      return FAILURE;
     }
   }
 
@@ -54,8 +59,19 @@ public class BookmarkService {
     return charUtils.getSimpleCharInfoList(serviceCode, savedCharacterInfoList);
   }
 
+  @Transactional
+  public ResultType removeBookmark(ServiceCode serviceCode, ImgUrlDto imgUrlDto, Member member) {
+    log.info(ServiceCode.setServiceMsg(serviceCode) + "즐겨찾기 삭제 서비스 진행");
+    String imgUrl = imgUrlDto.getImgUrl();
+    CharacterInfo savedCharInfo = characterInfoRepository.findByImgUrl(imgUrl);
+    int result = bookmarkRepository.deleteByMemberAndCharacterInfo(member, savedCharInfo);
+    //매직넘버 삭제해야함.
+    return result > ZERO ? SUCCESS : FAILURE;
+  }
+
   private boolean isBookmarkExist(Member member, CharacterInfo characterInfo) {
     Bookmark findBookmark = bookmarkRepository.findByMemberAndCharacterInfo(member, characterInfo);
     return findBookmark != null;
   }
+
 }
