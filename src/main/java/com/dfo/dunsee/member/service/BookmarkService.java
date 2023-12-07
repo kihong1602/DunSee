@@ -1,5 +1,6 @@
 package com.dfo.dunsee.member.service;
 
+import com.dfo.dunsee.common.CharUtils;
 import com.dfo.dunsee.common.ResultType;
 import com.dfo.dunsee.common.ServiceCode;
 import com.dfo.dunsee.member.dto.ImgUrlDto;
@@ -7,7 +8,9 @@ import com.dfo.dunsee.member.entity.Bookmark;
 import com.dfo.dunsee.member.entity.CharacterInfo;
 import com.dfo.dunsee.member.entity.Member;
 import com.dfo.dunsee.member.repository.BookmarkRepository;
+import com.dfo.dunsee.search.dto.SimpleCharacterInfo;
 import com.dfo.dunsee.search.repository.CharacterInfoRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
@@ -21,6 +24,7 @@ public class BookmarkService {
 
   private final BookmarkRepository bookmarkRepository;
   private final CharacterInfoRepository characterInfoRepository;
+  private final CharUtils charUtils;
 
   @Transactional
   public ResultType addBookmarkCharacter(ServiceCode serviceCode, ImgUrlDto imgUrlDto, Member member) {
@@ -42,6 +46,12 @@ public class BookmarkService {
       log.error(ServiceCode.setServiceMsg(serviceCode) + "DataAccessException 발생");
       return ResultType.FAILURE;
     }
+  }
+
+  public List<SimpleCharacterInfo> searchBookmarks(ServiceCode serviceCode, Member member) {
+    List<CharacterInfo> savedCharacterInfoList = bookmarkRepository.findCharacterInfoByMember(member);
+
+    return charUtils.getSimpleCharInfoList(serviceCode, savedCharacterInfoList);
   }
 
   private boolean isBookmarkExist(Member member, CharacterInfo characterInfo) {

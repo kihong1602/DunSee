@@ -27,9 +27,9 @@ public class SignInController {
   private final RegisterService memberService;
 
   @GetMapping("/register")
-  public ModelAndView register() {
+  public ModelAndView register(ModelAndView modelAndView) {
     log.info(ServiceCode.setServiceMsg(MBR201) + ServiceCode.setServiceMsg(MBR202) + "회원가입 페이지 이동");
-    ModelAndView modelAndView = new ModelAndView();
+
     modelAndView.setViewName("member/register");
     return modelAndView;
   }

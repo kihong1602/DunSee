@@ -23,57 +23,27 @@
         <nav aria-label="Global">
           <ul class="flex items-center gap-6 text-sm">
             <li>
-              <a
-                  class="text-gray-500 transition hover:text-gray-500/75"
-                  href="/"
-              >
-                About
-              </a>
+              <a class="text-gray-500 transition hover:text-gray-500/75" href="/"> About </a>
             </li>
 
             <li>
-              <a
-                  class="text-gray-500 transition hover:text-gray-500/75"
-                  href="/"
-              >
-                Careers
-              </a>
+              <a class="text-gray-500 transition hover:text-gray-500/75" href="/"> Careers </a>
             </li>
 
             <li>
-              <a
-                  class="text-gray-500 transition hover:text-gray-500/75"
-                  href="/"
-              >
-                History
-              </a>
+              <a class="text-gray-500 transition hover:text-gray-500/75" href="/"> History </a>
             </li>
 
             <li>
-              <a
-                  class="text-gray-500 transition hover:text-gray-500/75"
-                  href="/"
-              >
-                Services
-              </a>
+              <a class="text-gray-500 transition hover:text-gray-500/75" href="/"> Services </a>
             </li>
 
             <li>
-              <a
-                  class="text-gray-500 transition hover:text-gray-500/75"
-                  href="/"
-              >
-                Projects
-              </a>
+              <a class="text-gray-500 transition hover:text-gray-500/75" href="/"> Projects </a>
             </li>
 
-            <li>
-              <a
-                  class="text-gray-500 transition hover:text-gray-500/75"
-                  href="/"
-              >
-                Blog
-              </a>
+            <li sec:authorize="isAuthenticated()">
+              <a class="text-gray-500 transition hover:text-gray-500/75" href="/bookmark/view"> Bookmark </a>
             </li>
           </ul>
         </nav>
@@ -81,28 +51,18 @@
 
       <div class="flex items-center gap-4">
         <div class="sm:flex sm:gap-4" sec:authorize="!isAuthenticated()">
-          <a
-              class="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow"
-              href="/login"
-          >
-            Login
-          </a>
+          <a class="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow"
+             href="/login">Login</a>
 
           <div class="hidden sm:flex">
-            <a
-                class="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600"
-                href="/register"
-            >
+            <a class="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600" href="/register">
               Register
             </a>
           </div>
         </div>
 
         <div class="hidden sm:flex" sec:authorize="isAuthenticated()">
-          <a
-              class="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600"
-              href="/logout"
-          >
+          <a class="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600" href="/logout">
             Logout
           </a>
         </div>
