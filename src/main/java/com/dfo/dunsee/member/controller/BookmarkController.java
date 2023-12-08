@@ -33,6 +33,19 @@ public class BookmarkController {
 
   private final BookmarkService bookmarkService;
 
+  @PostMapping("/add")
+  public ResponseEntity<ResponseJson> bookmark(@RequestBody ImgUrlDto imgUrlDto,
+      @AuthenticationPrincipal PrincipalDetails principalDetails) {
+    log.info(setServiceMsg(MBR401) + "즐겨찾기 추가");
+
+    Member member = getMember(principalDetails);
+
+    ResultType resultType = bookmarkService.addBookmarkCharacter(MBR401, imgUrlDto, member);
+
+    ResponseJson responseJson = setResponseJson(MBR401, resultType, "즐겨찾기에 추가되었습니다.");
+    return ResponseEntity.ok(responseJson);
+  }
+
   @GetMapping("/view")
   public ModelAndView bookmarkView(@AuthenticationPrincipal PrincipalDetails principalDetails,
       ModelAndView modelAndView) {
@@ -46,28 +59,15 @@ public class BookmarkController {
     return modelAndView;
   }
 
-  @PostMapping("/add")
-  public ResponseEntity<ResponseJson> bookmark(@RequestBody ImgUrlDto imgUrlDto,
-      @AuthenticationPrincipal PrincipalDetails principalDetails) {
-    log.info(setServiceMsg(MBR401) + "즐겨찾기 추가");
-
-    Member member = getMember(principalDetails);
-
-    ResultType resultType = bookmarkService.addBookmarkCharacter(MBR401, imgUrlDto, member);
-
-    ResponseJson responseJson = setResponseJson(MBR401, resultType);
-    return ResponseEntity.ok(responseJson);
-  }
-
   @PostMapping("/remove")
   public ResponseEntity<ResponseJson> remove(@RequestBody ImgUrlDto imgUrlDto,
       @AuthenticationPrincipal PrincipalDetails principalDetails) {
+    log.info(setServiceMsg(MBR403) + "즐겨찾기 캐릭터 삭제");
+
     Member member = getMember(principalDetails);
-    //즐겨찾기 삭제 기능 작성중
-    //html 에서 fetch를 통해 어떻게 url을 전송할지 고민해야함
     ResultType resultType = bookmarkService.removeBookmark(MBR403, imgUrlDto, member);
 
-    ResponseJson responseJson = ResponseJson.setResponseJson(MBR403, resultType, "즐겨찾기 삭제에 성공하였습니다.");
+    ResponseJson responseJson = setResponseJson(MBR403, resultType, "즐겨찾기 삭제에 성공하였습니다.");
     return ResponseEntity.ok(responseJson);
   }
 
@@ -75,11 +75,11 @@ public class BookmarkController {
     return principalDetails == null ? null : principalDetails.getMember();
   }
 
-  private ResponseJson setResponseJson(ServiceCode ServiceCode, ResultType resultType) {
+  private ResponseJson setResponseJson(ServiceCode serviceCode, ResultType resultType, String successMsg) {
     return switch (resultType) {
-      case SUCCESS -> ResponseJson.setResponseJson(ServiceCode, resultType, "즐겨찾기에 추가되었습니다.");
-      case FAILURE -> ResponseJson.setResponseJson(ServiceCode, resultType, "즐겨찾기 추가에 실패하였습니다.");
-      case EXIST -> ResponseJson.setResponseJson(ServiceCode, resultType, "이미 즐겨찾기에 추가된 캐릭터입니다.");
+      case SUCCESS -> ResponseJson.setResponseJson(serviceCode, resultType, successMsg);
+      case FAILURE -> ResponseJson.setResponseJson(serviceCode, resultType, "작업이 실패하였습니다.");
+      case EXIST -> ResponseJson.setResponseJson(serviceCode, resultType, "이미 즐겨찾기에 추가된 캐릭터입니다.");
     };
   }
 }

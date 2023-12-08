@@ -6,7 +6,7 @@
     <div class="max-w-screen-xl px-4 py-8 mx-auto sm:px-6 sm:py-12 lg:px-8">
 
       <ul class="grid gap-4 mt-8 sm:grid-cols-2 lg:grid-cols-4">
-        <li th:each="character,status: ${characterList}">
+        <li th:each="character: ${characterList}">
           <a th:href="@{/search/character(imgUrl=${character.imgUrl})}"
              class="block overflow-hidden group">
             <img
@@ -46,9 +46,8 @@
           </a>
           <button
               class="inline-block rounded-full border border-red-600 bg-red-600 p-3 text-white hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500"
-              th:imgUrl="${character.imgUrl}"
-              th:onclick="removeProcess(this.getAttribute('imgUrl'))" type="button"
-
+              type="button"
+              th:onclick="removeProcess([[${character.imgUrl}]])"
           >
             <span class="sr-only"> 삭제 </span>
 
@@ -69,22 +68,6 @@
       </ul>
     </div>
   </section>
-  <script th:inline="javascript">
-    function removeProcess(imgUrl) {
-
-      fetch("/bookmark/remove", {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify({
-          imgUrl: imgUrl
-        })
-      }).then(response => response.text())
-      .then(data => {
-        const result = JSON.parse(data);
-      })
-    }
-  </script>
+  <script src="/js/bookmark.js"></script>
 </th:block>
 </html>
