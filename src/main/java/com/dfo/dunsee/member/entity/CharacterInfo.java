@@ -1,5 +1,6 @@
 package com.dfo.dunsee.member.entity;
 
+import com.dfo.dunsee.search.dto.detail.DetailCharInfoDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,5 +32,12 @@ public class CharacterInfo {
     this.imgUrl = imgUrl;
     this.fame = fame;
     this.adventureName = adventureName;
+  }
+
+  public static CharacterInfo createCharacterInfo(DetailCharInfoDto detailCharInfoDto) {
+    return CharacterInfo.builder().fame(detailCharInfoDto.getFame())
+                                  .imgUrl(detailCharInfoDto.getImgUrl())
+                                  .adventureName(detailCharInfoDto.getAdventureName())
+                                  .build();
   }
 }

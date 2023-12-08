@@ -20,10 +20,11 @@ import com.dfo.dunsee.config.ApiUtilsConfig;
 import com.dfo.dunsee.member.entity.CharacterInfo;
 import com.dfo.dunsee.search.dto.ImgUrlParserCharacterInfo;
 import com.dfo.dunsee.search.dto.detail.DetailCharInfoDto;
-import java.util.EnumMap;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -54,8 +55,6 @@ public class CharDetailService {
 
     DetailCharInfoDto detailCharInfoDto = buildCharacterDetails(resMap, imgUrl);
 
-    //이쯤에서 반환할예정
-    //반환하기 전, 모든 데이터가 가공이 완료되었으면, CompletableFuture를 통해 모험단명과 imgUrl을 DB에 저장
     CompletableFuture.runAsync(() -> saveCharacterInfoProcess(detailCharInfoDto));
     return detailCharInfoDto;
   }
@@ -63,10 +62,8 @@ public class CharDetailService {
 
   private void saveCharacterInfoProcess(DetailCharInfoDto detailCharInfoDto) {
     log.info(serviceMsg + "Async Character Info Save Process Start");
-    CharacterInfo characterInfo = CharacterInfo.builder().fame(detailCharInfoDto.getFame())
-                                                         .imgUrl(detailCharInfoDto.getImgUrl())
-                                                         .adventureName(detailCharInfoDto.getAdventureName())
-                                                         .build();
+    CharacterInfo characterInfo = CharacterInfo.createCharacterInfo(detailCharInfoDto);
+
     boolean result = charSaveService.saveCharacterInfo(characterInfo);
     if (result) {
       log.info(serviceMsg + "Character Info Save Success");
@@ -93,34 +90,26 @@ public class CharDetailService {
   }
 
   private Map<KeyType, ApiResponse> getApiResponseData(ServiceCode serviceCode, Map<KeyType, String> urlMap) {
-    Map<KeyType, ApiResponse> resMap = new EnumMap<>(KeyType.class);
-    CompletableFuture<ApiResponse> defaultInfo = callApiService.callNeopleApi(serviceCode, urlMap.get(DEFAULT),
-                                                                              ResCharDefaultInfo.class);
-    CompletableFuture<ApiResponse> statusInfo = callApiService.callNeopleApi(serviceCode, urlMap.get(STATUS),
-                                                                             ResCharStatusInfo.class);
-    CompletableFuture<ApiResponse> equipInfo = callApiService.callNeopleApi(serviceCode, urlMap.get(EQUIP),
-                                                                            ResCharEquipInfo.class);
-    CompletableFuture<ApiResponse> creatureInfo = callApiService.callNeopleApi(serviceCode, urlMap.get(CREATURE),
-                                                                               ResCreatureInfo.class);
-    CompletableFuture<ApiResponse> avatarInfo = callApiService.callNeopleApi(serviceCode, urlMap.get(AVATAR),
-                                                                             ResCharAvatarInfo.class);
-    CompletableFuture<ApiResponse> talismanInfo = callApiService.callNeopleApi(serviceCode, urlMap.get(TALISMAN),
-                                                                               ResCharTalismanInfo.class);
-    CompletableFuture.allOf(defaultInfo, statusInfo, equipInfo, creatureInfo, avatarInfo, talismanInfo)
-                     .join();
-    try {
-      resMap.put(DEFAULT, defaultInfo.get());
-      resMap.put(STATUS, statusInfo.get());
-      resMap.put(EQUIP, equipInfo.get());
-      resMap.put(CREATURE, creatureInfo.get());
-      resMap.put(AVATAR, avatarInfo.get());
-      resMap.put(TALISMAN, talismanInfo.get());
-    } catch (InterruptedException | ExecutionException e) {
-      Thread.currentThread()
-            .interrupt();
-      throw new RuntimeException(ServiceCode.setServiceMsg(serviceCode) + "\n" + e);
-    }
-    return resMap;
+    Map<KeyType, Class<? extends ApiResponse>> typeClassMap = createTypeClassMap();
+    List<KeyType> keyTypes = Arrays.asList(KeyType.values());
+
+    List<CompletableFuture<ApiResponse>> apiCalls =
+        keyTypes.stream()
+                .map(keyType -> callApiService.callNeopleApi(serviceCode, urlMap.get(keyType),
+                                                             typeClassMap.get(keyType))).toList();
+
+    return apiCalls.stream()
+                   .collect(Collectors
+                                .toMap(apiCall -> keyTypes.get(apiCalls.indexOf(apiCall)), CompletableFuture::join));
+  }
+
+  private Map<KeyType, Class<? extends ApiResponse>> createTypeClassMap() {
+    return Map.of(DEFAULT, ResCharDefaultInfo.class,
+                  STATUS, ResCharStatusInfo.class,
+                  EQUIP, ResCharEquipInfo.class,
+                  CREATURE, ResCreatureInfo.class,
+                  AVATAR, ResCharAvatarInfo.class,
+                  TALISMAN, ResCharTalismanInfo.class);
   }
 
   private DetailCharInfoDto buildCharacterDetails(Map<KeyType, ApiResponse> resMap, String imgUrl) {
