@@ -41,7 +41,7 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
     String registrationId = userRequest.getClientRegistration()
                                        .getRegistrationId();
 
-    Oauth2UserInfo oauth2UserInfo = null;
+    Oauth2UserInfo oauth2UserInfo;
     switch (registrationId) {
       case "google" -> oauth2UserInfo = new GoogleMemberInfo(oAuth2User.getAttributes());
       case "kakao" -> oauth2UserInfo = new KakaoMemberInfo(oAuth2User.getAttributes());
