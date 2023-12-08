@@ -1,8 +1,8 @@
 package com.dfo.dunsee.common;
 
+import com.dfo.dunsee.apiresponse.charstatus.ResCharStatusInfo;
 import com.dfo.dunsee.config.ApiUtilsConfig;
 import com.dfo.dunsee.member.entity.CharacterInfo;
-import com.dfo.dunsee.response.charstatus.ResCharStatusInfo;
 import com.dfo.dunsee.search.dto.ImgUrlParserCharacterInfo;
 import com.dfo.dunsee.search.dto.SimpleCharacterInfo;
 import com.dfo.dunsee.search.service.CallApiService;

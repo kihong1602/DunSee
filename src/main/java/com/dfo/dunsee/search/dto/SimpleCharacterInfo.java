@@ -1,9 +1,9 @@
 package com.dfo.dunsee.search.dto;
 
+import com.dfo.dunsee.apiresponse.charlist.ResCharInfo;
+import com.dfo.dunsee.apiresponse.charstatus.ResCharStatusInfo;
 import com.dfo.dunsee.common.Server;
 import com.dfo.dunsee.member.entity.CharacterInfo;
-import com.dfo.dunsee.response.charlist.ResCharInfo;
-import com.dfo.dunsee.response.charstatus.ResCharStatusInfo;
 import java.util.Comparator;
 import lombok.Builder;
 import lombok.Getter;

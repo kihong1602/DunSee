@@ -1,6 +1,6 @@
 package com.dfo.dunsee.search.dto.detail.avatar;
 
-import com.dfo.dunsee.response.charavatar.Emblem;
+import com.dfo.dunsee.apiresponse.charavatar.Emblem;
 import lombok.Builder;
 import lombok.Getter;
 

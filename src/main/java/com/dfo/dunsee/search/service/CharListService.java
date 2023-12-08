@@ -1,9 +1,9 @@
 package com.dfo.dunsee.search.service;
 
+import com.dfo.dunsee.apiresponse.charlist.ResCharInfo;
+import com.dfo.dunsee.apiresponse.charlist.ResCharList;
 import com.dfo.dunsee.common.ServiceCode;
 import com.dfo.dunsee.config.ApiUtilsConfig;
-import com.dfo.dunsee.response.charlist.ResCharInfo;
-import com.dfo.dunsee.response.charlist.ResCharList;
 import com.dfo.dunsee.search.dto.CharacterSearchKeyword;
 import com.dfo.dunsee.search.dto.SimpleCharacterInfo;
 import java.util.ArrayList;

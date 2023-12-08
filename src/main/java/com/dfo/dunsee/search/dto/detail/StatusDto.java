@@ -1,6 +1,6 @@
 package com.dfo.dunsee.search.dto.detail;
 
-import com.dfo.dunsee.response.charstatus.Status;
+import com.dfo.dunsee.apiresponse.charstatus.Status;
 import lombok.Getter;
 
 @Getter

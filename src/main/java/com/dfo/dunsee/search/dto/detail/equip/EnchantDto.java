@@ -1,6 +1,6 @@
 package com.dfo.dunsee.search.dto.detail.equip;
 
-import com.dfo.dunsee.response.charequipment.enchant.Enchant;
+import com.dfo.dunsee.apiresponse.charequipment.enchant.Enchant;
 import java.util.stream.Collectors;
 
 public class EnchantDto {

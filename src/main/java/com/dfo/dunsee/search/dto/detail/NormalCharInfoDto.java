@@ -1,6 +1,6 @@
 package com.dfo.dunsee.search.dto.detail;
 
-import com.dfo.dunsee.response.chardefault.ResCharDefaultInfo;
+import com.dfo.dunsee.apiresponse.chardefault.ResCharDefaultInfo;
 import lombok.Builder;
 import lombok.Getter;
 

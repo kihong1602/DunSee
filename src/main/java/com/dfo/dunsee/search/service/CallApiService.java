@@ -1,8 +1,8 @@
 package com.dfo.dunsee.search.service;
 
+import com.dfo.dunsee.apiresponse.ApiResponse;
 import com.dfo.dunsee.common.ApiUtils;
 import com.dfo.dunsee.common.ServiceCode;
-import com.dfo.dunsee.response.ApiResponse;
 import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
