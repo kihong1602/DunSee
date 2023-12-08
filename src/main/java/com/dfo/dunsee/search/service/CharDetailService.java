@@ -35,7 +35,6 @@ import org.springframework.stereotype.Service;
 public class CharDetailService {
 
   private final ApiUtilsConfig apiUtilsConfig;
-  private final CallApiService callApiService;
   private final CharDataProcessor charDataProcessor;
   private final CharSaveService charSaveService;
 
@@ -95,8 +94,8 @@ public class CharDetailService {
 
     List<CompletableFuture<ApiResponse>> apiCalls =
         keyTypes.stream()
-                .map(keyType -> callApiService.callNeopleApi(serviceCode, urlMap.get(keyType),
-                                                             typeClassMap.get(keyType))).toList();
+                .map(keyType -> apiUtilsConfig.getApiUtils().callNeopleApi(serviceCode, urlMap.get(keyType),
+                                                                           typeClassMap.get(keyType))).toList();
 
     return apiCalls.stream()
                    .collect(Collectors

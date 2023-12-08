@@ -1,12 +1,12 @@
 package com.dfo.dunsee.member.service;
 
+import static com.dfo.dunsee.common.ResultType.EXIST;
 import static com.dfo.dunsee.common.ResultType.FAILURE;
 import static com.dfo.dunsee.common.ResultType.SUCCESS;
 
 import com.dfo.dunsee.common.ResultType;
 import com.dfo.dunsee.common.ServiceCode;
 import com.dfo.dunsee.member.dto.JoinMemberInfo;
-import com.dfo.dunsee.member.dto.UsernameDto;
 import com.dfo.dunsee.member.entity.Member;
 import com.dfo.dunsee.member.repository.MemberRepository;
 import com.dfo.dunsee.member.utils.MemberUtils;
@@ -34,9 +34,10 @@ public class RegisterService {
   }
 
   private ResultType isDuplicateMember(Member saveMember) {
-    UsernameDto existingUsername = memberRepository.findUsernameByEmail(saveMember.getEmail());
+    Member existingUsername = memberRepository.findByUsername(saveMember.getUsername());
+    Member existingEmail = memberRepository.findByEmail(saveMember.getEmail());
 
-    return existingUsername == null ? SUCCESS : FAILURE;
+    return existingEmail == null && existingUsername == null ? SUCCESS : EXIST;
   }
 
 
@@ -54,7 +55,7 @@ public class RegisterService {
       }
 
       case FAILURE -> FAILURE;
-      default -> throw new IllegalStateException("Unexpected value: " + resultType);
+      case EXIST -> EXIST;
     };
   }
 

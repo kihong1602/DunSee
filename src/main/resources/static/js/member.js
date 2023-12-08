@@ -1,5 +1,6 @@
 const SUCCESS = "SUCCESS"
 const FAILURE = "FAILURE"
+const EXIST = "EXIST"
 
 function loginProcess() {
   let username = document.getElementById('username');
@@ -65,11 +66,18 @@ function registerProcess() {
         break
       }
       case FAILURE : {
-        alert("회원가입에 실패하였습니다. 다시한번 확인해주세요.")
+        alert(detail)
         username.value = '';
         password.value = '';
         email.value = '';
         break
+      }
+      case EXIST: {
+        alert(detail)
+        username.value = '';
+        password.value = '';
+        email.value = '';
+        break;
       }
     }
   })

@@ -3,9 +3,9 @@ package com.dfo.dunsee.member.controller;
 import static com.dfo.dunsee.common.ServiceCode.MBR101;
 import static com.dfo.dunsee.common.ServiceCode.MBR201;
 import static com.dfo.dunsee.common.ServiceCode.MBR202;
+import static com.dfo.dunsee.common.ServiceCode.setServiceMsg;
 
 import com.dfo.dunsee.common.ResultType;
-import com.dfo.dunsee.common.ServiceCode;
 import com.dfo.dunsee.common.response.ResponseJson;
 import com.dfo.dunsee.member.dto.JoinMemberInfo;
 import com.dfo.dunsee.member.service.RegisterService;
@@ -28,7 +28,7 @@ public class SignInController {
 
   @GetMapping("/register")
   public ModelAndView register(ModelAndView modelAndView) {
-    log.info(ServiceCode.setServiceMsg(MBR201) + ServiceCode.setServiceMsg(MBR202) + "회원가입 페이지 이동");
+    log.info(setServiceMsg(MBR201) + setServiceMsg(MBR202) + "회원가입 페이지 이동");
 
     modelAndView.setViewName("member/register");
     return modelAndView;
@@ -38,19 +38,29 @@ public class SignInController {
   @PostMapping("/register-process")
   public ResponseEntity<ResponseJson> registerId(@RequestBody JoinMemberInfo joinMemberInfo) {
 
-    log.info(ServiceCode.setServiceMsg(MBR101) + "일반 회원가입 진행");
+    log.info(setServiceMsg(MBR101) + "일반 회원가입 진행");
 
     ResultType result = memberService.memberRegister(MBR101, joinMemberInfo);
 
-    ResponseJson responseJson = ResponseJson.setResponseJson(MBR101, result, "회원가입이 완료되었습니다. 로그인페이지로 이동합니다.");
+    ResponseJson responseJson = setResponseJson(result);
 
     return switch (result) {
-      case SUCCESS -> ResponseEntity.ok(responseJson);
-
-      case FAILURE -> ResponseEntity.notFound().build();
-      default -> ResponseEntity.badRequest().build();
+      case SUCCESS -> ResponseEntity.ok().body(responseJson);
+      case FAILURE -> ResponseEntity.badRequest().body(responseJson);
+      case EXIST -> ResponseEntity.unprocessableEntity().body(responseJson);
     };
 
+  }
+
+  private ResponseJson setResponseJson(ResultType resultType) {
+    String msg =
+        switch (resultType) {
+          case SUCCESS -> "회원가입이 완료되었습니다. 로그인페이지로 이동합니다.";
+          case FAILURE -> "회원가입에 실패하였습니다. 다시 시도해주세요.";
+          case EXIST -> "이미 등록된 아이디 또는 이메일입니다.";
+        };
+
+    return ResponseJson.setResponseJson(MBR101, resultType, msg);
   }
 
   @GetMapping("/user")

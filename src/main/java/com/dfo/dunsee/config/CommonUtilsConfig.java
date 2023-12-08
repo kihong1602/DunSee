@@ -1,13 +1,13 @@
 package com.dfo.dunsee.config;
 
 import com.dfo.dunsee.common.JsonUtils;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
 public class CommonUtilsConfig {
 

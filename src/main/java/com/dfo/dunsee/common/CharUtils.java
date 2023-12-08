@@ -5,7 +5,6 @@ import com.dfo.dunsee.config.ApiUtilsConfig;
 import com.dfo.dunsee.member.entity.CharacterInfo;
 import com.dfo.dunsee.search.dto.ImgUrlParserCharacterInfo;
 import com.dfo.dunsee.search.dto.SimpleCharacterInfo;
-import com.dfo.dunsee.search.service.CallApiService;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Component;
 public class CharUtils {
 
   private final ApiUtilsConfig apiUtilsConfig;
-  private final CallApiService callApiService;
 
   public List<SimpleCharacterInfo> getSimpleCharInfoList(ServiceCode serviceCode,
       List<CharacterInfo> savedCharacterInfoList) {
@@ -47,7 +45,7 @@ public class CharUtils {
 
     List<CompletableFuture<ResCharStatusInfo>> futures =
         urlList.stream()
-               .map(url -> callApiService.callNeopleApi(serviceCode, url, ResCharStatusInfo.class)
+               .map(url -> apiUtilsConfig.getApiUtils().callNeopleApi(serviceCode, url, ResCharStatusInfo.class)
                                          .thenApply(ResCharStatusInfo.class::cast)).toList();
 
     futures.stream()

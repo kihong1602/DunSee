@@ -2,11 +2,11 @@ package com.dfo.dunsee.common;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 
-@Component
+@Configuration
 public class GlobalUtils {
 
   @Bean
