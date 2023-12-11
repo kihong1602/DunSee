@@ -44,11 +44,12 @@ function resultProcess(result) {
     }
     case FAILURE : {
       alert(detail);
-      break
+      location.reload();
+      break;
     }
     case EXIST: {
       alert(detail);
-      break
+      break;
     }
   }
 }

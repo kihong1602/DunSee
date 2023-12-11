@@ -33,7 +33,7 @@ public class UrlFactory {
    * <p>
    * https://api.neople.co.kr/df/servers/{serverId}/characters?characterName={characterName}&limit={limit}&wordType={wordType}&apikey={apikey}
    */
-  public String setSearchCharacterListUrl(ServiceCode serviceCode, String characterName, String serverId) {
+  public String setSearchCharacterListUrl(ServiceCode serviceCode, String serverId, String characterName) {
     log.info(ServiceCode.setServiceMsg(serviceCode) + "Character List URL Create");
     StringBuilder sb = new StringBuilder();
 
@@ -154,6 +154,9 @@ public class UrlFactory {
              .toString();
   }
 
+  /**
+   * 캐릭터 아바타 조회<p> https://api.neople.co.kr/df/servers/{serverId}/characters/{characterId}/equip/avatar?apikey={apikey}
+   */
   public String setSearchCharacterAvatarUrl(ServiceCode serviceCode, String serverId, String characterId) {
     log.info(ServiceCode.setServiceMsg(serviceCode) + " Character Avatar URL Create");
     StringBuilder sb = new StringBuilder();
@@ -175,6 +178,9 @@ public class UrlFactory {
              .toString();
   }
 
+  /**
+   * 크리쳐 조회<p> https://api.neople.co.kr/df/servers/{serverId}/characters/{characterId}/equip/creature?apikey={apikey}
+   */
   public String setSearchCreatureUrl(ServiceCode serviceCode, String serverId, String characterId) {
     log.info(ServiceCode.setServiceMsg(serviceCode) + " Creature URL Create");
     StringBuilder sb = new StringBuilder();
@@ -196,6 +202,11 @@ public class UrlFactory {
              .toString();
   }
 
+  /**
+   * 캐릭터 탈리스만 조회
+   * <p>
+   * https://api.neople.co.kr/df/servers/{serverId}/characters/{characterId}/equip/talisman?apikey={apikey}
+   */
   public String setSearchTalismanUrl(ServiceCode serviceCode, String serverId, String characterId) {
     log.info(ServiceCode.setServiceMsg(serviceCode) + "Talisman URL Create");
     StringBuilder sb = new StringBuilder();
@@ -217,6 +228,11 @@ public class UrlFactory {
              .toString();
   }
 
+  /**
+   * 아이템 이미지 조회
+   * <p>
+   * https://img-api.neople.co.kr/df/items/{itemId}
+   */
   public String setItemImgUrl(String itemId) {
     log.info("Item Image URL Create");
     StringBuilder sb = new StringBuilder();

@@ -29,7 +29,7 @@ public class BookmarkService {
   private final BookmarkRepository bookmarkRepository;
   private final CharacterInfoRepository characterInfoRepository;
   private final CharUtils charUtils;
-  private final int ZERO = 0;
+  private static final int ZERO = 0;
 
   @Transactional
   public ResultType addBookmarkCharacter(ServiceCode serviceCode, ImgUrlDto imgUrlDto, Member member) {
