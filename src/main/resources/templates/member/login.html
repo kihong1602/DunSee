@@ -14,7 +14,7 @@
       </p>
     </div>
 
-    <div class="mx-auto mb-0 mt-8 max-w-md space-y-4">
+    <div class="mx-auto mb-0 mt-8 max-w-md space-y-4" id="login-container">
       <div>
         <label for="username" class="sr-only">Username</label>
 
@@ -80,7 +80,7 @@
             id="loginBtn"
             type="button"
             class="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white"
-            onclick="loginProcess()"
+            th:onclick="loginProcess()"
         >
           Login
         </button>
@@ -107,6 +107,6 @@
       </div>
     </div>
   </div>
-  <script src="/js/member.js"></script>
+  <script src="/js/login.js"></script>
 </th:block>
 </html>

@@ -14,7 +14,7 @@
       </p>
     </div>
 
-    <div class="mx-auto mb-0 mt-8 max-w-md space-y-4">
+    <div class="mx-auto mb-0 mt-8 max-w-md space-y-4" id="register-container">
       <div>
         <label for="username" class="sr-only">Username</label>
 
@@ -89,6 +89,7 @@
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
+
           >
             <path
                 stroke-linecap="round"
@@ -109,7 +110,7 @@
             id="registerBtn"
             type="button"
             class="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white"
-            onclick="registerProcess()"
+            th:onclick="registerProcess()"
         >
           회원가입
         </button>
@@ -135,6 +136,6 @@
       </div>
     </div>
   </div>
-  <script src="/js/member.js"></script>
+  <script src="/js/register.js"></script>
 </th:block>
 </html>

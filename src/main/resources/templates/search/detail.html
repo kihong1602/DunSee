@@ -9,8 +9,7 @@
   <!--  즐겨찾기 버튼-->
   <a sec:authorize="isAuthenticated()"
      class="group relative inline-block text-sm font-medium text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
-     href="javascript:bookmarkProcess();"
-  >
+     th:onclick="bookmarkProcess()">
   <span
       class="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-indigo-600 transition-transform group-hover:translate-x-0 group-hover:translate-y-0"
   ></span>
