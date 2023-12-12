@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="fragments/default_layout" lang="en">
+      layout:decorate="~{fragments/default_layout}" lang="en">
+<head>
+  <title>캐릭터 조회</title>
+</head>
 <th:block layout:fragment="content" th:with="title='캐릭터조회'">
   <section>
     <div class="max-w-screen-xl px-4 py-8 mx-auto sm:px-6 sm:py-12 lg:px-8">

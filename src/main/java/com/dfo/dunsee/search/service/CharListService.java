@@ -25,7 +25,7 @@ public class CharListService {
     String characterName = keyword.getCharacterName();
     String serverId = keyword.getServerId();
     String searchCharacterUrl = apiUtilsConfig.getUrlFactory()
-                                              .setSearchCharacterListUrl(serviceCode, characterName, serverId);
+                                              .setSearchCharacterListUrl(serviceCode, serverId, characterName);
 
     ResCharList resCharList = apiUtilsConfig.getApiUtils()
                                             .getApiResponseJson(serviceCode, searchCharacterUrl,

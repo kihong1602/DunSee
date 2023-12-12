@@ -1,8 +1,10 @@
 package com.dfo.dunsee.member.controller;
 
 import com.dfo.dunsee.common.ServiceCode;
+import com.dfo.dunsee.search.dto.CharacterSearchKeyword;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
@@ -16,8 +18,9 @@ public class LoginController {
   }
 
   @GetMapping("/")
-  public String indexPage() {
+  public String indexPage(Model model) {
     log.info(ServiceCode.setServiceMsg(ServiceCode.COM100).replace("::", "").trim());
-    return "/index";
+    model.addAttribute("searchKeyword", CharacterSearchKeyword.builder().build());
+    return "index";
   }
 }
