@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
+@Transactional
 class RegisterServiceTest {
 
   @Autowired
@@ -29,7 +30,6 @@ class RegisterServiceTest {
   }
 
   @Test
-  @Transactional
   @DisplayName("ResultType이 SUCCESS가 입력되면 회원가입을 진행한다.")
   void saveMemberSuccess() {
     //given
@@ -46,7 +46,6 @@ class RegisterServiceTest {
   }
 
   @Test
-  @Transactional
   @DisplayName("중복회원이라면 EXIST를  출력한다.")
   void saveMemberExist() {
     //given

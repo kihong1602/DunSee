@@ -5,7 +5,7 @@ import com.dfo.dunsee.member.entity.CharacterInfo;
 import com.dfo.dunsee.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BookmarkRepository extends JpaRepository<Bookmark, Integer>, BookmarkCustomRepository {
+public interface BookmarkRepository extends JpaRepository<Bookmark, Long>, BookmarkCustomRepository {
 
   Bookmark findByMemberAndCharacterInfo(Member member, CharacterInfo characterInfo);
 

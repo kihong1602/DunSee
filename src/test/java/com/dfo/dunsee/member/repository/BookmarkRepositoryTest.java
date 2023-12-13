@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
+@Transactional
 class BookmarkRepositoryTest {
 
 
@@ -50,7 +51,6 @@ class BookmarkRepositoryTest {
   }
 
   @Test
-  @Transactional
   @DisplayName("멤버 엔티티를 입력하면 캐릭터정보가 반환된다.")
   void findCharacterInfoByMemberTest() {
     //given
@@ -66,7 +66,6 @@ class BookmarkRepositoryTest {
   }
 
   @Test
-  @Transactional
   @DisplayName("회원정보와 캐릭터정보를 등록한 북마크가 있는지 체크한다")
   void findBookmarkByMemberAndCharacterInfoTest() {
     //given
@@ -85,7 +84,6 @@ class BookmarkRepositoryTest {
   }
 
   @Test
-  @Transactional
   @DisplayName("북마크를 삭제한다")
   void deleteBookmark() {
     //given

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 @SpringBootTest
+@Transactional
 class MemberRepositoryTest {
 
   @Autowired
@@ -27,7 +28,6 @@ class MemberRepositoryTest {
 
 
   @Test
-  @Transactional
   @DisplayName("username을 입력해 회원이 있는지 조회한다.")
   void findByUsername() {
     //given
@@ -39,7 +39,6 @@ class MemberRepositoryTest {
   }
 
   @Test
-  @Transactional
   @DisplayName("email을 입력해 회원이 존재하는지 조회한다.")
   void findByEmailTest() {
     //given
