@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public enum Server {
   ALL("all", "전체"),
+  ADVENTURE("adventure", "모험단"),
   CAIN("cain", "카인"),
   DIREGIE("diregie", "디레지에"),
   SIROCO("siroco", "시로코"),

@@ -1,3 +1,9 @@
+buildscript {
+    ext {
+        queryDslVersion = "5.0.0"
+    }
+}
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.1.5'
@@ -22,26 +28,46 @@ repositories {
 }
 
 dependencies {
+    // DB, JPA
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
+    // Query DSL
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"
+    annotationProcessor(
+            "com.querydsl:querydsl-apt:${queryDslVersion}:jakarta",
+            "jakarta.annotation:jakarta.annotation-api",
+            "jakarta.persistence:jakarta.persistence-api"
+    )
+    sourceSets {
+        main {
+            java {
+                srcDirs = ["$projectDir/src/main/java", "$projectDir/build/generated"]
+            }
+        }
+    }
+
+    // Security
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 
+    // Thymeleaf
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 
+    // Web
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.springframework.boot:spring-boot-devtools'
-    
     implementation 'org.apache.httpcomponents.client5:httpclient5:5.2.1'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+    // Lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
+    // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

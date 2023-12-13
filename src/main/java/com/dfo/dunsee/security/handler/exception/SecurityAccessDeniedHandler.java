@@ -22,7 +22,7 @@ public class SecurityAccessDeniedHandler implements AccessDeniedHandler {
     if (isUser || isManager) {
       response.sendError(HttpStatus.FORBIDDEN.value());
     } else {
-      response.sendRedirect("login");
+      response.sendRedirect("/login");
     }
   }
 }

@@ -24,21 +24,9 @@
           <div class="mx-auto max-w-xl text-center grid lg:grid-cols-10 lg:gap-8">
             <div class="lg:col-span-3">
               <label for="serverId"></label>
-              <select
-                  th:field="*{serverId}"
-                  id="serverId"
-                  class="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
-              >
-                <option value="all">전체</option>
-                <option value="adventure">모험단</option>
-                <option value="cain">카인</option>
-                <option value="diregie">디레지에</option>
-                <option value="siroco">시로코</option>
-                <option value="prey">프레이</option>
-                <option value="casillas">카시야스</option>
-                <option value="hilder">힐더</option>
-                <option value="anton">안톤</option>
-                <option value="bakal">바칼</option>
+              <select th:field="*{serverId}" id="serverId"
+                      class="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm">
+                <option th:each="server:${servers}" th:value="${server.engName}" th:text="${server.korName}">전체</option>
               </select>
             </div>
             <div class="lg:col-span-7 mt-4 lg:mt-0">
