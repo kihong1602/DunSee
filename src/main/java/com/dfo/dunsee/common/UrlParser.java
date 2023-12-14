@@ -1,6 +1,6 @@
 package com.dfo.dunsee.common;
 
-import com.dfo.dunsee.search.dto.ImgUrlParserCharacterInfo;
+import com.dfo.dunsee.domain.search.dto.ImgUrlParserCharacterInfo;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,9 +23,9 @@ public class UrlParser {
     String serverId = parseImgUrlMap.get("serverId");
 
     return ImgUrlParserCharacterInfo.builder()
-                                    .characterId(characterId)
-                                    .serverId(serverId)
-                                    .build();
+        .characterId(characterId)
+        .serverId(serverId)
+        .build();
   }
 }
 

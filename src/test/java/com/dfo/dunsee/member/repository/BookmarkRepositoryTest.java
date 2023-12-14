@@ -3,10 +3,12 @@ package com.dfo.dunsee.member.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
 
-import com.dfo.dunsee.member.entity.Bookmark;
-import com.dfo.dunsee.member.entity.CharacterInfo;
-import com.dfo.dunsee.member.entity.Member;
-import com.dfo.dunsee.search.repository.CharacterInfoRepository;
+import com.dfo.dunsee.domain.member.entity.Bookmark;
+import com.dfo.dunsee.domain.member.entity.CharacterInfo;
+import com.dfo.dunsee.domain.member.entity.Member;
+import com.dfo.dunsee.domain.member.repository.BookmarkRepository;
+import com.dfo.dunsee.domain.member.repository.MemberRepository;
+import com.dfo.dunsee.domain.search.repository.CharacterInfoRepository;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

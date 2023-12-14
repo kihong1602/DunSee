@@ -3,8 +3,9 @@ package com.dfo.dunsee.board.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
-import com.dfo.dunsee.board.entity.FreeBoard;
-import com.dfo.dunsee.member.entity.Member;
+import com.dfo.dunsee.domain.board.entity.FreeBoard;
+import com.dfo.dunsee.domain.board.repository.FreeBoardRepository;
+import com.dfo.dunsee.domain.member.entity.Member;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.util.List;

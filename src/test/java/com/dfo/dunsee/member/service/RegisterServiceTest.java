@@ -4,7 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.dfo.dunsee.common.ResultType;
 import com.dfo.dunsee.common.ServiceCode;
-import com.dfo.dunsee.member.dto.JoinMemberInfo;
+import com.dfo.dunsee.domain.member.dto.JoinMemberInfo;
+import com.dfo.dunsee.domain.member.service.RegisterService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

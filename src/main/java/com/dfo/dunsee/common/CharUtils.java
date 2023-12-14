@@ -2,9 +2,9 @@ package com.dfo.dunsee.common;
 
 import com.dfo.dunsee.apiresponse.charstatus.ResCharStatusInfo;
 import com.dfo.dunsee.config.ApiUtilsConfig;
-import com.dfo.dunsee.member.entity.CharacterInfo;
-import com.dfo.dunsee.search.dto.ImgUrlParserCharacterInfo;
-import com.dfo.dunsee.search.dto.SimpleCharacterInfo;
+import com.dfo.dunsee.domain.member.entity.CharacterInfo;
+import com.dfo.dunsee.domain.search.dto.ImgUrlParserCharacterInfo;
+import com.dfo.dunsee.domain.search.dto.SimpleCharacterInfo;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;

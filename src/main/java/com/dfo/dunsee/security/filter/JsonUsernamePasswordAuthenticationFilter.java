@@ -4,7 +4,7 @@ import static com.dfo.dunsee.common.ServiceCode.setServiceMsg;
 
 import com.dfo.dunsee.common.JsonUtils;
 import com.dfo.dunsee.common.ServiceCode;
-import com.dfo.dunsee.member.dto.LoginDto;
+import com.dfo.dunsee.domain.member.dto.LoginDto;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

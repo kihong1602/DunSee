@@ -2,7 +2,8 @@ package com.dfo.dunsee.member.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.dfo.dunsee.member.entity.Member;
+import com.dfo.dunsee.domain.member.entity.Member;
+import com.dfo.dunsee.domain.member.repository.MemberRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

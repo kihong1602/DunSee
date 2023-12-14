@@ -1,6 +1,6 @@
 package com.dfo.dunsee.security.auth.oauth;
 
-import com.dfo.dunsee.member.entity.Member;
+import com.dfo.dunsee.domain.member.entity.Member;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;

@@ -4,8 +4,8 @@ import static com.dfo.dunsee.common.ServiceCode.setServiceMsg;
 
 import com.dfo.dunsee.common.RoleType;
 import com.dfo.dunsee.common.ServiceCode;
-import com.dfo.dunsee.member.entity.Member;
-import com.dfo.dunsee.member.repository.MemberRepository;
+import com.dfo.dunsee.domain.member.entity.Member;
+import com.dfo.dunsee.domain.member.repository.MemberRepository;
 import com.dfo.dunsee.security.auth.oauth.provider.GoogleMemberInfo;
 import com.dfo.dunsee.security.auth.oauth.provider.KakaoMemberInfo;
 import com.dfo.dunsee.security.auth.oauth.provider.Oauth2UserInfo;

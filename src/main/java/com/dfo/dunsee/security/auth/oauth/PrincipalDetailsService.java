@@ -1,8 +1,8 @@
 package com.dfo.dunsee.security.auth.oauth;
 
 import com.dfo.dunsee.common.ServiceCode;
-import com.dfo.dunsee.member.entity.Member;
-import com.dfo.dunsee.member.repository.MemberRepository;
+import com.dfo.dunsee.domain.member.entity.Member;
+import com.dfo.dunsee.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;

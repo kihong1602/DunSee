@@ -5,7 +5,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 
 import com.dfo.dunsee.common.ServiceCode;
 import com.dfo.dunsee.common.UrlParser;
-import com.dfo.dunsee.search.dto.ImgUrlParserCharacterInfo;
+import com.dfo.dunsee.domain.search.dto.ImgUrlParserCharacterInfo;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
