@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 
+@Transactional
 @SpringBootTest
 class CharacterInfoRepositoryTest {
 
@@ -28,7 +29,6 @@ class CharacterInfoRepositoryTest {
   }
 
   @Test
-  @Transactional
   @DisplayName("모험단이름으로 캐릭터목록을 조회한다.")
   void findByAdventureName() {
     //given
@@ -42,7 +42,6 @@ class CharacterInfoRepositoryTest {
   }
 
   @Test
-  @Transactional
   @DisplayName("ImageUrl를 통해 캐릭터를 존재하는지 확인하고 존재하면 true를 반환한다.")
   void existsByImgUrlTrue() {
     //given
@@ -54,7 +53,6 @@ class CharacterInfoRepositoryTest {
   }
 
   @Test
-  @Transactional
   @DisplayName("ImageUrl을 통해 캐릭터가 존재하는지 확인하고 없다면 false를 반환한다.")
   void existsByImgUrlFalse() {
     //given

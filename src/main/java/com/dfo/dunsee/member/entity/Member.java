@@ -1,7 +1,8 @@
 package com.dfo.dunsee.member.entity;
 
 import com.dfo.dunsee.board.entity.Comment;
-import com.dfo.dunsee.board.entity.Post;
+import com.dfo.dunsee.board.entity.FreeBoard;
+import com.dfo.dunsee.board.entity.QuestionBoard;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.CascadeType;
@@ -28,7 +29,7 @@ import org.hibernate.annotations.DynamicInsert;
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
 @DynamicInsert
-public class Member extends BaseEntity {
+public class Member extends BaseTimeEntity {
 
   @Builder
   private Member(String username, String password, String email, String role, String provider,
@@ -69,7 +70,10 @@ public class Member extends BaseEntity {
   private List<Bookmark> bookmarks = new ArrayList<>();
 
   @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<Post> posts = new ArrayList<>();
+  private List<FreeBoard> freeBoards = new ArrayList<>();
+
+  @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<QuestionBoard> questionBoard = new ArrayList<>();
 
   @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Comment> comments = new ArrayList<>();

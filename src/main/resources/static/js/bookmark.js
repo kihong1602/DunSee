@@ -40,6 +40,7 @@ function resultProcess(result) {
   switch (jsonData.data.value) {
     case SUCCESS: {
       alert(detail);
+      location.reload();
       break;
     }
     case FAILURE : {
