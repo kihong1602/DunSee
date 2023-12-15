@@ -40,7 +40,7 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
     OAuth2User oAuth2User = super.loadUser(userRequest);
     String registrationId = userRequest.getClientRegistration()
                                        .getRegistrationId();
-
+    log.info(oAuth2User.toString());
     Oauth2UserInfo oauth2UserInfo;
     switch (registrationId) {
       case "google" -> oauth2UserInfo = new GoogleMemberInfo(oAuth2User.getAttributes());
@@ -71,6 +71,7 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
     String provider = oauth2UserInfo.getProvider();
     String providerId = oauth2UserInfo.getProviderId();
     String email = oauth2UserInfo.getEmail();
+    String nickName = oauth2UserInfo.getName();
     String username = createUserName(provider, providerId);
     String password = bCryptPasswordEncoder.encode(oAuth2Password);
     String role = RoleType.USER.getValue();
@@ -78,6 +79,7 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
     return Member.builder()
         .username(username)
         .password(password)
+        .nickName(nickName)
         .email(email)
         .role(role)
         .provider(provider)
