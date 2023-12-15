@@ -112,4 +112,18 @@ public class Member extends BaseTimeEntity {
     }
     setPassword(password);
   }
+
+  @Override
+  public String toString() {
+    return "Member{" +
+        "id=" + id +
+        ", username='" + username + '\'' +
+        ", password='" + password + '\'' +
+        ", nickName='" + nickName + '\'' +
+        ", email='" + email + '\'' +
+        ", role='" + role + '\'' +
+        ", provider='" + provider + '\'' +
+        ", providerId='" + providerId + '\'' +
+        '}';
+  }
 }

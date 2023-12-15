@@ -15,7 +15,7 @@
     </div>
     <div id="editor"></div>
     <div class="flex justify-end items-end mb-4">
-      <button th:text="#{post.write}"
+      <button th:text="#{post.write}" onclick="savePost()"
               class="mr-3 inline-block rounded bg-indigo-600 px-8 py-3 text-sm font-medium text-white
           transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-indigo-500">
         writer
@@ -37,9 +37,68 @@
       el: document.querySelector('#editor'),
       height: '500px',
       initialEditType: 'markdown',
-      initialValue: '내용을 입력해주세요.',
+      initialValue: '# 내용을 입력해주세요.',
       previewStyle: 'vertical',
     });
+
+    console.log('시작시점 마크다운 형식' + editor.getMarkdown());
+
+    const SUCCESS = "SUCCESS"
+    const FAILURE = "FAILURE"
+
+    function savePost() {
+      const title = document.getElementById('title').value;
+      const content = editor.getMarkdown();
+      console.log(title);
+      console.log('저장프로세스 시점' + content);
+      const requestData = {
+        title: title,
+        content: content
+      };
+      let category = findCategory();
+      let requestUrl = "/board/" + category + "/save";
+
+      fetch(requestUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestData),
+      })
+      .then(response => response.text())
+      .then(result => resultProcess(result))
+      .catch(e => {
+        alert("서버 오류 입니다.");
+        console.error(e);
+      });
+
+    }
+
+    function findCategory() {
+      const url = new URL(window.location.href);
+      const uri = url.pathname.split("/");
+      return uri[uri.length - 2];
+    }
+
+    function resultProcess(result) {
+      const jsonData = JSON.parse(result);
+      console.log(jsonData.code);
+      console.log(jsonData.description);
+      console.log(jsonData.data.value);
+      const detail = jsonData.detail
+      switch (jsonData.data.value) {
+        case SUCCESS: {
+          alert(detail);
+          location.reload();
+          break;
+        }
+        case FAILURE : {
+          alert(detail);
+          location.reload();
+          break;
+        }
+      }
+    }
   </script>
 </th:block>
 
