@@ -16,9 +16,11 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
 
 @Getter
 @Entity
+@DynamicInsert
 @Table(name = "question_board")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class QuestionBoard extends BaseBoardEntity {

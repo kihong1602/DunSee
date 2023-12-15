@@ -29,7 +29,7 @@ public abstract class BaseBoardEntity extends BaseTimeEntity {
   protected BaseBoardEntity(String title, String content, Integer viewCount, Integer likeCount) {
     this.title = title;
     this.content = content;
-    this.viewCount = viewCount != null ? viewCount : 0;
-    this.likeCount = likeCount != null ? likeCount : 0;
+    this.viewCount = viewCount;
+    this.likeCount = likeCount;
   }
 }

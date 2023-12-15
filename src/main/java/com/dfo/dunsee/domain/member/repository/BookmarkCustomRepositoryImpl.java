@@ -1,10 +1,11 @@
 package com.dfo.dunsee.domain.member.repository;
 
-import static com.dfo.dunsee.member.entity.QBookmark.bookmark;
+
+import static com.dfo.dunsee.domain.member.entity.QBookmark.bookmark;
 
 import com.dfo.dunsee.domain.member.entity.CharacterInfo;
 import com.dfo.dunsee.domain.member.entity.Member;
-import com.dfo.dunsee.member.entity.QMember;
+import com.dfo.dunsee.domain.member.entity.QMember;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
