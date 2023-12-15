@@ -1,9 +1,8 @@
-package com.dfo.dunsee.search.repository;
+package com.dfo.dunsee.domain.search.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.dfo.dunsee.domain.member.entity.CharacterInfo;
-import com.dfo.dunsee.domain.search.repository.CharacterInfoRepository;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

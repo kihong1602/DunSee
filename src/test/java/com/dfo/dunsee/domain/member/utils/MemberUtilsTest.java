@@ -1,10 +1,9 @@
-package com.dfo.dunsee.member.utils;
+package com.dfo.dunsee.domain.member.utils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.dfo.dunsee.domain.member.dto.JoinMemberInfo;
 import com.dfo.dunsee.domain.member.entity.Member;
-import com.dfo.dunsee.domain.member.utils.MemberUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

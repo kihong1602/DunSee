@@ -1,10 +1,8 @@
-package com.dfo.dunsee.search;
+package com.dfo.dunsee.common;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
 
-import com.dfo.dunsee.common.ServiceCode;
-import com.dfo.dunsee.common.UrlParser;
 import com.dfo.dunsee.domain.search.dto.ImgUrlParserCharacterInfo;
 import java.util.HashMap;
 import java.util.Map;

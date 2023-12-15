@@ -1,9 +1,7 @@
-package com.dfo.dunsee.search;
+package com.dfo.dunsee.common;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.dfo.dunsee.common.ServiceCode;
-import com.dfo.dunsee.common.UrlFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
