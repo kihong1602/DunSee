@@ -6,8 +6,8 @@ buildscript {
 
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.1.5'
-    id 'io.spring.dependency-management' version '1.1.3'
+    id 'org.springframework.boot' version '3.2.0'
+    id 'io.spring.dependency-management' version '1.1.4'
 }
 
 group = 'com.dfo'
@@ -41,13 +41,6 @@ dependencies {
             "jakarta.annotation:jakarta.annotation-api",
             "jakarta.persistence:jakarta.persistence-api"
     )
-    sourceSets {
-        main {
-            java {
-                srcDirs = ["$projectDir/src/main/java", "$projectDir/build/generated"]
-            }
-        }
-    }
 
     // Security
     implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -78,4 +71,37 @@ tasks.named('bootBuildImage') {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+
+// QueryDSL Compile 에러 해결을 위한 코드
+// compile 마다 QueryDSL 관련 디렉토리를 삭제 후 재생성
+def queryDslDir = "./out/production/classes/generated"
+def queryDslOutput = file("${queryDslDir}")
+sourceSets {
+    main {
+        java {
+            srcDir queryDslDir
+        }
+    }
+}
+
+compileJava.doFirst {
+    delete file("${queryDslDir}/com")
+}
+
+def gradleGeneratedDir = "./build/generated/source/apt"
+def gradleQueryDslOutput = file("${gradleGeneratedDir}")
+tasks.register('cleanUpQueryDsl', Copy) {
+    from "${gradleGeneratedDir}/main"
+    into "${queryDslDir}"
+    doLast {
+        delete gradleQueryDslOutput
+    }
+}
+compileJava.finalizedBy(cleanUpQueryDsl)
+
+clean {
+    delete gradleQueryDslOutput
+    delete queryDslOutput
 }

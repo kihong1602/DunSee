@@ -62,4 +62,17 @@ public class SimpleCharacterInfo implements Comparable<SimpleCharacterInfo> {
     return Comparator.comparing(SimpleCharacterInfo::getFame, Comparator.nullsLast(Comparator.reverseOrder()))
                      .compare(this, other);
   }
+
+  @Override
+  public String toString() {
+    return "SimpleCharacterInfo{" +
+        "serverId=" + serverId +
+        ", characterId='" + characterId + '\'' +
+        ", characterName='" + characterName + '\'' +
+        ", level=" + level +
+        ", jobGrowName='" + jobGrowName + '\'' +
+        ", fame=" + fame +
+        ", imgUrl='" + imgUrl + '\'' +
+        '}';
+  }
 }

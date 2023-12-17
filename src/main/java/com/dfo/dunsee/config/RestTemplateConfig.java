@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
@@ -38,6 +39,11 @@ public class RestTemplateConfig {
   public RestTemplate restTemplate() {
 
     return new RestTemplate(httpRequestFactory());
+  }
+
+  @Bean
+  public RestClient restClient(RestTemplate restTemplate) {
+    return RestClient.create(restTemplate);
   }
 
   private ClientHttpRequestFactory httpRequestFactory() {

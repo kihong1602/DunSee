@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -43,14 +42,18 @@ public class CharUtils {
   private Map<String, ResCharStatusInfo> callApi(ServiceCode serviceCode, List<String> urlList) {
     Map<String, ResCharStatusInfo> statusInfoMap = new HashMap<>();
 
-    List<CompletableFuture<ResCharStatusInfo>> futures =
+    /*List<CompletableFuture<ResCharStatusInfo>> futures =
         urlList.stream()
                .map(url -> apiUtilsConfig.getApiUtils().callNeopleApi(serviceCode, url, ResCharStatusInfo.class)
                                          .thenApply(ResCharStatusInfo.class::cast)).toList();
-
     futures.stream()
            .map(CompletableFuture::join)
-           .forEach(statusInfo -> statusInfoMap.put(statusInfo.getCharacterId(), statusInfo));
+           .forEach(statusInfo -> statusInfoMap.put(statusInfo.getCharacterId(), statusInfo));*/
+    List<ResCharStatusInfo> infoList =
+        urlList.parallelStream()
+               .map(url -> apiUtilsConfig.getApiUtils().getApiRestClient(serviceCode, url, ResCharStatusInfo.class))
+               .toList();
+    infoList.forEach(statusInfo -> statusInfoMap.put(statusInfo.getCharacterId(), statusInfo));
 
     return statusInfoMap;
   }

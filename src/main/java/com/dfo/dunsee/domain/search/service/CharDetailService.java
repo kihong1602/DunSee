@@ -41,6 +41,7 @@ public class CharDetailService {
   private String serviceMsg;
 
   public DetailCharInfoDto charDetailSearch(ServiceCode serviceCode, String imgUrl) {
+    long startTime = System.currentTimeMillis();
     serviceMsg = ServiceCode.setServiceMsg(serviceCode);
     log.info(serviceMsg + "Sync Character Detail Info Search Service Start");
 
@@ -53,7 +54,9 @@ public class CharDetailService {
     Map<KeyType, ApiResponse> resMap = getApiResponseData(serviceCode, urlMap);
 
     DetailCharInfoDto detailCharInfoDto = buildCharacterDetails(resMap, imgUrl);
-
+    long endTime = System.currentTimeMillis();
+    long workTime = endTime - startTime;
+    log.info("작업시간 ::: " + workTime + " ms");
     CompletableFuture.runAsync(() -> saveCharacterInfoProcess(detailCharInfoDto));
     return detailCharInfoDto;
   }
@@ -92,14 +95,38 @@ public class CharDetailService {
     Map<KeyType, Class<? extends ApiResponse>> typeClassMap = createTypeClassMap();
     List<KeyType> keyTypes = Arrays.asList(KeyType.values());
 
-    List<CompletableFuture<ApiResponse>> apiCalls =
+    //동기처리 stream
+    /*List<? extends ApiResponse> apiResponseList =
+        keyTypes.stream()
+                .map(keyType -> apiUtilsConfig.getApiUtils()
+                                              .getApiResponseJson(serviceCode, urlMap.get(keyType),
+                                                                  typeClassMap.get(keyType))).toList();*/
+
+    //병렬처리 parallelStream RestTemplate
+    /*List<? extends ApiResponse> apiResponseList =
+        keyTypes.parallelStream()
+                .map(keyType -> apiUtilsConfig.getApiUtils()
+                                              .getApiResponseJson(serviceCode, urlMap.get(keyType),
+                                                                  typeClassMap.get(keyType))).toList();*/
+
+    List<? extends ApiResponse> apiResponseList =
+        keyTypes.parallelStream()
+                .map(keyType -> apiUtilsConfig.getApiUtils()
+                                              .getApiRestClient(serviceCode, urlMap.get(keyType),
+                                                                typeClassMap.get(keyType))).toList();
+
+    return apiResponseList.stream()
+                          .collect(Collectors.toMap(apiResponse -> keyTypes.get(apiResponseList.indexOf(apiResponse)),
+                                                    apiResponse -> apiResponse));
+
+    // @ASync 사용 비동기처리
+    /*List<CompletableFuture<ApiResponse>> apiCalls =
         keyTypes.stream()
                 .map(keyType -> apiUtilsConfig.getApiUtils().callNeopleApi(serviceCode, urlMap.get(keyType),
                                                                            typeClassMap.get(keyType))).toList();
-
     return apiCalls.stream()
                    .collect(Collectors
-                                .toMap(apiCall -> keyTypes.get(apiCalls.indexOf(apiCall)), CompletableFuture::join));
+                                .toMap(apiCall -> keyTypes.get(apiCalls.indexOf(apiCall)), CompletableFuture::join));*/
   }
 
   private Map<KeyType, Class<? extends ApiResponse>> createTypeClassMap() {
