@@ -19,7 +19,7 @@ public class CharDetailSearchController {
   private static final ServiceCode SERVICE_CODE = ServiceCode.CHR201;
 
   @GetMapping("/search/character")
-  public String searchCharacterDetailInfo(@RequestParam String imgUrl, Model model) {
+  public String searchCharacterDetailInfo(@RequestParam("imgUrl") String imgUrl, Model model) {
     log.info(ServiceCode.setServiceMsg(SERVICE_CODE) + "Character Detail Search Process Start");
 
     DetailCharInfoDto detailCharInfoDto = charDetailService.charDetailSearch(SERVICE_CODE, imgUrl);
