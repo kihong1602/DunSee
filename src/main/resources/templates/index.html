@@ -3,9 +3,15 @@
       layout:decorate="~{fragments/default_layout}" lang="en">
 <head>
   <title>DunSee</title>
+  <style>
+    .field-error {
+      border-color: #dc3545;
+      color: #dc3545;
+    }
+  </style>
 </head>
 <th:block layout:fragment="content">
-  <section class="bg-[url('images/background/index/dangin_dnf.jpg')]">
+  <section class="bg-[url('/images/background/index/dangin_dnf.jpg')]">
     <div
         class="mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:h-screen lg:items-center backdrop-blur-sm"
     >
@@ -37,10 +43,11 @@
                     type="text"
                     id="characterName"
                     th:field="*{characterName}"
+                    th:errorclass="field-error"
                     placeholder="Search for..."
                     class="w-full rounded-md border-gray-200 py-2.5 pe-10 shadow-sm sm:text-sm"
                 />
-
+                <div class="field-error" th:errors="*{characterName}">상품명 오류</div>
                 <span class="absolute inset-y-0 end-0 grid w-10 place-content-center">
           <button type="button" class="text-gray-600 hover:text-gray-700">
           <span class="sr-only">Search</span>

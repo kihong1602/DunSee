@@ -3,6 +3,7 @@ package com.dfo.dunsee.domain.search.controller;
 import static com.dfo.dunsee.common.ServiceCode.CHR101;
 import static com.dfo.dunsee.common.ServiceCode.setServiceMsg;
 
+import com.dfo.dunsee.common.Server;
 import com.dfo.dunsee.common.ServiceCode;
 import com.dfo.dunsee.domain.search.dto.CharacterSearchKeyword;
 import com.dfo.dunsee.domain.search.dto.SimpleCharacterInfo;
@@ -13,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -27,7 +30,14 @@ public class CharListSearchController {
   private static final String ADVENTURE = "adventure";
 
   @GetMapping("/search/list")
-  public String searchCharacterDefaultInfo(@ModelAttribute CharacterSearchKeyword searchKeyword, Model model) {
+  public String searchCharacterDefaultInfo(
+      @Validated @ModelAttribute("searchKeyword") CharacterSearchKeyword searchKeyword,
+      BindingResult bindingResult, Model model) {
+    if (bindingResult.hasErrors()) {
+      log.info("errors = {}  ", bindingResult);
+      model.addAttribute("servers", Server.values());
+      return "index";
+    }
     log.info(setServiceMsg(SERVICE_CODE) + "Character Search Process Start");
 
     List<SimpleCharacterInfo> characterInfoList;
