@@ -3,8 +3,8 @@ package com.dfo.dunsee.domain.board.controller;
 import com.dfo.dunsee.common.ResultType;
 import com.dfo.dunsee.common.ServiceCode;
 import com.dfo.dunsee.common.response.ResponseJson;
+import com.dfo.dunsee.domain.board.dto.BoardDto;
 import com.dfo.dunsee.domain.board.dto.PostRequestDto;
-import com.dfo.dunsee.domain.board.entity.FreeBoard;
 import com.dfo.dunsee.domain.board.service.FreeBoardService;
 import com.dfo.dunsee.domain.member.entity.Member;
 import com.dfo.dunsee.security.auth.oauth.PrincipalDetails;
@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +31,8 @@ public class FreeBoardController {
 
   @GetMapping("/list")
   public ModelAndView board(ModelAndView modelAndView) {
-    List<FreeBoard> freeBoards = freeBoardService.loadFreePosts();
+    List<BoardDto> freeBoards = freeBoardService.loadFreePosts();
+    freeBoards.forEach(board -> log.info(board.toString()));
     modelAndView.addObject("freeBoards", freeBoards);
     modelAndView.setViewName("board/freeBoard");
     return modelAndView;
@@ -49,7 +51,25 @@ public class FreeBoardController {
     log.info(authMember.toString());
     log.info(postRequestDto.getTitle());
     log.info(postRequestDto.getContent());
-    ResponseJson responseJson = ResponseJson.setResponseJson(ServiceCode.BRD201, ResultType.SUCCESS, "작성성공!");
-    return ResponseEntity.ok().body(responseJson);
+
+    ResultType result = freeBoardService.save(postRequestDto, authMember);
+    ResponseJson responseJson = switch (result) {
+      case SUCCESS -> ResponseJson.setResponseJson(ServiceCode.BRD201, ResultType.SUCCESS,
+          "작성성공!");
+      case FAILURE -> ResponseJson.setResponseJson(ServiceCode.BRD201, ResultType.FAILURE,
+          "작성실패..");
+      default -> ResponseJson.setResponseJson(ServiceCode.BRD201, ResultType.FAILURE,
+          "서버오류입니다..");
+    };
+    return ResponseEntity.ok()
+                         .body(responseJson);
+  }
+
+  @GetMapping("/{id}")
+  public ModelAndView viewPost(@PathVariable("id") Long id, ModelAndView modelAndView) {
+    BoardDto detailInfo = freeBoardService.findDetailInfo(id);
+    modelAndView.addObject("detail", detailInfo);
+    modelAndView.setViewName("board/view");
+    return modelAndView;
   }
 }
