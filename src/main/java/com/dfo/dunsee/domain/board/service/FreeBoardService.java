@@ -25,16 +25,7 @@ public class FreeBoardService {
   public List<BoardDto> loadFreePosts() {
     List<FreeBoard> boards = freeBoardRepository.findAll();
     return boards.stream()
-                 .map(board ->
-                     new BoardDto(
-                         board.getId(),
-                         board.getMember()
-                              .getNickName(),
-                         board.getTitle(),
-                         board.getContent(),
-                         board.getViewCount(),
-                         board.getLikeCount(),
-                         board.getCreatedDate()))
+                 .map(BoardDto::new)
                  .toList();
   }
 
