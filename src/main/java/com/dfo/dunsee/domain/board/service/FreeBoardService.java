@@ -4,8 +4,8 @@ import static com.dfo.dunsee.common.ResultType.FAILURE;
 import static com.dfo.dunsee.common.ResultType.SUCCESS;
 
 import com.dfo.dunsee.common.ResultType;
-import com.dfo.dunsee.domain.board.dto.BoardDto;
-import com.dfo.dunsee.domain.board.dto.PostRequestDto;
+import com.dfo.dunsee.domain.board.dto.BoardRequestDto;
+import com.dfo.dunsee.domain.board.dto.BoardResponseDto;
 import com.dfo.dunsee.domain.board.entity.FreeBoard;
 import com.dfo.dunsee.domain.board.repository.FreeBoardRepository;
 import com.dfo.dunsee.domain.member.entity.Member;
@@ -22,29 +22,26 @@ public class FreeBoardService {
 
   private final FreeBoardRepository freeBoardRepository;
 
-  public List<BoardDto> loadFreePosts() {
+  public List<BoardResponseDto> loadFreePosts() {
     List<FreeBoard> boards = freeBoardRepository.findAll();
     return boards.stream()
-                 .map(BoardDto::new)
+                 .map(BoardResponseDto::new)
                  .toList();
   }
 
-  public ResultType save(PostRequestDto postRequestDto, Member authMember) {
+  public ResultType save(BoardRequestDto boardRequestDto, Member authMember) {
     FreeBoard savePost = FreeBoard.builder()
                                   .member(authMember)
-                                  .title(postRequestDto.getTitle())
-                                  .content(postRequestDto.getContent())
+                                  .title(boardRequestDto.title())
+                                  .content(boardRequestDto.content())
                                   .build();
     FreeBoard saveResult = freeBoardRepository.save(savePost);
     return savePost.equals(saveResult) ? SUCCESS : FAILURE;
   }
 
-  public BoardDto findDetailInfo(Long id) {
+  public BoardResponseDto findDetailInfo(Long id) {
     FreeBoard findBoard = freeBoardRepository.findById(id)
                                              .orElseThrow(RuntimeException::new);
-    return new BoardDto(findBoard.getId(), findBoard.getMember()
-                                                    .getNickName(), findBoard.getTitle(),
-        findBoard.getContent(), findBoard.getViewCount(), findBoard.getLikeCount(),
-        findBoard.getCreatedDate());
+    return new BoardResponseDto(findBoard);
   }
 }

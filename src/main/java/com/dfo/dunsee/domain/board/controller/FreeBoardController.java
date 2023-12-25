@@ -3,8 +3,8 @@ package com.dfo.dunsee.domain.board.controller;
 import com.dfo.dunsee.common.ResultType;
 import com.dfo.dunsee.common.ServiceCode;
 import com.dfo.dunsee.common.response.ResponseJson;
-import com.dfo.dunsee.domain.board.dto.BoardDto;
-import com.dfo.dunsee.domain.board.dto.PostRequestDto;
+import com.dfo.dunsee.domain.board.dto.BoardRequestDto;
+import com.dfo.dunsee.domain.board.dto.BoardResponseDto;
 import com.dfo.dunsee.domain.board.service.FreeBoardService;
 import com.dfo.dunsee.domain.member.entity.Member;
 import com.dfo.dunsee.security.auth.oauth.PrincipalDetails;
@@ -31,7 +31,7 @@ public class FreeBoardController {
 
   @GetMapping("/list")
   public ModelAndView board(ModelAndView modelAndView) {
-    List<BoardDto> freeBoards = freeBoardService.loadFreePosts();
+    List<BoardResponseDto> freeBoards = freeBoardService.loadFreePosts();
     freeBoards.forEach(board -> log.info(board.toString()));
     modelAndView.addObject("freeBoards", freeBoards);
     modelAndView.setViewName("board/freeBoard");
@@ -45,14 +45,14 @@ public class FreeBoardController {
   }
 
   @PostMapping("/save")
-  public ResponseEntity<ResponseJson> save(@RequestBody PostRequestDto postRequestDto,
+  public ResponseEntity<ResponseJson> save(@RequestBody BoardRequestDto boardRequestDto,
       @AuthenticationPrincipal PrincipalDetails principalDetails) {
     Member authMember = principalDetails.getMember();
     log.info(authMember.toString());
-    log.info(postRequestDto.getTitle());
-    log.info(postRequestDto.getContent());
+    log.info(boardRequestDto.title());
+    log.info(boardRequestDto.content());
 
-    ResultType result = freeBoardService.save(postRequestDto, authMember);
+    ResultType result = freeBoardService.save(boardRequestDto, authMember);
     ResponseJson responseJson = switch (result) {
       case SUCCESS -> ResponseJson.setResponseJson(ServiceCode.BRD201, ResultType.SUCCESS,
           "작성성공!");
@@ -67,7 +67,7 @@ public class FreeBoardController {
 
   @GetMapping("/{id}")
   public ModelAndView viewPost(@PathVariable("id") Long id, ModelAndView modelAndView) {
-    BoardDto detailInfo = freeBoardService.findDetailInfo(id);
+    BoardResponseDto detailInfo = freeBoardService.findDetailInfo(id);
     modelAndView.addObject("detail", detailInfo);
     modelAndView.setViewName("board/view");
     return modelAndView;

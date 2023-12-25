@@ -45,7 +45,8 @@
           <td class="whitespace-nowrap px-4 py-2 text-gray-700" th:text="${board.nickName()}">
             작성자1
           </td>
-          <td class="whitespace-nowrap px-4 py-2 text-gray-700" th:text="${board.createdDate()}">
+          <td class="whitespace-nowrap px-4 py-2 text-gray-700"
+              th:text="${#temporals.format(board.createdDate(),'yyyy-MM-dd HH:mm')}">
             2023-01-01
           </td>
           <td class="whitespace-nowrap px-4 py-2 text-gray-700" th:text="${board.viewCount()}">0
