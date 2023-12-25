@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org" xmlns=""
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{fragments/default_layout}" lang="en">
 <head>
   <title>일반 게시판</title>
@@ -9,7 +9,8 @@
   <div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
     <div class="mb-6">
       <!-- 제목 입력을 위한 input 태그 -->
-      <label for="title"><input type="text" id="title" name="title" class="w-full px-4 py-2 border rounded-md"
+      <label for="title"><input type="text" id="title" name="title"
+                                class="w-full px-4 py-2 border rounded-md"
                                 placeholder="제목을 입력해주세요."/>
       </label>
     </div>
@@ -37,8 +38,33 @@
       el: document.querySelector('#editor'),
       height: '500px',
       initialEditType: 'markdown',
-      initialValue: '# 내용을 입력해주세요.',
+      initialValue: '',
       previewStyle: 'vertical',
+      placeholder: '내용을 입력해주세요.',
+      hooks: {
+        async addImageBlobHook(blob, callback) {
+          console.log(blob);
+          console.log(callback);
+          try {
+
+            const formData = new FormData();
+            formData.append('image', blob);
+
+            const response = await fetch('/image-upload', {
+              method: 'POST',
+              body: formData
+            });
+
+            const fileName = await response.text();
+            console.log("서버에 저장된 파일명 :: " + fileName);
+
+            const imageUrl = `/image-print?fileName=${fileName}`;
+            callback(imageUrl, 'image alt attribute');
+          } catch (e) {
+            console.error('업로드실패', e);
+          }
+        }
+      }
     });
 
     console.log('시작시점 마크다운 형식' + editor.getMarkdown());
@@ -89,7 +115,7 @@
       switch (jsonData.data.value) {
         case SUCCESS: {
           alert(detail);
-          location.reload();
+          location.href = '/board/free/list';
           break;
         }
         case FAILURE : {

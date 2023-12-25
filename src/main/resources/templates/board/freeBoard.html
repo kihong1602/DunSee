@@ -5,29 +5,53 @@
   <title>자유 게시판</title>
 </head>
 <th:block layout:fragment="content">
-  <input type="hidden" id="isAuthenticated" th:value="${#authorization.expression('isAuthenticated()')}">
+  <input type="hidden" id="isAuthenticated"
+         th:value="${#authorization.expression('isAuthenticated()')}">
   <div class="rounded-lg border border-gray-200">
     <div class="overflow-x-auto rounded-t-lg">
       <table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
         <thead class="ltr:text-left rtl:text-right">
         <tr>
-          <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900" th:text="#{post.no}">번호</th>
-          <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900" th:text="#{post.title}">제목</th>
-          <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900" th:text="#{post.writer}">작성자</th>
-          <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900" th:text="#{post.date}">날짜</th>
-          <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900" th:text="#{post.view}">조회수</th>
-          <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900" th:text="#{post.like}">추천</th>
+          <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900" th:text="#{post.no}">
+            번호
+          </th>
+          <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900" th:text="#{post.title}">
+            제목
+          </th>
+          <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"
+              th:text="#{post.writer}">작성자
+          </th>
+          <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900" th:text="#{post.date}">
+            날짜
+          </th>
+          <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900" th:text="#{post.view}">
+            조회수
+          </th>
+          <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900" th:text="#{post.like}">
+            추천
+          </th>
         </tr>
         </thead>
 
         <tbody class="divide-y divide-gray-200">
         <tr th:each="board : ${freeBoards}">
-          <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900" th:text="${board.id}">1</td>
-          <td class="whitespace-nowrap px-4 py-2 text-gray-700" th:text="${board.title}">첫 번째 글 제목</td>
-          <td class="whitespace-nowrap px-4 py-2 text-gray-700" th:text="${board.member.username}">작성자1</td>
-          <td class="whitespace-nowrap px-4 py-2 text-gray-700" th:text="${board.createdDate}">2023-01-01</td>
-          <td class="whitespace-nowrap px-4 py-2 text-gray-700" th:text="${board.viewCount}">0</td>
-          <td class="whitespace-nowrap px-4 py-2 text-gray-700" th:text="${board.likeCount}">0</td>
+          <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+            <a th:href="@{/board/free/{id}(id=${board.id()})}" th:text="${board.id()}">1</a>
+          </td>
+          <td class="whitespace-nowrap px-4 py-2 text-gray-700">
+            <a th:href="@{/board/free/{id}(id=${board.id()})}" th:text="${board.title()}">
+              첫 번째 글 제목</a>
+          </td>
+          <td class="whitespace-nowrap px-4 py-2 text-gray-700" th:text="${board.nickName()}">
+            작성자1
+          </td>
+          <td class="whitespace-nowrap px-4 py-2 text-gray-700" th:text="${board.createdDate()}">
+            2023-01-01
+          </td>
+          <td class="whitespace-nowrap px-4 py-2 text-gray-700" th:text="${board.viewCount()}">0
+          </td>
+          <td class="whitespace-nowrap px-4 py-2 text-gray-700" th:text="${board.likeCount()}">0
+          </td>
         </tr>
         <th:block th:if="${freeBoards.isEmpty()}">
           <td colspan="6" class="text-center py-60 text-gray-500">
@@ -58,7 +82,8 @@
         </li>
 
         <li>
-          <a href="#" class="block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900">
+          <a href="#"
+             class="block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900">
             1</a>
         </li>
 
@@ -67,12 +92,14 @@
         </li>
 
         <li>
-          <a href="#" class="block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900">
+          <a href="#"
+             class="block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900">
             3</a>
         </li>
 
         <li>
-          <a href="#" class="block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900">
+          <a href="#"
+             class="block h-8 w-8 rounded border border-gray-100 bg-white text-center leading-8 text-gray-900">
             4
           </a>
         </li>
